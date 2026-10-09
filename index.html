@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lumi · Guía</title>
 <meta name="description" content="Guía por fases para construir Lumi con React, TypeScript y shadcn/ui.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
 /* Layout: one TL;DR slide at a time in a centered column; top bar with progress and index, prev/next at the bottom. */
 :root {
@@ -245,6 +242,149 @@ tr:last-child td { border-bottom: 0; }
   .topbar-inner { gap: 8px; flex-wrap: nowrap; }
   .day-chip { font-size: 11px; padding: 3px 8px; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 }
+
+/* =====================================================================
+   Lumi guide · Apple-clean theme
+   Palette taken from the salon reference: warm ivory walls, light oak,
+   champagne-gold fixtures and sage plants.
+   ===================================================================== */
+:root {
+  --bg: #FAF7F2;          /* ivory wall */
+  --surface: #FFFFFF;
+  --ink: #2B2620;         /* warm charcoal */
+  --muted: #776C60;       /* warm stone */
+  --line: #ECE5DA;        /* hairline */
+  --accent: #8F6B3A;      /* bronze / champagne gold */
+  --accent-ink: #FFFFFF;
+  --accent-soft: #F4ECDF; /* beige */
+  --ok: #5E7A50;          /* sage */
+  --ok-soft: #E8EEE1;
+  --warn: #8A5A12;
+  --warn-soft: #FBF0DC;
+  --code-bg: #2A2520;     /* espresso */
+  --code-fg: #F3ECE2;
+  --code-dim: #A89B8B;
+  --shadow: 0 1px 2px rgba(70, 50, 25, .04), 0 10px 30px rgba(70, 50, 25, .07);
+  --glass: rgba(250, 247, 242, .78);
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, "Cascadia Code", Consolas, monospace;
+  --radius: 20px;
+
+  --l-domain-bg: #F3E6CF; --l-domain-fg: #7A5A2A;          /* light oak */
+  --l-app-bg: #F2E3DA;    --l-app-fg: #8A5240;             /* blush clay */
+  --l-infra-bg: #E9E5DE;  --l-infra-fg: #5C554B;           /* stone */
+  --l-ui-bg: #E4EBDD;     --l-ui-fg: #4E6B40;              /* sage */
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15120E; --surface: #1F1B16; --ink: #F3ECE2; --muted: #A99D8E; --line: #322B23;
+    --accent: #D6B47E; --accent-ink: #1A140C; --accent-soft: #3A2F21;
+    --ok: #A9C394; --ok-soft: #232D1E; --warn: #E8C27C; --warn-soft: #33281A;
+    --code-bg: #0F0C09; --code-fg: #F3ECE2; --code-dim: #94887A;
+    --shadow: 0 0 0 1px #2C261F; --glass: rgba(21, 18, 14, .74);
+    --l-domain-bg: #3A2F1E; --l-domain-fg: #E3C48E;
+    --l-app-bg: #3A2722;    --l-app-fg: #E4AE98;
+    --l-infra-bg: #2D2924;  --l-infra-fg: #CFC6BA;
+    --l-ui-bg: #232D1E;     --l-ui-fg: #A9C394;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15120E; --surface: #1F1B16; --ink: #F3ECE2; --muted: #A99D8E; --line: #322B23;
+  --accent: #D6B47E; --accent-ink: #1A140C; --accent-soft: #3A2F21;
+  --ok: #A9C394; --ok-soft: #232D1E; --warn: #E8C27C; --warn-soft: #33281A;
+  --code-bg: #0F0C09; --code-fg: #F3ECE2; --code-dim: #94887A;
+  --shadow: 0 0 0 1px #2C261F; --glass: rgba(21, 18, 14, .74);
+  --l-domain-bg: #3A2F1E; --l-domain-fg: #E3C48E;
+  --l-app-bg: #3A2722;    --l-app-fg: #E4AE98;
+  --l-infra-bg: #2D2924;  --l-infra-fg: #CFC6BA;
+  --l-ui-bg: #232D1E;     --l-ui-fg: #A9C394;
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+body { font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; letter-spacing: -0.005em; }
+.slide h1, .home h1 { font-weight: 700; letter-spacing: -0.035em; font-size: clamp(40px, 7vw, 68px); line-height: 1.05; }
+.slide h2 { font-weight: 700; letter-spacing: -0.03em; font-size: clamp(30px, 4.8vw, 46px); line-height: 1.08; }
+.slide h3, .phase-card h3 { letter-spacing: -0.02em; }
+.eyebrow { color: var(--accent); letter-spacing: .02em; text-transform: none; font-size: 15px; font-weight: 600; }
+.lead, .home .lead { color: var(--muted); font-size: 20px; line-height: 1.5; }
+code { background: var(--accent-soft); border-radius: 7px; font-size: .86em; }
+main { padding-block: 44px 32px; }
+.slide.is-active { gap: 22px; }
+
+/* ---------- Glass bars ---------- */
+.topbar, .nav {
+  background: var(--glass);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-color: var(--line);
+}
+.nav { position: sticky; bottom: 0; z-index: 5; }
+.brand { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; }
+.brand-dot { background: var(--accent); width: 9px; height: 9px; }
+.day-chip { text-transform: none; letter-spacing: 0; font-size: 13px; font-weight: 600; background: var(--accent-soft); color: var(--accent); }
+.progress { height: 2px; background: transparent; }
+.progress-bar { background: var(--accent); }
+
+/* ---------- Buttons: pills ---------- */
+.ghost-btn, .nav-btn, .help-btn, .copy, .expand { border-radius: 999px; }
+.ghost-btn { background: var(--surface); border: 1px solid var(--line); box-shadow: none; }
+.nav-btn { border: 1px solid var(--line); background: var(--surface); font-weight: 600; padding: 10px 20px; }
+.nav-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.nav-btn.primary:hover { filter: brightness(1.06); }
+.help-btn { border-style: solid; background: transparent; }
+.theme-btn { border-radius: 999px; }
+
+/* ---------- Surfaces: soft cards, no heavy borders ---------- */
+.panel, .phase-card, .table-wrap, .tree-slice, .checklist label, .week-row, .flow-step, .preview {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.checklist label { border-radius: 16px; padding: 13px 16px; }
+.checklist label:has(input:checked) { box-shadow: none; border-color: transparent; }
+.table-wrap { box-shadow: none; }
+th { text-transform: none; letter-spacing: 0; font-size: 13px; font-weight: 600; }
+th, td { padding: 12px 16px; }
+
+/* ---------- Home ---------- */
+.continue { background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 24px; padding: 20px 22px; }
+.continue small { color: var(--accent); text-transform: none; letter-spacing: 0; font-size: 14px; }
+.phase-grid { gap: 18px; }
+.phase-card { border-radius: 24px; padding: 22px; transition: transform .2s ease, box-shadow .2s ease; }
+.phase-card:hover { transform: translateY(-2px); border-color: var(--line); }
+.phase-card .num { color: var(--accent); text-transform: none; letter-spacing: 0; font-size: 14px; }
+.phase-card .meter { height: 4px; }
+@media (prefers-reduced-motion: reduce) { .phase-card { transition: none; } .phase-card:hover { transform: none; } }
+
+/* ---------- Code ---------- */
+.code { border-radius: 18px; }
+.code-head { padding: 12px 14px 0 18px; }
+.code pre { padding: 12px 18px 18px; }
+.k { color: #E3B97A; }
+.s { color: #B9CDA3; }
+.c { color: var(--code-dim); }
+.copy { border-color: #ffffff26; }
+.expand { border-radius: 0 0 18px 18px; }
+
+/* ---------- Misc ---------- */
+.tldr li::before { background: var(--accent); width: 6px; height: 6px; margin-top: 11px; }
+.ts b { color: var(--accent); }
+.tree-slice { border-left: 1px solid var(--line); border-radius: 18px; }
+.tree-slice-head > span:first-child { color: var(--accent); }
+.slice-tag { text-transform: none; letter-spacing: 0; font-size: 12px; }
+.tree-layer { border-radius: 12px; }
+.toc-item.current { background: var(--accent-soft); color: var(--ink); }
+.toc-group { color: var(--accent); text-transform: none; letter-spacing: 0; font-size: 13px; }
+.drawer { background: var(--bg); }
+.toc-search { border-radius: 12px; }
+.celebrate { border-radius: 20px; }
+.celebrate b { color: var(--ok); }
+.toast { border-radius: 999px; padding: 11px 20px; }
+.arch-svg .slice-lines line { stroke: var(--accent); opacity: .55; }
+.arch-svg .ring-ui, .arch-svg .ring-infra, .arch-svg .ring-app, .arch-svg .ring-domain { stroke: var(--bg); stroke-width: 4; }
 
 body { margin: 0; }
 [hidden] { display: none !important; }
