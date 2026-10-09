@@ -739,7 +739,7 @@ useEffect(() =&gt; {
   <p class="eyebrow">Paso 5 · ui/components</p>
   <h2>La tarjeta de tratamiento</h2>
   <div class="cols">
-    <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm dlx shadcn@latest add badge</code></pre></div>
+    <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>npx shadcn@latest add badge</code></pre></div>
     <p class="muted">Así se traen componentes de shadcn. Quedan en <code>src/components/ui/</code>.</p>
   </div>
   <div class="code"><div class="code-head"><span>ui/components/treatment-card.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { Badge } <span class="k">from</span> <span class="s">'@/components/ui/badge'</span>
@@ -1165,7 +1165,7 @@ useEffect(() =&gt; {
   <p class="eyebrow">Paso 5 · react-hook-form + zod</p>
   <h2>Un formulario que valida solo</h2>
   <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add react-hook-form zod @hookform/resolvers
-pnpm dlx shadcn@latest add input label textarea</code></pre></div>
+npx shadcn@latest add input label textarea</code></pre></div>
   <div class="code"><div class="code-head"><span>ui/components/treatment-form.tsx (la base)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">const</span> treatmentFormSchema = z.object({
   name: z.string().min(3, <span class="s">'Use at least 3 characters'</span>),
   category: z.enum([<span class="s">'facial'</span>, <span class="s">'body'</span>, <span class="s">'hair-removal'</span>, <span class="s">'hands-and-feet'</span>]),
@@ -1350,7 +1350,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
   </div>
   <ul class="tldr">
     <li><span><b>Alertas:</b> varios checkboxes con el mismo <code>{...register('alerts')}</code> y distinto <code>value</code> te devuelven un arreglo.</span></li>
-    <li><span><b>Confirmar antes de eliminar:</b> <code>pnpm dlx shadcn@latest add alert-dialog</code>. Después de borrar, invalida <code>['clients']</code> y vuelve a la lista.</span></li>
+    <li><span><b>Confirmar antes de eliminar:</b> <code>npx shadcn@latest add alert-dialog</code>. Después de borrar, invalida <code>['clients']</code> y vuelve a la lista.</span></li>
     <li><span><b>Etiquetas:</b> usa <code>Badge</code>; para las alertas, una variante que llame la atención.</span></li>
   </ul>
   <p class="ts"><b>React</b>inputs controlados · <code>onChange</code> · <b>TS</b>regex · <code>.optional()</code> · arreglos en zod</p>
@@ -1541,7 +1541,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="5" data-day="Fase 5 · Paso 1" data-title="Feedback visual">
   <p class="eyebrow">Paso 1 · feedback</p>
   <h2>Que la app responda a cada acción</h2>
-  <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm dlx shadcn@latest add sonner skeleton</code></pre></div>
+  <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>npx shadcn@latest add sonner skeleton</code></pre></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>mensajes (toasts)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { toast } <span class="k">from</span> <span class="s">'sonner'</span>
 
