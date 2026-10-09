@@ -1,0 +1,1450 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lumi · Guía</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+body { margin: 0; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+
+/* Layout: one TL;DR slide at a time in a centered column; top bar with progress and index, prev/next at the bottom. */
+:root {
+  --bg: #F6F4F7;
+  --surface: #FFFFFF;
+  --ink: #231B2B;
+  --muted: #6B6275;
+  --line: #E4DEE8;
+  --accent: #A23B78;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #F5E6EF;
+  --ok: #2F7D62;
+  --ok-soft: #E2F1EA;
+  --code-bg: #211B28;
+  --code-fg: #EFE8F4;
+  --code-dim: #A99FB4;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141018; --surface: #1D1823; --ink: #EEE8F2; --muted: #A69CB0; --line: #342B3C;
+    --accent: #E58BC0; --accent-ink: #1A1020; --accent-soft: #3A2232;
+    --ok: #74CFA9; --ok-soft: #19302A;
+    --code-bg: #0E0B12; --code-fg: #EFE8F4; --code-dim: #8E8499;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141018; --surface: #1D1823; --ink: #EEE8F2; --muted: #A69CB0; --line: #342B3C;
+  --accent: #E58BC0; --accent-ink: #1A1020; --accent-soft: #3A2232;
+  --ok: #74CFA9; --ok-soft: #19302A;
+  --code-bg: #0E0B12; --code-fg: #EFE8F4; --code-dim: #8E8499;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55; display: flex; flex-direction: column; }
+a { color: var(--accent); text-underline-offset: 3px; font-weight: 600; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.topbar-inner { max-width: 940px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+.brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+.brand small { font-family: var(--font-body); font-weight: 500; font-size: 14px; color: var(--muted); letter-spacing: 0; }
+.spacer { flex: 1; }
+.day-chip { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.ghost-btn { font: 600 14px var(--font-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 7px 12px; cursor: pointer; }
+.ghost-btn:hover { border-color: var(--accent); }
+.theme-btn { display: inline-grid; place-items: center; padding: 7px 9px; }
+.theme-btn .icon-sun { display: none; }
+.theme-btn.is-dark .icon-sun { display: block; }
+.theme-btn.is-dark .icon-moon { display: none; }
+.progress { height: 3px; background: var(--line); }
+.progress-bar { height: 100%; width: 0; background: var(--accent); transition: width .3s ease; }
+
+main { flex: 1; width: 100%; max-width: 940px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 24px; }
+.slide { display: none; }
+.slide.is-active { display: flex; flex-direction: column; gap: 18px; animation: rise .3s ease both; }
+@keyframes rise { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .slide.is-active { animation: none; } .progress-bar { transition: none; } }
+
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.slide h1, .slide h2 { font-family: var(--font-display); letter-spacing: -0.025em; line-height: 1.08; text-wrap: balance; margin: 0; }
+.slide h1 { font-size: clamp(36px, 7vw, 58px); font-weight: 800; }
+.slide h2 { font-size: clamp(28px, 4.6vw, 40px); font-weight: 700; }
+.slide p { margin: 0; max-width: 68ch; }
+.muted { color: var(--muted); }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; align-items: start; }
+.cols > * { min-width: 0; }
+code { font-family: var(--font-mono); font-size: .88em; background: var(--accent-soft); color: var(--ink); padding: 1px 6px; border-radius: 6px; }
+kbd { font-family: var(--font-mono); font-size: .85em; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 1px 6px; background: var(--surface); }
+
+.tldr { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.tldr li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; }
+.tldr li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-top: 10px; justify-self: center; }
+.tldr li > span { min-width: 0; }
+
+.code { background: var(--code-bg); color: var(--code-fg); border-radius: 12px; min-width: 0; }
+.code-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px 0 14px; font: 500 12px var(--font-mono); color: var(--code-dim); }
+.code-head span { overflow-wrap: anywhere; }
+.code pre { margin: 0; padding: 10px 14px 14px; overflow-x: auto; font: 14px/1.6 var(--font-mono); }
+.code pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+.copy { font: 600 12px var(--font-body); color: var(--code-fg); background: transparent; border: 1px solid #ffffff2e; border-radius: 8px; padding: 4px 10px; cursor: pointer; flex: none; }
+.copy:hover { border-color: #ffffff6b; }
+.copy.done { color: #9FE2C4; border-color: #9FE2C480; }
+.c { color: var(--code-dim); }
+.k { color: #F2A5D0; }
+.s { color: #A8E3C5; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+tr:last-child td { border-bottom: 0; }
+
+.checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.checklist label { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
+.checklist input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ok); flex: none; }
+.checklist label:has(input:checked) { background: var(--ok-soft); border-color: transparent; }
+.checklist label:has(input:checked) span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--ok); }
+.done-title { font: 700 13px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--ok); margin: 0; }
+
+.ts { font-size: 14px; color: var(--muted); }
+.ts b { color: var(--accent); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: 12px; margin-right: 6px; }
+
+.nav { border-top: 1px solid var(--line); background: var(--bg); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.nav-inner { max-width: 940px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
+.nav-btn { font: 700 15px var(--font-body); border-radius: 12px; padding: 10px 18px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.nav-btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.nav-btn:disabled { opacity: .4; cursor: default; }
+.counter { flex: 1; text-align: center; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.drawer-backdrop { position: fixed; inset: 0; background: #0000004d; z-index: 20; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(360px, 92vw); z-index: 21; background: var(--bg); border-left: 1px solid var(--line); overflow-y: auto; padding: calc(16px + env(safe-area-inset-top, 0px)) 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
+.drawer-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.drawer-head h2 { font-family: var(--font-display); font-size: 22px; margin: 0; }
+.toc-group { margin: 14px 0 4px; font: 700 12px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.toc-item { display: flex; gap: 10px; width: 100%; text-align: left; background: none; border: 0; padding: 8px 10px; border-radius: 10px; font: 500 15px var(--font-body); color: var(--ink); cursor: pointer; }
+.toc-item:hover { background: var(--surface); }
+.toc-item.current { background: var(--accent-soft); font-weight: 700; }
+.toc-item .n { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 22px; }
+</style>
+
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="brand-dot" aria-hidden="true"></span>Lumi <small>Guía</small></div>
+    <span class="day-chip" id="dayChip">Inicio</span>
+    <span class="spacer"></span>
+    <button class="ghost-btn theme-btn" id="themeToggle" type="button" aria-label="Cambiar a tema oscuro">
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <button class="ghost-btn" id="openIndex" type="button" aria-haspopup="dialog">Índice</button>
+  </div>
+  <div class="progress" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
+</header>
+
+<main id="deck">
+<!-- ================= FASE 1 ================= -->
+
+
+<!-- INICIO -->
+<section class="slide" data-day="Fase 1 · Inicio" data-title="Bienvenida">
+  <p class="eyebrow">Fase 1 · a tu ritmo</p>
+  <h1>¡Hola, Brygith! Qué bueno tenerte en el equipo.</h1>
+  <ul class="tldr">
+    <li><span>Soy Jorge y voy a estar acompañándote en ConnectUp. Estoy muy contento de que te unas.</span></li>
+    <li><span>Para arrancar con buen pie, te propongo construir tu propia app: <b>Lumi</b>, la agenda de un centro estético. Pensé en ese tema porque tú conoces ese mundo mucho mejor que yo, y eso lo hace más divertido.</span></li>
+    <li><span>Ya te preparé una base con el diseño y la estructura lista. Tú la vas a convertir en una app de verdad, por fases y a tu ritmo.</span></li>
+    <li><span>En esta primera fase vas a dejar tu computador listo, publicar tu app y construir el catálogo de tratamientos.</span></li>
+    <li><span>Puedes avanzar con <kbd>←</kbd> <kbd>→</kbd>, y las casillas que vayas marcando se guardan. ¡Vamos!</span></li>
+  </ul>
+  <p class="muted">— Jorge</p>
+</section>
+
+<section class="slide" data-day="Fase 1 · Inicio" data-title="Así lo vamos a hacer">
+  <p class="eyebrow">Nuestra forma de trabajar</p>
+  <h2>Así lo vamos a hacer</h2>
+  <ul class="tldr">
+    <li><span>Trabajamos por <b>fases</b>, no por semanas. Tú organizas tu tiempo; lo importante es entender bien cada paso.</span></li>
+    <li><span>Cada día que trabajes, una rama y un pull request. Así tu avance queda registrado y puedes ver todo lo que has logrado.</span></li>
+    <li><span>Lo ideal es escribir el código, los commits y los textos de la app en <b>inglés</b>, como en el equipo. Si en algún momento se te complica mucho, tranquila, puedes usar español.</span></li>
+    <li><span>Si te trabas o te surge una duda, escríbeme con toda confianza y cuadramos una reunión.</span></li>
+    <li><span>Si te bloqueas, la IA es tu aliada: puedes pedirle explicaciones o incluso código. Lo que más me interesa es que entiendas cómo funciona, me lo puedas contar y vayas formando tu propio criterio.</span></li>
+  </ul>
+</section>
+
+<section class="slide" data-day="Fase 1 · Inicio" data-title="El mapa de la fase 1">
+  <p class="eyebrow">El mapa</p>
+  <h2>Lo que vas a lograr en esta fase</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Paso</th><th>Qué haces</th><th>Qué aprendes</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Preparas tu computador</td><td>Git, Node, pnpm, VS Code</td></tr>
+        <tr><td>2</td><td>Creas tu copia de Lumi y la publicas</td><td>GitHub, Vercel</td></tr>
+        <tr><td>3</td><td>Conoces la plantilla por dentro</td><td>Estructura por features y sus 4 capas</td></tr>
+        <tr><td>4</td><td>Defines qué es un tratamiento y de dónde salen los datos</td><td>Tipos e interfaces de TypeScript</td></tr>
+        <tr><td>5</td><td>Muestras los tratamientos en pantalla</td><td>Componentes, props, <code>useState</code>, <code>useEffect</code></td></tr>
+        <tr><td>6</td><td>Agregas filtros por categoría</td><td>Estado y datos derivados</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">Al final de la fase, tu app publicada muestra el catálogo de tratamientos con filtros.</p>
+</section>
+
+<!-- PASO 1 -->
+<section class="slide" id="f1-p1" data-day="Fase 1 · Paso 1" data-title="Tu cuenta y tus herramientas">
+  <p class="eyebrow">Paso 1</p>
+  <h2>Primero, tu cuenta y tus herramientas</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Qué</th><th>Link</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Cuenta de GitHub (usuario profesional, verificación en dos pasos)</td><td><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a></td></tr>
+        <tr><td>2</td><td>Git</td><td><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com</a></td></tr>
+        <tr><td>3</td><td>Node.js, versión <b>LTS</b> (trae npm)</td><td><a href="https://nodejs.org/en/download" target="_blank" rel="noopener">nodejs.org</a></td></tr>
+        <tr><td>4</td><td>VS Code + extensiones: ESLint, Prettier, Tailwind CSS IntelliSense, Error Lens</td><td><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a></td></tr>
+        <tr><td>5</td><td>Chrome + React Developer Tools</td><td><a href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener">react.dev</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">En los instaladores puedes dejar las opciones por defecto.</p>
+</section>
+
+<section class="slide" data-day="Fase 1 · Paso 1" data-title="pnpm, yarn y Git">
+  <p class="eyebrow">Paso 1</p>
+  <h2>Revisemos que todo quedó bien</h2>
+  <div class="code"><div class="code-head"><span>terminal nueva</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c"># package managers used in the team (Lumi uses pnpm)</span>
+npm install -g pnpm yarn
+
+<span class="c"># each one must print a version</span>
+git --version
+node -v
+pnpm -v
+yarn -v
+
+<span class="c"># once, with your GitHub email</span>
+git config --global user.name <span class="s">"Brygith Arboleda"</span>
+git config --global user.email <span class="s">"tu-correo-de-github@ejemplo.com"</span>
+git config --global init.defaultBranch main</code></pre></div>
+  <p class="muted">Si aparece "no se reconoce el comando", no pasa nada: abre una terminal nueva o reinicia el computador. Si PowerShell no deja ejecutar <code>pnpm</code> o <code>yarn</code>, prueba en <b>Command Prompt</b> (cmd).</p>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f1-c-p1"><span>Paso 1 listo: cuenta creada, todo instalado y Git configurado</span></label></li>
+  </ul>
+</section>
+
+<!-- PASO 2 -->
+<section class="slide" id="f1-p2" data-day="Fase 1 · Paso 2" data-title="Tu copia de Lumi">
+  <p class="eyebrow">Paso 2</p>
+  <h2>Nace tu proyecto</h2>
+  <ul class="tldr">
+    <li><span>Entra a <a href="https://github.com/JorgeVargasConnectUp/lumi-beauty-project" target="_blank" rel="noopener">la plantilla de Lumi</a> → botón verde <b>Use this template</b> → <b>Create a new repository</b>.</span></li>
+    <li><span>Owner: tu cuenta. Nombre: <code>lumi-beauty-center</code>. Visibilidad: <b>Public</b>. → Create repository.</span></li>
+    <li><span>Luego, en la terminal (cambiando <code>&lt;tu-usuario&gt;</code> por el tuyo):</span></li>
+  </ul>
+  <div class="code"><div class="code-head"><span>terminal (en el Escritorio)</span><button class="copy" type="button">Copiar</button></div><pre><code>git clone https://github.com/&lt;tu-usuario&gt;/lumi-beauty-center.git
+cd lumi-beauty-center
+pnpm install
+pnpm dev</code></pre></div>
+  <p class="muted">Si abres <code>http://localhost:5173</code> deberías ver la tarjeta de Lumi. Prueba el botón de la luna: cambia a modo oscuro.</p>
+</section>
+
+<section class="slide" data-day="Fase 1 · Paso 2" data-title="Publica en Vercel">
+  <p class="eyebrow">Paso 2</p>
+  <h2>¡Tu app en internet!</h2>
+  <ul class="tldr">
+    <li><span><a href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com/signup</a> → plan <b>Hobby</b> → <b>Continue with GitHub</b>.</span></li>
+    <li><span>Add New → Project → <code>lumi-beauty-center</code> → <b>Deploy</b>. Vercel reconoce que usa pnpm; no hace falta cambiar nada.</span></li>
+    <li><span>Esa URL (<code>lumi-beauty-center.vercel.app</code>) es tu versión 0. Envíame el link de tu repositorio y el de Vercel, ¡quiero verla!</span></li>
+    <li><span>A partir de aquí, todo lo que llegue a <code>main</code> se publica solito.</span></li>
+  </ul>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f1-c-p2"><span>Paso 2 listo: mi copia está en GitHub y en Vercel, y le pasé los dos links a Jorge</span></label></li>
+  </ul>
+</section>
+
+<section class="slide" data-day="Fase 1 · Paso 2" data-title="Tu rutina de cada día">
+  <p class="eyebrow">Desde ahora</p>
+  <h2>Tu rutina de cada día</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>al empezar</span><button class="copy" type="button">Copiar</button></div><pre><code>git checkout main
+git pull
+git checkout -b feat/treatments-domain</code></pre></div>
+    <div class="code"><div class="code-head"><span>al terminar</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm format
+pnpm lint
+pnpm build
+git add .
+git commit -m <span class="s">"feat(treatments): add treatment domain"</span>
+git push -u origin feat/treatments-domain</code></pre></div>
+  </div>
+  <ul class="tldr">
+    <li><span>El nombre de la rama cuenta lo que hiciste ese día. Si <code>lint</code> o <code>build</code> muestran errores, corrígelos antes del commit.</span></li>
+    <li><span>En GitHub aparece <b>Compare &amp; pull request</b>. Vercel deja una vista previa en el PR; si al probarla todo funciona, puedes hacer el merge a <code>main</code> tú misma.</span></li>
+  </ul>
+</section>
+
+<!-- PASO 3 -->
+<section class="slide" id="f1-p3" data-day="Fase 1 · Paso 3" data-title="Conoce la plantilla">
+  <p class="eyebrow">Paso 3</p>
+  <h2>Conoce tu plantilla por dentro</h2>
+  <p>Cada parte de la app (tratamientos, clientas, citas) vive en su propia carpeta dentro de <code>src/features/</code>, y cada una tiene 4 capas. Cada capa tiene un solo trabajo:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Capa</th><th>En palabras simples</th><th>En el ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><code>domain/</code></td><td>Qué son las cosas y qué necesitamos de los datos</td><td><code>Item</code>, <code>ItemRepository</code></td></tr>
+        <tr><td><code>application/</code></td><td>Qué puede hacer la app</td><td><code>getItems</code></td></tr>
+        <tr><td><code>infrastructure/</code></td><td>De dónde salen los datos (hoy un arreglo, mañana una API)</td><td><code>items.mock.ts</code></td></tr>
+        <tr><td><code>ui/</code></td><td>Lo que se ve en pantalla</td><td><code>ItemsPage</code>, <code>useItems</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">Lee el <code>README.md</code> y el comentario al inicio de cada archivo de <code>src/features/_template/</code>. Ahí está todo explicado.</p>
+</section>
+
+<section class="slide" data-day="Fase 1 · Paso 3" data-title="Juega con el ejemplo">
+  <p class="eyebrow">Paso 3</p>
+  <h2>Juega un poco con el ejemplo</h2>
+  <div class="cols">
+    <ul class="tldr">
+      <li><span>En <code>src/app/app.tsx</code>, muestra la página de ejemplo en lugar de la tarjeta de bienvenida.</span></li>
+      <li><span>Cambia los nombres en <code>items.mock.ts</code> y recarga la página (<kbd>F5</kbd>) para ver el cambio.</span></li>
+      <li><span>Deja el arreglo vacío (<code>[]</code>) y mira qué muestra la pantalla.</span></li>
+      <li><span>Abre React Developer Tools y busca <code>ItemsPage</code> e <code>ItemCard</code>.</span></li>
+      <li><span>Cuando termines, regresa todo a como estaba: <code>git restore .</code></span></li>
+    </ul>
+    <div class="code"><div class="code-head"><span>src/app/app.tsx (solo para jugar)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { ItemsPage } <span class="k">from</span> <span class="s">'@/features/_template'</span>
+
+<span class="k">export function</span> App() {
+  <span class="k">return</span> &lt;ItemsPage /&gt;
+}</code></pre></div>
+  </div>
+  <p class="muted"><b>¿Por qué hay que recargar?</b> Los cambios en <code>domain</code>, <code>application</code> e <code>infrastructure</code> son TypeScript puro: todavía no estamos en React, así que la pantalla no se actualiza automáticamente. Los cambios en <code>ui/</code> sí se ven al instante.</p>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f1-c-p3"><span>Paso 3 listo: puedo explicar con mis palabras para qué sirve cada capa</span></label></li>
+  </ul>
+</section>
+
+<!-- PASO 4 -->
+<section class="slide" id="f1-p4" data-day="Fase 1 · Paso 4" data-title="El dominio">
+  <p class="eyebrow">Paso 4 · domain</p>
+  <h2>Qué es un tratamiento</h2>
+  <p>Copia los archivos de <code>_template</code> en <code>features/treatments/</code> y cambia <code>Item</code> por <code>Treatment</code>. Empieza por el dominio:</p>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>domain/treatment.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> TreatmentCategory =
+  | <span class="s">'facial'</span>
+  | <span class="s">'body'</span>
+  | <span class="s">'hair-removal'</span>
+  | <span class="s">'hands-and-feet'</span>
+
+<span class="k">export interface</span> Treatment {
+  id: <span class="k">string</span>
+  name: <span class="k">string</span>
+  category: TreatmentCategory
+  description: <span class="k">string</span>
+  durationMinutes: <span class="k">number</span>
+  price: <span class="k">number</span>
+}</code></pre></div>
+    <div class="code"><div class="code-head"><span>domain/treatment-repository.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import type</span> { Treatment } <span class="k">from</span> <span class="s">'./treatment'</span>
+
+<span class="k">export interface</span> TreatmentRepository {
+  findAll(): Promise&lt;Treatment[]&gt;
+  findById(id: <span class="k">string</span>): Promise&lt;Treatment | <span class="k">null</span>&gt;
+}</code></pre></div>
+  </div>
+  <p class="muted">Un experimento: escribe <code>category: 'massage'</code> en algún lado y mira qué te dice TypeScript.</p>
+  <p class="ts"><b>TS</b><code>type</code> · <code>interface</code> · uniones <code>|</code> · <code>Promise&lt;T&gt;</code> · <code>import type</code></p>
+</section>
+
+<section class="slide" data-day="Fase 1 · Paso 4" data-title="Datos y caso de uso">
+  <p class="eyebrow">Paso 4 · infrastructure + application</p>
+  <h2>De dónde salen los tratamientos</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>infrastructure/treatments.mock.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import type</span> { Treatment } <span class="k">from</span> <span class="s">'../domain/treatment'</span>
+
+<span class="k">export const</span> treatmentsMock: Treatment[] = [
+  {
+    id: <span class="s">'t1'</span>,
+    name: <span class="s">'Deep facial cleansing'</span>,
+    category: <span class="s">'facial'</span>,
+    description: <span class="s">'Extraction, exfoliation and mask.'</span>,
+    durationMinutes: 60,
+    price: 120000,
+  },
+  <span class="c">// add 5 more, at least one per category</span>
+]</code></pre></div>
+    <ul class="tldr">
+      <li><span>Inventa al menos 6 tratamientos reales. ¡Aquí tu experiencia suma!</span></li>
+      <li><span><code>in-memory-treatment-repository.ts</code>: es el del ejemplo con otros nombres.</span></li>
+      <li><span><code>infrastructure/index.ts</code>: <code>export const treatmentRepository = createInMemoryTreatmentRepository(treatmentsMock)</code></span></li>
+      <li><span><code>application/get-treatments.ts</code>: <code>getTreatments(repository)</code> devuelve <code>repository.findAll()</code>.</span></li>
+    </ul>
+  </div>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f1-c-p4"><span>Paso 4 listo: <code>pnpm build</code> pasa sin errores</span></label></li>
+  </ul>
+</section>
+
+<!-- PASO 5 -->
+<section class="slide" id="f1-p5" data-day="Fase 1 · Paso 5" data-title="El hook">
+  <p class="eyebrow">Paso 5 · ui/hooks</p>
+  <h2>Tu primer hook: <code>useTreatments</code></h2>
+  <div class="cols">
+    <ul class="tldr">
+      <li><span>Copia <code>use-items.ts</code> como <code>use-treatments.ts</code> y cambia los nombres.</span></li>
+      <li><span><code>useState</code> guarda algo que, cuando cambia, vuelve a dibujar la pantalla: aquí, los tratamientos, si está cargando y si hubo un error.</span></li>
+      <li><span><code>useEffect</code> ejecuta código después de dibujar. Con <code>[]</code> al final, solo la primera vez: perfecto para cargar datos.</span></li>
+      <li><span>Lee línea por línea el hook del ejemplo hasta que puedas contarme qué pasa en cada una.</span></li>
+    </ul>
+    <div class="code"><div class="code-head"><span>la idea, en corto</span></div><pre><code><span class="k">const</span> [treatments, setTreatments] = useState&lt;Treatment[]&gt;([])
+
+useEffect(() =&gt; {
+  getTreatments(treatmentRepository).then(setTreatments)
+}, [])</code></pre></div>
+  </div>
+  <p class="ts"><b>React</b><code>useState</code> · <code>useEffect</code> · arreglo de dependencias · <b>TS</b><code>useState&lt;T&gt;</code></p>
+</section>
+
+<section class="slide" data-day="Fase 1 · Paso 5" data-title="La tarjeta">
+  <p class="eyebrow">Paso 5 · ui/components</p>
+  <h2>La tarjeta de tratamiento</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm dlx shadcn@latest add badge</code></pre></div>
+    <p class="muted">Así se traen componentes de shadcn. Quedan en <code>src/components/ui/</code>.</p>
+  </div>
+  <div class="code"><div class="code-head"><span>ui/components/treatment-card.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { Badge } <span class="k">from</span> <span class="s">'@/components/ui/badge'</span>
+<span class="k">import</span> { Card, CardDescription, CardFooter, CardHeader, CardTitle } <span class="k">from</span> <span class="s">'@/components/ui/card'</span>
+
+<span class="k">import type</span> { Treatment } <span class="k">from</span> <span class="s">'../../domain/treatment'</span>
+
+<span class="k">interface</span> TreatmentCardProps {
+  treatment: Treatment
+}
+
+<span class="k">export function</span> TreatmentCard({ treatment }: TreatmentCardProps) {
+  <span class="k">return</span> (
+    &lt;Card&gt;
+      &lt;CardHeader&gt;
+        &lt;Badge variant=<span class="s">"secondary"</span>&gt;{treatment.category}&lt;/Badge&gt;
+        &lt;CardTitle&gt;{treatment.name}&lt;/CardTitle&gt;
+        &lt;CardDescription&gt;{treatment.description}&lt;/CardDescription&gt;
+      &lt;/CardHeader&gt;
+      &lt;CardFooter className=<span class="s">"justify-between"</span>&gt;
+        &lt;span&gt;{treatment.durationMinutes} min&lt;/span&gt;
+        &lt;strong&gt;${treatment.price}&lt;/strong&gt;
+      &lt;/CardFooter&gt;
+    &lt;/Card&gt;
+  )
+}</code></pre></div>
+  <p class="muted">Un reto: el precio se ve como <code>$120000</code>. ¿Te animas a mostrarlo como <code>$ 120.000</code>? Pista: <code>Intl.NumberFormat('es-CO', ...)</code>.</p>
+  <p class="ts"><b>React</b>props · desestructuración · <b>TS</b>props tipadas con <code>interface</code></p>
+</section>
+
+<!-- PASO 6 -->
+<section class="slide" id="f1-p6" data-day="Fase 1 · Paso 6" data-title="Página y filtros">
+  <p class="eyebrow">Paso 6 · ui/pages</p>
+  <h2>La página, con filtros por categoría</h2>
+  <div class="code"><div class="code-head"><span>ui/pages/treatments-page.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { useState } <span class="k">from</span> <span class="s">'react'</span>
+
+<span class="k">import</span> { Button } <span class="k">from</span> <span class="s">'@/components/ui/button'</span>
+
+<span class="k">import type</span> { TreatmentCategory } <span class="k">from</span> <span class="s">'../../domain/treatment'</span>
+<span class="k">import</span> { TreatmentCard } <span class="k">from</span> <span class="s">'../components/treatment-card'</span>
+<span class="k">import</span> { useTreatments } <span class="k">from</span> <span class="s">'../hooks/use-treatments'</span>
+
+<span class="k">type</span> CategoryFilter = TreatmentCategory | <span class="s">'all'</span>
+
+<span class="k">const</span> CATEGORIES: CategoryFilter[] = [<span class="s">'all'</span>, <span class="s">'facial'</span>, <span class="s">'body'</span>, <span class="s">'hair-removal'</span>, <span class="s">'hands-and-feet'</span>]
+
+<span class="k">export function</span> TreatmentsPage() {
+  <span class="k">const</span> { treatments, isLoading, error } = useTreatments()
+  <span class="k">const</span> [category, setCategory] = useState&lt;CategoryFilter&gt;(<span class="s">'all'</span>)
+
+  <span class="c">// Not state: it is calculated from the state on every render</span>
+  <span class="k">const</span> visibleTreatments =
+    category === <span class="s">'all'</span> ? treatments : treatments.filter((t) =&gt; t.category === category)
+
+  <span class="k">if</span> (isLoading) <span class="k">return</span> &lt;p className=<span class="s">"p-6 text-muted-foreground"</span>&gt;Loading treatments...&lt;/p&gt;
+  <span class="k">if</span> (error) <span class="k">return</span> &lt;p className=<span class="s">"p-6 text-destructive"</span>&gt;{error}&lt;/p&gt;
+
+  <span class="k">return</span> (
+    &lt;main className=<span class="s">"mx-auto flex max-w-5xl flex-col gap-6 p-6"</span>&gt;
+      &lt;h1 className=<span class="s">"text-3xl font-semibold"</span>&gt;Treatments&lt;/h1&gt;
+      &lt;div className=<span class="s">"flex flex-wrap gap-2"</span>&gt;
+        {CATEGORIES.map((option) =&gt; (
+          &lt;Button
+            key={option}
+            variant={category === option ? <span class="s">'default'</span> : <span class="s">'outline'</span>}
+            onClick={() =&gt; setCategory(option)}
+          &gt;
+            {option}
+          &lt;/Button&gt;
+        ))}
+      &lt;/div&gt;
+      &lt;div className=<span class="s">"grid gap-4 sm:grid-cols-2 lg:grid-cols-3"</span>&gt;
+        {visibleTreatments.map((treatment) =&gt; (
+          &lt;TreatmentCard key={treatment.id} treatment={treatment} /&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/main&gt;
+  )
+}</code></pre></div>
+  <p class="ts"><b>React</b><code>.map()</code> + <code>key</code> · eventos · datos derivados · <b>TS</b>unión con <code>'all'</code></p>
+</section>
+
+<section class="slide" data-day="Fase 1 · Paso 6" data-title="Conéctala a la app">
+  <p class="eyebrow">Paso 6</p>
+  <h2>Conéctala a la app</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>features/treatments/index.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> { Treatment } <span class="k">from</span> <span class="s">'./domain/treatment'</span>
+<span class="k">export</span> { TreatmentsPage } <span class="k">from</span> <span class="s">'./ui/pages/treatments-page'</span></code></pre></div>
+    <div class="code"><div class="code-head"><span>src/app/app.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { ThemeToggle } <span class="k">from</span> <span class="s">'@/components/common/theme-toggle'</span>
+<span class="k">import</span> { TreatmentsPage } <span class="k">from</span> <span class="s">'@/features/treatments'</span>
+
+<span class="k">export function</span> App() {
+  <span class="k">return</span> (
+    &lt;&gt;
+      &lt;div className=<span class="s">"fixed top-4 right-4"</span>&gt;
+        &lt;ThemeToggle /&gt;
+      &lt;/div&gt;
+      &lt;TreatmentsPage /&gt;
+    &lt;/&gt;
+  )
+}</code></pre></div>
+  </div>
+  <ul class="tldr">
+    <li><span>Borra los <code>.gitkeep</code> de las carpetas que ya llenaste.</span></li>
+    <li><span>Un reto extra: si un filtro no tiene tratamientos, muestra un mensaje amable en vez de una grilla vacía.</span></li>
+  </ul>
+</section>
+
+<!-- CIERRE -->
+<section class="slide" data-day="Fase 1 · Cierre" data-title="Fase 1 lista">
+  <p class="eyebrow">Cierre</p>
+  <h2>¡Fase 1 lista!</h2>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f1-c-f1-1"><span><code>pnpm lint</code> y <code>pnpm build</code> sin errores</span></label></li>
+    <li><label><input type="checkbox" id="f1-c-f1-2"><span>Todos mis PRs de la fase tienen merge a <code>main</code></span></label></li>
+    <li><label><input type="checkbox" id="f1-c-f1-3"><span>Mi URL de Vercel muestra los tratamientos con filtros, en claro y en oscuro</span></label></li>
+    <li><label><input type="checkbox" id="f1-c-f1-4"><span>Puedo explicar qué hace cada capa de <code>treatments</code></span></label></li>
+    <li><label><input type="checkbox" id="f1-c-f1-5"><span>Puedo explicar qué hacen <code>useState</code> y <code>useEffect</code> en mi hook</span></label></li>
+  </ul>
+  <p class="muted">Cuando termines, escríbeme y lo vemos juntos. ¡Buen trabajo!</p>
+</section>
+
+<section class="slide" data-day="Fase 1 · Cierre" data-title="Lo que viene">
+  <p class="eyebrow">Lo que viene</p>
+  <h2>Las próximas fases</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Fase</th><th>Qué construyes</th><th>Qué aprendes</th></tr></thead>
+      <tbody>
+        <tr><td>2</td><td>Menú y varias páginas, detalle, formularios para crear y editar, y datos que se guardan</td><td>React Router, TanStack Query, react-hook-form + zod</td></tr>
+        <tr><td>3</td><td>Clientas, casi sola, repitiendo el patrón</td><td>Búsqueda, formularios más completos, eliminar</td></tr>
+        <tr><td>4</td><td>Citas: la agenda y sus reglas para que nada se cruce</td><td>Lógica de negocio, fechas, usar varios features juntos</td></tr>
+        <tr><td>5</td><td>Los detalles que la hacen brillar</td><td>Feedback visual, dashboard, presentar tu trabajo</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ================= FASE 2 ================= -->
+
+
+<section class="slide" data-day="Fase 2 · Inicio" data-title="Bienvenida a la fase 2">
+  <p class="eyebrow">Fase 2 · a tu ritmo</p>
+  <h1>¡Fase 2! Tu app empieza a sentirse de verdad.</h1>
+  <ul class="tldr">
+    <li><span>Lumi va a tener menú, varias páginas, detalle de cada tratamiento y formularios para crear y editar.</span></li>
+    <li><span>Y los datos se van a guardar: si recargas la página, tus tratamientos nuevos siguen ahí.</span></li>
+    <li><span>Aquí vas a ver por qué separamos todo en capas: para guardar los datos de otra forma, cambias <b>una sola línea</b>.</span></li>
+    <li><span>Vas a conocer tres herramientas que usamos todos los días en el equipo: <b>React Router</b>, <b>TanStack Query</b> y <b>react-hook-form + zod</b>.</span></li>
+  </ul>
+  <p class="muted">— Jorge</p>
+</section>
+
+<section class="slide" data-day="Fase 2 · Inicio" data-title="El mapa de la fase 2">
+  <p class="eyebrow">El mapa</p>
+  <h2>Lo que vas a lograr en esta fase</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Paso</th><th>Qué haces</th><th>Qué aprendes</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Menú y páginas</td><td>React Router, <code>Outlet</code>, <code>NavLink</code></td></tr>
+        <tr><td>2</td><td>Datos con TanStack Query</td><td><code>useQuery</code>, caché, estados de carga</td></tr>
+        <tr><td>3</td><td>Página de detalle</td><td>Rutas con parámetros, <code>useParams</code>, <code>Link</code></td></tr>
+        <tr><td>4</td><td>Datos que se guardan</td><td>Un nuevo adaptador con <code>localStorage</code></td></tr>
+        <tr><td>5</td><td>Crear y editar tratamientos</td><td>react-hook-form, zod, <code>useMutation</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted">Recuerda tu rutina: una rama y un PR por cada día que trabajes, y <code>pnpm format</code>, <code>pnpm lint</code> y <code>pnpm build</code> antes de cada commit.</p>
+</section>
+
+<!-- PASO 1 -->
+<section class="slide" id="f2-p1" data-day="Fase 2 · Paso 1" data-title="Las rutas">
+  <p class="eyebrow">Paso 1 · React Router</p>
+  <h2>Cada pantalla, su propia URL</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add react-router</code></pre></div>
+    <p class="muted">El router decide qué página mostrar según la URL. El layout es el marco que se repite (menú) y <code>&lt;Outlet /&gt;</code> es el hueco donde va cada página.</p>
+  </div>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>src/app/router.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { createBrowserRouter, Navigate } <span class="k">from</span> <span class="s">'react-router'</span>
+
+<span class="k">import</span> { AppLayout } <span class="k">from</span> <span class="s">'@/components/common/app-layout'</span>
+<span class="k">import</span> { TreatmentsPage } <span class="k">from</span> <span class="s">'@/features/treatments'</span>
+
+<span class="k">export const</span> router = createBrowserRouter([
+  {
+    path: <span class="s">'/'</span>,
+    element: &lt;AppLayout /&gt;,
+    children: [
+      { index: <span class="k">true</span>, element: &lt;Navigate to=<span class="s">"/treatments"</span> replace /&gt; },
+      { path: <span class="s">'treatments'</span>, element: &lt;TreatmentsPage /&gt; },
+    ],
+  },
+])</code></pre></div>
+    <div class="code"><div class="code-head"><span>src/app/app.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { RouterProvider } <span class="k">from</span> <span class="s">'react-router'</span>
+
+<span class="k">import</span> { router } <span class="k">from</span> <span class="s">'./router'</span>
+
+<span class="k">export function</span> App() {
+  <span class="k">return</span> &lt;RouterProvider router={router} /&gt;
+}</code></pre></div>
+  </div>
+</section>
+
+<section class="slide" data-day="Fase 2 · Paso 1" data-title="El layout con menú">
+  <p class="eyebrow">Paso 1 · layout</p>
+  <h2>El marco de tu app</h2>
+  <div class="code"><div class="code-head"><span>src/components/common/app-layout.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { NavLink, Outlet } <span class="k">from</span> <span class="s">'react-router'</span>
+
+<span class="k">import</span> { cn } <span class="k">from</span> <span class="s">'@/lib/utils'</span>
+
+<span class="k">import</span> { ThemeToggle } <span class="k">from</span> <span class="s">'./theme-toggle'</span>
+
+<span class="k">const</span> LINKS = [{ to: <span class="s">'/treatments'</span>, label: <span class="s">'Treatments'</span> }]
+
+<span class="k">export function</span> AppLayout() {
+  <span class="k">return</span> (
+    &lt;div className=<span class="s">"min-h-svh md:grid md:grid-cols-[220px_1fr]"</span>&gt;
+      &lt;aside className=<span class="s">"flex items-center justify-between gap-4 border-b bg-sidebar p-4 md:flex-col md:items-stretch md:justify-start md:border-r md:border-b-0"</span>&gt;
+        &lt;span className=<span class="s">"font-heading text-2xl font-semibold"</span>&gt;Lumi&lt;/span&gt;
+        &lt;nav className=<span class="s">"flex gap-1 md:flex-col"</span>&gt;
+          {LINKS.map((link) =&gt; (
+            &lt;NavLink
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) =&gt;
+                cn(<span class="s">'rounded-md px-3 py-2 text-sm font-medium hover:bg-sidebar-accent'</span>, isActive &amp;&amp; <span class="s">'bg-sidebar-accent text-primary'</span>)
+              }
+            &gt;
+              {link.label}
+            &lt;/NavLink&gt;
+          ))}
+        &lt;/nav&gt;
+        &lt;ThemeToggle /&gt;
+      &lt;/aside&gt;
+      &lt;Outlet /&gt;
+    &lt;/div&gt;
+  )
+}</code></pre></div>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>vercel.json (en la raíz del proyecto)</span><button class="copy" type="button">Copiar</button></div><pre><code>{ <span class="s">"rewrites"</span>: [{ <span class="s">"source"</span>: <span class="s">"/(.*)"</span>, <span class="s">"destination"</span>: <span class="s">"/index.html"</span> }] }</code></pre></div>
+    <p class="muted">Sin este archivo, si recargas <code>/treatments</code> en Vercel te sale un 404. Con él, Vercel siempre entrega tu app y React Router se encarga del resto.</p>
+  </div>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f2-c-p1"><span>Paso 1 listo: el menú funciona y <code>/treatments</code> carga también al recargar en Vercel</span></label></li>
+  </ul>
+</section>
+
+<!-- PASO 2 -->
+<section class="slide" id="f2-p2" data-day="Fase 2 · Paso 2" data-title="TanStack Query">
+  <p class="eyebrow">Paso 2 · TanStack Query</p>
+  <h2>Adiós al <code>useEffect</code> manual</h2>
+  <ul class="tldr">
+    <li><span>TanStack Query se encarga de pedir los datos, guardar si está cargando o si falló, y guardarlos en caché para no pedirlos dos veces.</span></li>
+    <li><span>Tu hook <code>useTreatments</code> pasa de muchas líneas a muy pocas.</span></li>
+  </ul>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>terminal + src/app/query-client.ts</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add @tanstack/react-query
+
+<span class="c">// src/app/query-client.ts</span>
+<span class="k">import</span> { QueryClient } <span class="k">from</span> <span class="s">'@tanstack/react-query'</span>
+
+<span class="k">export const</span> queryClient = <span class="k">new</span> QueryClient()</code></pre></div>
+    <div class="code"><div class="code-head"><span>src/app/app.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { QueryClientProvider } <span class="k">from</span> <span class="s">'@tanstack/react-query'</span>
+<span class="k">import</span> { RouterProvider } <span class="k">from</span> <span class="s">'react-router'</span>
+
+<span class="k">import</span> { queryClient } <span class="k">from</span> <span class="s">'./query-client'</span>
+<span class="k">import</span> { router } <span class="k">from</span> <span class="s">'./router'</span>
+
+<span class="k">export function</span> App() {
+  <span class="k">return</span> (
+    &lt;QueryClientProvider client={queryClient}&gt;
+      &lt;RouterProvider router={router} /&gt;
+    &lt;/QueryClientProvider&gt;
+  )
+}</code></pre></div>
+  </div>
+</section>
+
+<section class="slide" data-day="Fase 2 · Paso 2" data-title="useQuery">
+  <p class="eyebrow">Paso 2 · useQuery</p>
+  <h2>Tu hook, versión TanStack Query</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>ui/hooks/use-treatments.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { useQuery } <span class="k">from</span> <span class="s">'@tanstack/react-query'</span>
+
+<span class="k">import</span> { getTreatments } <span class="k">from</span> <span class="s">'../../application/get-treatments'</span>
+<span class="k">import</span> { treatmentRepository } <span class="k">from</span> <span class="s">'../../infrastructure'</span>
+
+<span class="k">export function</span> useTreatments() {
+  <span class="k">return</span> useQuery({
+    queryKey: [<span class="s">'treatments'</span>],
+    queryFn: () =&gt; getTreatments(treatmentRepository),
+  })
+}</code></pre></div>
+    <div class="stack" style="display:flex;flex-direction:column;gap:14px">
+      <div class="code"><div class="code-head"><span>en treatments-page.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">const</span> { data: treatments = [], isLoading, error } = useTreatments()
+
+<span class="c">// error is now an Error object</span>
+<span class="k">if</span> (error) <span class="k">return</span> &lt;p className=<span class="s">"p-6 text-destructive"</span>&gt;{error.message}&lt;/p&gt;</code></pre></div>
+      <ul class="tldr">
+        <li><span><code>queryKey</code> es el nombre con el que se guarda en caché. Lo vas a usar para decir "estos datos cambiaron".</span></li>
+        <li><span>Fíjate: <code>getTreatments</code> y el repositorio no cambiaron nada. Solo cambió la capa <code>ui</code>.</span></li>
+      </ul>
+    </div>
+  </div>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f2-c-p2"><span>Paso 2 listo: la lista funciona igual que antes, ahora con TanStack Query</span></label></li>
+  </ul>
+</section>
+
+<!-- PASO 3 -->
+<section class="slide" id="f2-p3" data-day="Fase 2 · Paso 3" data-title="Página de detalle">
+  <p class="eyebrow">Paso 3 · detalle</p>
+  <h2>Un tratamiento, su propia página</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>application + ui/hooks</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c">// application/get-treatment-by-id.ts</span>
+<span class="k">export function</span> getTreatmentById(repository: TreatmentRepository, id: <span class="k">string</span>) {
+  <span class="k">return</span> repository.findById(id)
+}
+
+<span class="c">// ui/hooks/use-treatment.ts</span>
+<span class="k">export function</span> useTreatment(id: <span class="k">string</span>) {
+  <span class="k">return</span> useQuery({
+    queryKey: [<span class="s">'treatments'</span>, id],
+    queryFn: () =&gt; getTreatmentById(treatmentRepository, id),
+  })
+}</code></pre></div>
+    <div class="code"><div class="code-head"><span>ui/pages/treatment-detail-page.tsx (la idea)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { Link, useParams } <span class="k">from</span> <span class="s">'react-router'</span>
+
+<span class="k">export function</span> TreatmentDetailPage() {
+  <span class="k">const</span> { id = <span class="s">''</span> } = useParams()
+  <span class="k">const</span> { data: treatment, isLoading } = useTreatment(id)
+
+  <span class="k">if</span> (isLoading) <span class="k">return</span> &lt;p className=<span class="s">"p-6"</span>&gt;Loading...&lt;/p&gt;
+  <span class="k">if</span> (!treatment) <span class="k">return</span> &lt;p className=<span class="s">"p-6"</span>&gt;Treatment not found.&lt;/p&gt;
+
+  <span class="k">return</span> (
+    &lt;main className=<span class="s">"mx-auto max-w-3xl p-6"</span>&gt;
+      &lt;Link to=<span class="s">"/treatments"</span>&gt;← Back&lt;/Link&gt;
+      &lt;h1 className=<span class="s">"text-3xl font-semibold"</span>&gt;{treatment.name}&lt;/h1&gt;
+      {<span class="c">/* your design here */</span>}
+    &lt;/main&gt;
+  )
+}</code></pre></div>
+  </div>
+  <ul class="tldr">
+    <li><span>Agrega la ruta <code>{ path: 'treatments/:id', element: &lt;TreatmentDetailPage /&gt; }</code> y expórtala desde el <code>index.ts</code> del feature.</span></li>
+    <li><span>Envuelve cada tarjeta en un <code>&lt;Link to={`/treatments/${treatment.id}`}&gt;</code>. El diseño del detalle es tuyo: muéstralo bonito.</span></li>
+  </ul>
+  <p class="ts"><b>React</b><code>useParams</code> · <code>Link</code> · rutas con <code>:id</code> · <b>TS</b><code>Treatment | null</code></p>
+</section>
+
+<!-- PASO 4 -->
+<section class="slide" id="f2-p4" data-day="Fase 2 · Paso 4" data-title="Datos que se guardan">
+  <p class="eyebrow">Paso 4 · infrastructure</p>
+  <h2>Datos que sobreviven a la recarga</h2>
+  <p>Hasta ahora los datos viven en un arreglo y se pierden al recargar. Vamos a crear otro adaptador que los guarde en <code>localStorage</code>, el almacenamiento del navegador.</p>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>domain: el contrato crece</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c">// domain/treatment.ts</span>
+<span class="k">export type</span> NewTreatment = Omit&lt;Treatment, <span class="s">'id'</span>&gt;
+
+<span class="c">// domain/treatment-repository.ts</span>
+<span class="k">export interface</span> TreatmentRepository {
+  findAll(): Promise&lt;Treatment[]&gt;
+  findById(id: <span class="k">string</span>): Promise&lt;Treatment | <span class="k">null</span>&gt;
+  create(input: NewTreatment): Promise&lt;Treatment&gt;
+  update(treatment: Treatment): Promise&lt;Treatment&gt;
+}</code></pre></div>
+    <div class="code"><div class="code-head"><span>infrastructure/local-storage-treatment-repository.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">const</span> STORAGE_KEY = <span class="s">'lumi-treatments'</span>
+
+<span class="k">export function</span> createLocalStorageTreatmentRepository(
+  seed: Treatment[],
+): TreatmentRepository {
+  <span class="k">function</span> read(): Treatment[] {
+    <span class="k">const</span> saved = localStorage.getItem(STORAGE_KEY)
+    <span class="k">return</span> saved ? (JSON.parse(saved) <span class="k">as</span> Treatment[]) : seed
+  }
+
+  <span class="k">function</span> write(treatments: Treatment[]) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(treatments))
+  }
+
+  <span class="k">return</span> {
+    <span class="k">async</span> findAll() { <span class="k">return</span> read() },
+    <span class="k">async</span> findById(id) { <span class="k">return</span> read().find((t) =&gt; t.id === id) ?? <span class="k">null</span> },
+    <span class="k">async</span> create(input) {
+      <span class="k">const</span> treatment = { ...input, id: crypto.randomUUID() }
+      write([...read(), treatment])
+      <span class="k">return</span> treatment
+    },
+    <span class="k">async</span> update(treatment) {
+      write(read().map((t) =&gt; (t.id === treatment.id ? treatment : t)))
+      <span class="k">return</span> treatment
+    },
+  }
+}</code></pre></div>
+  </div>
+</section>
+
+<section class="slide" data-day="Fase 2 · Paso 4" data-title="El cambio de una línea">
+  <p class="eyebrow">Paso 4 · el momento mágico</p>
+  <h2>Cambias una línea y todo sigue funcionando</h2>
+  <div class="code"><div class="code-head"><span>infrastructure/index.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { createLocalStorageTreatmentRepository } <span class="k">from</span> <span class="s">'./local-storage-treatment-repository'</span>
+<span class="k">import</span> { treatmentsMock } <span class="k">from</span> <span class="s">'./treatments.mock'</span>
+
+<span class="k">export const</span> treatmentRepository = createLocalStorageTreatmentRepository(treatmentsMock)</code></pre></div>
+  <ul class="tldr">
+    <li><span>Los casos de uso, los hooks y las páginas no cambiaron. Para eso sirven las capas.</span></li>
+    <li><span>TypeScript te va a pedir que el adaptador en memoria también tenga <code>create</code> y <code>update</code>. Agrégalos: es un buen ejercicio.</span></li>
+    <li><span>Crea los casos de uso <code>createTreatment</code> y <code>updateTreatment</code> en <code>application/</code>, igual que <code>getTreatments</code>.</span></li>
+  </ul>
+  <p class="ts"><b>TS</b><code>Omit&lt;T, K&gt;</code> · <code>async</code> · <code>as</code> · <b>Web</b><code>localStorage</code> · <code>JSON</code></p>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f2-c-p4"><span>Paso 4 listo: puedo explicar por qué cambiar de adaptador no rompió nada</span></label></li>
+  </ul>
+</section>
+
+<!-- PASO 5 -->
+<section class="slide" id="f2-p5" data-day="Fase 2 · Paso 5" data-title="El formulario">
+  <p class="eyebrow">Paso 5 · react-hook-form + zod</p>
+  <h2>Un formulario que valida solo</h2>
+  <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add react-hook-form zod @hookform/resolvers
+pnpm dlx shadcn@latest add input label textarea</code></pre></div>
+  <div class="code"><div class="code-head"><span>ui/components/treatment-form.tsx (la base)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">const</span> treatmentFormSchema = z.object({
+  name: z.string().min(3, <span class="s">'Use at least 3 characters'</span>),
+  category: z.enum([<span class="s">'facial'</span>, <span class="s">'body'</span>, <span class="s">'hair-removal'</span>, <span class="s">'hands-and-feet'</span>]),
+  description: z.string().min(10, <span class="s">'Tell a bit more'</span>),
+  durationMinutes: z.number().int().min(15, <span class="s">'Minimum 15 minutes'</span>),
+  price: z.number().positive(<span class="s">'Price must be greater than 0'</span>),
+})
+
+<span class="k">export type</span> TreatmentFormValues = z.infer&lt;<span class="k">typeof</span> treatmentFormSchema&gt;
+
+<span class="k">interface</span> TreatmentFormProps {
+  defaultValues?: TreatmentFormValues
+  isSaving: <span class="k">boolean</span>
+  onSubmit: (values: TreatmentFormValues) =&gt; <span class="k">void</span>
+}
+
+<span class="k">export function</span> TreatmentForm({ defaultValues, isSaving, onSubmit }: TreatmentFormProps) {
+  <span class="k">const</span> { register, handleSubmit, formState: { errors } } = useForm&lt;TreatmentFormValues&gt;({
+    resolver: zodResolver(treatmentFormSchema),
+    defaultValues,
+  })
+
+  <span class="k">return</span> (
+    &lt;form onSubmit={handleSubmit(onSubmit)} className=<span class="s">"flex max-w-lg flex-col gap-4"</span>&gt;
+      &lt;div className=<span class="s">"grid gap-2"</span>&gt;
+        &lt;Label htmlFor=<span class="s">"name"</span>&gt;Name&lt;/Label&gt;
+        &lt;Input id=<span class="s">"name"</span> {...register(<span class="s">'name'</span>)} /&gt;
+        {errors.name &amp;&amp; &lt;p className=<span class="s">"text-sm text-destructive"</span>&gt;{errors.name.message}&lt;/p&gt;}
+      &lt;/div&gt;
+
+      {<span class="c">/* numbers need valueAsNumber */</span>}
+      &lt;Input id=<span class="s">"price"</span> type=<span class="s">"number"</span> {...register(<span class="s">'price'</span>, { valueAsNumber: <span class="k">true</span> })} /&gt;
+
+      {<span class="c">/* repeat for category (a native select), description and durationMinutes */</span>}
+
+      &lt;Button type=<span class="s">"submit"</span> disabled={isSaving}&gt;Save&lt;/Button&gt;
+    &lt;/form&gt;
+  )
+}</code></pre></div>
+  <p class="ts"><b>TS</b><code>z.infer</code> · props opcionales <code>?</code> · funciones como props · <b>React</b>formularios controlados por una librería</p>
+</section>
+
+<section class="slide" data-day="Fase 2 · Paso 5" data-title="Crear y editar">
+  <p class="eyebrow">Paso 5 · useMutation</p>
+  <h2>Guardar y actualizar la lista</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>ui/hooks/use-create-treatment.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export function</span> useCreateTreatment() {
+  <span class="k">const</span> queryClient = useQueryClient()
+
+  <span class="k">return</span> useMutation({
+    mutationFn: (values: NewTreatment) =&gt; createTreatment(treatmentRepository, values),
+    onSuccess: () =&gt; queryClient.invalidateQueries({ queryKey: [<span class="s">'treatments'</span>] }),
+  })
+}</code></pre></div>
+    <div class="code"><div class="code-head"><span>ui/pages/new-treatment-page.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export function</span> NewTreatmentPage() {
+  <span class="k">const</span> navigate = useNavigate()
+  <span class="k">const</span> createMutation = useCreateTreatment()
+
+  <span class="k">return</span> (
+    &lt;main className=<span class="s">"mx-auto max-w-3xl p-6"</span>&gt;
+      &lt;h1 className=<span class="s">"mb-6 text-3xl font-semibold"</span>&gt;New treatment&lt;/h1&gt;
+      &lt;TreatmentForm
+        isSaving={createMutation.isPending}
+        onSubmit={(values) =&gt;
+          createMutation.mutate(values, { onSuccess: () =&gt; navigate(<span class="s">'/treatments'</span>) })
+        }
+      /&gt;
+    &lt;/main&gt;
+  )
+}</code></pre></div>
+  </div>
+  <ul class="tldr">
+    <li><span><code>invalidateQueries</code> le dice a TanStack Query: "la lista cambió, vuelve a pedirla".</span></li>
+    <li><span>Rutas nuevas: <code>treatments/new</code> y <code>treatments/:id/edit</code>. Pon un botón "New treatment" en la lista y uno "Edit" en el detalle.</span></li>
+    <li><span>Para editar, reutiliza el mismo <code>TreatmentForm</code> pasándole <code>defaultValues</code>, y crea <code>useUpdateTreatment</code> igual que el de crear. Ese es tu reto.</span></li>
+  </ul>
+</section>
+
+<section class="slide" data-day="Fase 2 · Cierre" data-title="Fase 2 lista">
+  <p class="eyebrow">Cierre</p>
+  <h2>¡Fase 2 lista!</h2>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f2-c-f2-1"><span>Mi app tiene menú y cada página tiene su URL, también en Vercel</span></label></li>
+    <li><label><input type="checkbox" id="f2-c-f2-2"><span>Puedo ver el detalle, crear y editar tratamientos</span></label></li>
+    <li><label><input type="checkbox" id="f2-c-f2-3"><span>Si recargo, mis tratamientos nuevos siguen ahí</span></label></li>
+    <li><label><input type="checkbox" id="f2-c-f2-4"><span>El formulario muestra errores claros cuando algo está mal</span></label></li>
+    <li><label><input type="checkbox" id="f2-c-f2-5"><span>Puedo explicar qué hacen <code>useQuery</code>, <code>useMutation</code> e <code>invalidateQueries</code></span></label></li>
+    <li><label><input type="checkbox" id="f2-c-f2-6"><span><code>pnpm lint</code> y <code>pnpm build</code> sin errores</span></label></li>
+  </ul>
+  <p class="muted">Siguiente: clientas, y esta vez tú llevas el timón. Cualquier cosa, me escribes.</p>
+</section>
+
+
+<!-- ================= FASE 3 ================= -->
+
+
+<section class="slide" data-day="Fase 3 · Inicio" data-title="Bienvenida a la fase 3">
+  <p class="eyebrow">Fase 3 · a tu ritmo</p>
+  <h1>Fase 3: esta vez tú llevas el timón.</h1>
+  <ul class="tldr">
+    <li><span>Vas a construir las <b>clientas</b>: lista, búsqueda, ficha, crear, editar y eliminar.</span></li>
+    <li><span>Es el mismo patrón de tratamientos. Por eso aquí te doy <b>qué</b> construir y algunas pistas, y el <b>cómo</b> lo decides tú.</span></li>
+    <li><span>Si te trabas, mira cómo lo resolviste en <code>treatments</code>. Y si sigues trabada, me escribes.</span></li>
+  </ul>
+  <p class="muted">— Jorge</p>
+</section>
+
+<section class="slide" data-day="Fase 3 · Paso 1" data-title="Qué es una clienta">
+  <p class="eyebrow">Paso 1 · domain</p>
+  <h2>Qué es una clienta</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>domain/client.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> SkinType = <span class="s">'normal'</span> | <span class="s">'dry'</span> | <span class="s">'oily'</span> | <span class="s">'combination'</span> | <span class="s">'sensitive'</span>
+
+<span class="k">export type</span> ClientAlert =
+  | <span class="s">'pregnancy'</span>
+  | <span class="s">'active-acne'</span>
+  | <span class="s">'recent-sun-exposure'</span>
+  | <span class="s">'skin-allergy'</span>
+
+<span class="k">export interface</span> Client {
+  id: <span class="k">string</span>
+  fullName: <span class="k">string</span>
+  phone: <span class="k">string</span>
+  email?: <span class="k">string</span>
+  skinType: SkinType
+  alerts: ClientAlert[]
+  notes?: <span class="k">string</span>
+}
+
+<span class="k">export type</span> NewClient = Omit&lt;Client, <span class="s">'id'</span>&gt;</code></pre></div>
+    <ul class="tldr">
+      <li><span>Los campos con <code>?</code> son opcionales: la clienta puede no tener correo ni notas.</span></li>
+      <li><span>Las alertas te van a servir en la fase 4 para avisar contraindicaciones. Si conoces otras, agrégalas: tú sabes más de esto que yo.</span></li>
+      <li><span>El repositorio necesita <code>findAll</code>, <code>findById</code>, <code>create</code>, <code>update</code> y uno nuevo: <code>remove(id)</code>.</span></li>
+      <li><span>Usa directamente un adaptador con <code>localStorage</code> (clave <code>lumi-clients</code>).</span></li>
+    </ul>
+  </div>
+  <p class="ts"><b>TS</b>propiedades opcionales <code>?</code> · arreglos de uniones · <code>Omit</code></p>
+</section>
+
+<section class="slide" data-day="Fase 3 · Paso 2" data-title="Las pantallas">
+  <p class="eyebrow">Paso 2 · ui</p>
+  <h2>Lo que debe hacer la app</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Ruta</th><th>Qué muestra</th></tr></thead>
+      <tbody>
+        <tr><td><code>/clients</code></td><td>Lista con nombre, teléfono, tipo de piel y alertas como etiquetas. Un buscador por nombre o teléfono.</td></tr>
+        <tr><td><code>/clients/:id</code></td><td>La ficha completa, con las alertas bien visibles arriba. Botones para editar y eliminar.</td></tr>
+        <tr><td><code>/clients/new</code></td><td>Formulario para registrar una clienta.</td></tr>
+        <tr><td><code>/clients/:id/edit</code></td><td>El mismo formulario, con los datos cargados.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="tldr">
+    <li><span>Agrega "Clients" al menú en <code>LINKS</code> del layout.</span></li>
+    <li><span>Validaciones: nombre obligatorio; teléfono celular colombiano de 10 dígitos que empieza por 3; correo opcional pero válido si se escribe.</span></li>
+    <li><span>Antes de eliminar, pide confirmación.</span></li>
+  </ul>
+</section>
+
+<section class="slide" data-day="Fase 3 · Paso 3" data-title="Pistas">
+  <p class="eyebrow">Paso 3 · pistas</p>
+  <h2>Algunas pistas para lo nuevo</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>buscador (input controlado)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">const</span> [search, setSearch] = useState(<span class="s">''</span>)
+
+<span class="k">const</span> visibleClients = clients.filter((client) =&gt;
+  client.fullName.toLowerCase().includes(search.toLowerCase()) ||
+  client.phone.includes(search),
+)
+
+&lt;Input
+  placeholder=<span class="s">"Search by name or phone"</span>
+  value={search}
+  onChange={(event) =&gt; setSearch(event.target.value)}
+/&gt;</code></pre></div>
+    <div class="code"><div class="code-head"><span>zod: teléfono y correo opcional</span><button class="copy" type="button">Copiar</button></div><pre><code>phone: z.string().regex(/^3\d{9}$/, <span class="s">'Use a 10-digit mobile number'</span>),
+email: z.email(<span class="s">'Invalid email'</span>).optional().or(z.literal(<span class="s">''</span>)),
+alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'active-acne'</span>, <span class="s">'recent-sun-exposure'</span>, <span class="s">'skin-allergy'</span>])),</code></pre></div>
+  </div>
+  <ul class="tldr">
+    <li><span><b>Alertas:</b> varios checkboxes con el mismo <code>{...register('alerts')}</code> y distinto <code>value</code> te devuelven un arreglo.</span></li>
+    <li><span><b>Confirmar antes de eliminar:</b> <code>pnpm dlx shadcn@latest add alert-dialog</code>. Después de borrar, invalida <code>['clients']</code> y vuelve a la lista.</span></li>
+    <li><span><b>Etiquetas:</b> usa <code>Badge</code>; para las alertas, una variante que llame la atención.</span></li>
+  </ul>
+  <p class="ts"><b>React</b>inputs controlados · <code>onChange</code> · <b>TS</b>regex · <code>.optional()</code> · arreglos en zod</p>
+</section>
+
+<section class="slide" data-day="Fase 3 · Cierre" data-title="Fase 3 lista">
+  <p class="eyebrow">Cierre</p>
+  <h2>¡Fase 3 lista!</h2>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f3-c-f3-1"><span>Puedo buscar clientas por nombre o teléfono</span></label></li>
+    <li><label><input type="checkbox" id="f3-c-f3-2"><span>Puedo ver la ficha, crear, editar y eliminar (con confirmación)</span></label></li>
+    <li><label><input type="checkbox" id="f3-c-f3-3"><span>El formulario valida el teléfono y el correo</span></label></li>
+    <li><label><input type="checkbox" id="f3-c-f3-4"><span>Las clientas se guardan al recargar</span></label></li>
+    <li><label><input type="checkbox" id="f3-c-f3-5"><span>Lo hice casi sola y puedo explicar cada decisión</span></label></li>
+    <li><label><input type="checkbox" id="f3-c-f3-6"><span><code>pnpm lint</code> y <code>pnpm build</code> sin errores</span></label></li>
+  </ul>
+  <p class="muted">Siguiente: citas, el corazón de Lumi. Si quieres, escríbeme y revisamos juntos lo que hiciste antes de seguir.</p>
+</section>
+
+
+<!-- ================= FASE 4 ================= -->
+
+
+<section class="slide" data-day="Fase 4 · Inicio" data-title="Bienvenida a la fase 4">
+  <p class="eyebrow">Fase 4 · a tu ritmo</p>
+  <h1>Fase 4: la agenda, el corazón de Lumi.</h1>
+  <ul class="tldr">
+    <li><span>Vas a construir las <b>citas</b>: ver la agenda del día, agendar y cambiar el estado de cada cita.</span></li>
+    <li><span>Aquí aparecen las <b>reglas de negocio</b>: que dos citas no se crucen, que la hora de fin se calcule sola, que una cita cancelada no se pueda completar.</span></li>
+    <li><span>Tú conoces estas reglas mejor que nadie, porque las viviste en el día a día de un centro estético.</span></li>
+    <li><span>Y vas a usar juntos los tres features: una cita une a una clienta con un tratamiento.</span></li>
+  </ul>
+  <p class="muted">— Jorge</p>
+</section>
+
+<section class="slide" data-day="Fase 4 · Paso 1" data-title="Qué es una cita">
+  <p class="eyebrow">Paso 1 · domain</p>
+  <h2>Qué es una cita</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>domain/appointment.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> AppointmentStatus =
+  | <span class="s">'scheduled'</span>
+  | <span class="s">'confirmed'</span>
+  | <span class="s">'completed'</span>
+  | <span class="s">'cancelled'</span>
+  | <span class="s">'no-show'</span>
+
+<span class="k">export interface</span> Appointment {
+  id: <span class="k">string</span>
+  clientId: <span class="k">string</span>
+  treatmentId: <span class="k">string</span>
+  startsAt: <span class="k">string</span> <span class="c">// ISO date: "2026-11-03T10:00:00"</span>
+  endsAt: <span class="k">string</span>
+  status: AppointmentStatus
+  notes?: <span class="k">string</span>
+}</code></pre></div>
+    <ul class="tldr">
+      <li><span>La cita no guarda la clienta ni el tratamiento completos: guarda sus <code>id</code>. Así, si editas un tratamiento, la cita no queda desactualizada.</span></li>
+      <li><span>Las fechas se guardan como texto en formato ISO, que es lo que <code>localStorage</code> y las APIs entienden.</span></li>
+      <li><span>Repositorio: lo mismo que clientas, con <code>localStorage</code> (clave <code>lumi-appointments</code>).</span></li>
+      <li><span>Para simplificar, el centro tiene una sola cabina: dos citas no pueden ocurrir al mismo tiempo.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-day="Fase 4 · Paso 2" data-title="Las reglas">
+  <p class="eyebrow">Paso 2 · domain/rules</p>
+  <h2>Las reglas, como funciones puras</h2>
+  <p>Una función pura recibe datos y devuelve un resultado, sin React ni repositorios. Por eso es fácil leerla, probarla y confiar en ella.</p>
+  <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add date-fns</code></pre></div>
+  <div class="code"><div class="code-head"><span>domain/appointment-rules.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { addMinutes, areIntervalsOverlapping } <span class="k">from</span> <span class="s">'date-fns'</span>
+
+<span class="k">import type</span> { Appointment, AppointmentStatus } <span class="k">from</span> <span class="s">'./appointment'</span>
+
+<span class="k">export function</span> calculateEndsAt(startsAt: Date, durationMinutes: <span class="k">number</span>): Date {
+  <span class="k">return</span> addMinutes(startsAt, durationMinutes)
+}
+
+<span class="c">// Back-to-back is allowed: 9:00-10:00 and 10:00-11:00 do not overlap</span>
+<span class="k">export function</span> hasScheduleConflict(
+  candidate: { start: Date; end: Date },
+  appointments: Appointment[],
+): <span class="k">boolean</span> {
+  <span class="k">return</span> appointments
+    .filter((appointment) =&gt; appointment.status !== <span class="s">'cancelled'</span>)
+    .some((appointment) =&gt;
+      areIntervalsOverlapping(candidate, {
+        start: <span class="k">new</span> Date(appointment.startsAt),
+        end: <span class="k">new</span> Date(appointment.endsAt),
+      }),
+    )
+}
+
+<span class="k">const</span> NEXT_STATUSES: Record&lt;AppointmentStatus, AppointmentStatus[]&gt; = {
+  scheduled: [<span class="s">'confirmed'</span>, <span class="s">'cancelled'</span>],
+  confirmed: [<span class="s">'completed'</span>, <span class="s">'cancelled'</span>, <span class="s">'no-show'</span>],
+  completed: [],
+  cancelled: [],
+  <span class="s">'no-show'</span>: [],
+}
+
+<span class="k">export function</span> getNextStatuses(status: AppointmentStatus): AppointmentStatus[] {
+  <span class="k">return</span> NEXT_STATUSES[status]
+}</code></pre></div>
+  <p class="ts"><b>TS</b><code>Record&lt;K, V&gt;</code> · tipos de retorno · objetos como tipos · <b>date-fns</b><code>addMinutes</code> · <code>areIntervalsOverlapping</code></p>
+</section>
+
+<section class="slide" data-day="Fase 4 · Paso 3" data-title="Usar otros features">
+  <p class="eyebrow">Paso 3 · features juntos</p>
+  <h2>Las citas necesitan clientas y tratamientos</h2>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>features/treatments/index.ts y clients/index.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c">// treatments/index.ts</span>
+<span class="k">export</span> { useTreatments } <span class="k">from</span> <span class="s">'./ui/hooks/use-treatments'</span>
+
+<span class="c">// clients/index.ts</span>
+<span class="k">export</span> { useClients } <span class="k">from</span> <span class="s">'./ui/hooks/use-clients'</span></code></pre></div>
+    <div class="code"><div class="code-head"><span>dentro de appointments</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { useClients } <span class="k">from</span> <span class="s">'@/features/clients'</span>
+<span class="k">import</span> { useTreatments } <span class="k">from</span> <span class="s">'@/features/treatments'</span></code></pre></div>
+  </div>
+  <ul class="tldr">
+    <li><span>Recuerda la regla de la plantilla: un feature usa a otro solo a través de su <code>index.ts</code>. Así cada feature decide qué muestra hacia afuera.</span></li>
+    <li><span>Para mostrar el nombre de la clienta en una cita, busca por <code>id</code>: <code>clients.find((client) =&gt; client.id === appointment.clientId)</code>.</span></li>
+  </ul>
+</section>
+
+<section class="slide" data-day="Fase 4 · Paso 4" data-title="Las pantallas">
+  <p class="eyebrow">Paso 4 · ui</p>
+  <h2>Lo que debe hacer la agenda</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Ruta</th><th>Qué muestra</th></tr></thead>
+      <tbody>
+        <tr><td><code>/appointments</code></td><td>Las citas del día ordenadas por hora: hora, clienta, tratamiento y estado con un color. Botones para día anterior, hoy y día siguiente.</td></tr>
+        <tr><td><code>/appointments/new</code></td><td>Formulario: clienta, tratamiento, fecha y hora de inicio. La hora de fin se muestra calculada.</td></tr>
+        <tr><td>Detalle o panel</td><td>Los datos de la cita y solo los botones de estado que permite <code>getNextStatuses</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="tldr">
+    <li><span><b>Al guardar:</b> calcula <code>endsAt</code>, revisa <code>hasScheduleConflict</code> y no permitas fechas pasadas. Si algo falla, muestra el error con <code>setError</code> de react-hook-form.</span></li>
+    <li><span><b>Fechas:</b> <code>addDays</code>, <code>isSameDay</code> y <code>format</code> de date-fns te resuelven la navegación por días.</span></li>
+    <li><span><b>Colores de estado:</b> la plantilla ya trae <code>success</code> y <code>warning</code> en los tokens, además de <code>destructive</code>.</span></li>
+  </ul>
+  <p class="ts"><b>React</b><code>setError</code> · <code>watch</code> para mostrar la hora de fin · <b>TS</b>funciones puras en la UI</p>
+</section>
+
+<section class="slide" data-day="Fase 4 · Extra" data-title="Retos extra">
+  <p class="eyebrow">Si te quedan ganas</p>
+  <h2>Retos extra, con tu experiencia</h2>
+  <ul class="tldr">
+    <li><span><b>Contraindicaciones:</b> agrega a cada tratamiento una lista de alertas incompatibles. Si la clienta tiene alguna, muestra una advertencia antes de agendar.</span></li>
+    <li><span><b>Días entre sesiones:</b> un peeling no se repite antes de 15 días. Agrega <code>minDaysBetweenSessions</code> al tratamiento y valídalo.</span></li>
+    <li><span><b>Historial:</b> en la ficha de cada clienta, sus citas de la más reciente a la más antigua.</span></li>
+    <li><span><b>Reprogramar:</b> mover una cita a otra hora con las mismas validaciones.</span></li>
+  </ul>
+</section>
+
+<section class="slide" data-day="Fase 4 · Cierre" data-title="Fase 4 lista">
+  <p class="eyebrow">Cierre</p>
+  <h2>¡Fase 4 lista!</h2>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f4-c-f4-1"><span>Veo la agenda de cualquier día, ordenada por hora</span></label></li>
+    <li><label><input type="checkbox" id="f4-c-f4-2"><span>Puedo agendar y la app no deja cruzar citas ni agendar en el pasado</span></label></li>
+    <li><label><input type="checkbox" id="f4-c-f4-3"><span>Solo aparecen los cambios de estado permitidos</span></label></li>
+    <li><label><input type="checkbox" id="f4-c-f4-4"><span>Las reglas viven en <code>domain/</code> como funciones puras</span></label></li>
+    <li><label><input type="checkbox" id="f4-c-f4-5"><span>Puedo explicar cómo se comunican los tres features</span></label></li>
+    <li><label><input type="checkbox" id="f4-c-f4-6"><span><code>pnpm lint</code> y <code>pnpm build</code> sin errores</span></label></li>
+  </ul>
+  <p class="muted">¡Lumi ya funciona de punta a punta! Escríbeme y cuadramos una reunión para que me la muestres.</p>
+</section>
+
+
+<!-- ================= FASE 5 ================= -->
+
+
+<section class="slide" data-day="Fase 5 · Inicio" data-title="Bienvenida a la fase 5">
+  <p class="eyebrow">Fase 5 · a tu ritmo</p>
+  <h1>Fase 5: los detalles que la hacen brillar.</h1>
+  <ul class="tldr">
+    <li><span>Lumi ya funciona. Ahora vamos a hacer que se sienta profesional: que responda a cada acción, que cargue bonito y que tenga una pantalla de inicio útil.</span></li>
+    <li><span>Al final, Lumi va a ser un proyecto que puedes mostrar con orgullo en tu portafolio.</span></li>
+    <li><span>Y vas a llegar lista para empezar a ayudarnos en ConnectUp, que usa este mismo stack.</span></li>
+  </ul>
+  <p class="muted">— Jorge</p>
+</section>
+
+<section class="slide" data-day="Fase 5 · Paso 1" data-title="Feedback visual">
+  <p class="eyebrow">Paso 1 · feedback</p>
+  <h2>Que la app responda a cada acción</h2>
+  <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm dlx shadcn@latest add sonner skeleton</code></pre></div>
+  <div class="cols">
+    <div class="code"><div class="code-head"><span>mensajes (toasts)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { toast } <span class="k">from</span> <span class="s">'sonner'</span>
+
+createMutation.mutate(values, {
+  onSuccess: () =&gt; {
+    toast.success(<span class="s">'Treatment created'</span>)
+    navigate(<span class="s">'/treatments'</span>)
+  },
+  onError: () =&gt; toast.error(<span class="s">'Could not save the treatment'</span>),
+})</code></pre></div>
+    <ul class="tldr">
+      <li><span>Pon <code>&lt;Toaster /&gt;</code> una sola vez, en el layout.</span></li>
+      <li><span>Agrega mensajes al crear, editar, eliminar y cambiar el estado de una cita.</span></li>
+      <li><span>Cambia los "Loading..." por <code>Skeleton</code> con la forma de las tarjetas.</span></li>
+      <li><span>Revisa que cada lista tenga un estado vacío amable, con un ícono de <code>lucide-react</code> y un botón para crear el primero.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-day="Fase 5 · Paso 2" data-title="Pantalla de inicio">
+  <p class="eyebrow">Paso 2 · dashboard</p>
+  <h2>Una pantalla de inicio útil</h2>
+  <p>Crea un feature <code>dashboard</code> y llévalo a la ruta <code>/</code> en lugar de la redirección. Que muestre, en tarjetas:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Tarjeta</th><th>Cómo se calcula</th></tr></thead>
+      <tbody>
+        <tr><td>Citas de hoy</td><td>Citas del día que no estén canceladas</td></tr>
+        <tr><td>Por confirmar</td><td>Citas en estado <code>scheduled</code></td></tr>
+        <tr><td>Ingresos de la semana</td><td>Suma del precio de las citas <code>completed</code> de la semana</td></tr>
+        <tr><td>Tratamientos más pedidos</td><td>Contar citas por tratamiento y mostrar los 3 primeros</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="code"><div class="code-head"><span>pista: sumar con reduce</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">const</span> weeklyIncome = completedThisWeek.reduce((total, appointment) =&gt; {
+  <span class="k">const</span> treatment = treatments.find((t) =&gt; t.id === appointment.treatmentId)
+  <span class="k">return</span> total + (treatment?.price ?? 0)
+}, 0)</code></pre></div>
+  <p class="ts"><b>React</b><code>useMemo</code> para cálculos pesados · <b>TS</b><code>reduce</code> · <code>?.</code> · <code>??</code></p>
+</section>
+
+<section class="slide" data-day="Fase 5 · Paso 3" data-title="Revisión final">
+  <p class="eyebrow">Paso 3 · revisión</p>
+  <h2>Mírala como la vería una clienta</h2>
+  <ul class="checklist">
+    <li><label><input type="checkbox" id="f5-c-f5-1"><span>Se ve bien en el celular y en el computador</span></label></li>
+    <li><label><input type="checkbox" id="f5-c-f5-2"><span>Se ve bien en modo claro y en modo oscuro</span></label></li>
+    <li><label><input type="checkbox" id="f5-c-f5-3"><span>No hay errores en la consola del navegador</span></label></li>
+    <li><label><input type="checkbox" id="f5-c-f5-4"><span>No queda código comentado, <code>console.log</code> ni <code>any</code></span></label></li>
+    <li><label><input type="checkbox" id="f5-c-f5-5"><span>Borré el <code>_template</code> y los <code>.gitkeep</code> que ya no se usan</span></label></li>
+    <li><label><input type="checkbox" id="f5-c-f5-6"><span><code>pnpm lint</code> y <code>pnpm build</code> sin errores</span></label></li>
+  </ul>
+</section>
+
+<section class="slide" data-day="Fase 5 · Paso 4" data-title="Preséntala">
+  <p class="eyebrow">Paso 4 · tu portafolio</p>
+  <h2>Preséntala como se merece</h2>
+  <ul class="tldr">
+    <li><span>Actualiza el <code>README.md</code>: qué es Lumi, el link de Vercel, dos o tres capturas y el stack que usaste.</span></li>
+    <li><span>Prepara una demo de 10 minutos: un recorrido por la app, una parte del código que te guste y algo que te costó y cómo lo resolviste.</span></li>
+    <li><span>Agrega el proyecto a tu perfil de GitHub y a tu hoja de vida.</span></li>
+  </ul>
+</section>
+
+<section class="slide" data-day="Fase 5 · Cierre" data-title="Lo lograste">
+  <p class="eyebrow">Cierre</p>
+  <h2>¡Lo lograste, Brygith!</h2>
+  <ul class="tldr">
+    <li><span>Empezaste instalando Git y terminaste con una app completa, publicada, con arquitectura por capas y el mismo stack que usamos en el equipo.</span></li>
+    <li><span>Escríbeme para cuadrar tu demo. Después de eso, empezamos con tus primeras tareas en ConnectUp.</span></li>
+  </ul>
+  <p class="muted">Gracias por tu esfuerzo. — Jorge</p>
+</section>
+
+</main>
+
+<nav class="nav" aria-label="Navegación de la presentación">
+  <div class="nav-inner">
+    <button class="nav-btn" id="prevBtn" type="button">← Anterior</button>
+    <div class="counter" id="counter">1 / 1</div>
+    <button class="nav-btn primary" id="nextBtn" type="button">Siguiente →</button>
+  </div>
+</nav>
+
+<div class="drawer-backdrop" id="backdrop" hidden></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" hidden>
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Índice</h2>
+    <button class="ghost-btn" id="closeIndex" type="button">Cerrar</button>
+  </div>
+  <div id="toc"></div>
+</aside>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var current = 0;
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var counter = document.getElementById('counter');
+  var bar = document.getElementById('progressBar');
+  var dayChip = document.getElementById('dayChip');
+  var toc = document.getElementById('toc');
+  var drawer = document.getElementById('drawer');
+  var backdrop = document.getElementById('backdrop');
+
+  function store(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+
+  // Theme toggle: follows the system until the viewer picks one, then remembers it
+  var themeBtn = document.getElementById('themeToggle');
+  var darkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function isDarkNow() {
+    var t = document.documentElement.getAttribute('data-theme');
+    if (t) return t === 'dark';
+    return !!(darkQuery && darkQuery.matches);
+  }
+  function syncThemeBtn() {
+    var dark = isDarkNow();
+    themeBtn.classList.toggle('is-dark', dark);
+    themeBtn.setAttribute('aria-label', dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+  }
+  var savedTheme = load('lumi-theme');
+  if (savedTheme === 'dark' || savedTheme === 'light') document.documentElement.setAttribute('data-theme', savedTheme);
+  themeBtn.addEventListener('click', function () {
+    var next = isDarkNow() ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    store('lumi-theme', next);
+    syncThemeBtn();
+  });
+  if (darkQuery && darkQuery.addEventListener) darkQuery.addEventListener('change', syncThemeBtn);
+  syncThemeBtn();
+
+  var lastDay = null;
+  slides.forEach(function (slide, i) {
+    var day = slide.dataset.day;
+    if (day !== lastDay) {
+      var g = document.createElement('div');
+      g.className = 'toc-group';
+      g.textContent = day;
+      toc.appendChild(g);
+      lastDay = day;
+    }
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'toc-item';
+    b.innerHTML = '<span class="n">' + (i + 1) + '</span><span></span>';
+    b.lastChild.textContent = slide.dataset.title;
+    b.addEventListener('click', function () { go(i); closeDrawer(); });
+    toc.appendChild(b);
+  });
+  var tocItems = toc.querySelectorAll('.toc-item');
+
+  function go(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach(function (s, k) { s.classList.toggle('is-active', k === current); });
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === slides.length - 1;
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    bar.style.width = ((current + 1) / slides.length * 100) + '%';
+    dayChip.textContent = slides[current].dataset.day;
+    tocItems.forEach(function (t, k) { t.classList.toggle('current', k === current); });
+    store('lumi-guide-slide', String(current));
+    window.scrollTo(0, 0);
+  }
+
+  prevBtn.addEventListener('click', function () { go(current - 1); });
+  nextBtn.addEventListener('click', function () { go(current + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (!drawer.hidden) { if (e.key === 'Escape') closeDrawer(); return; }
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') go(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(current - 1);
+  });
+
+  function openDrawer() { drawer.hidden = false; backdrop.hidden = false; document.getElementById('closeIndex').focus(); }
+  function closeDrawer() { drawer.hidden = true; backdrop.hidden = true; document.getElementById('openIndex').focus(); }
+  document.getElementById('openIndex').addEventListener('click', openDrawer);
+  document.getElementById('closeIndex').addEventListener('click', closeDrawer);
+  backdrop.addEventListener('click', closeDrawer);
+
+  var checks = {};
+  try { checks = JSON.parse(load('lumi-guide-checks') || '{}') || {}; } catch (e) { checks = {}; }
+  document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function (box) {
+    if (checks[box.id]) box.checked = true;
+    box.addEventListener('change', function () {
+      checks[box.id] = box.checked;
+      store('lumi-guide-checks', JSON.stringify(checks));
+    });
+  });
+
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.closest('.code').querySelector('pre');
+      var text = code.innerText;
+      function done() {
+        btn.textContent = 'Copiado';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = 'Copiar'; btn.classList.remove('done'); }, 1600);
+      }
+      function fallback() {
+        var range = document.createRange();
+        range.selectNodeContents(code);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        btn.textContent = 'Seleccionado';
+        setTimeout(function () { btn.textContent = 'Copiar'; }, 1600);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else { fallback(); }
+    });
+  });
+
+  var start = 0;
+  var hash = (location.hash || '').replace('#', '');
+  var hashTarget = hash && document.getElementById(hash);
+  if (hashTarget && slides.indexOf(hashTarget) >= 0) {
+    start = slides.indexOf(hashTarget);
+  } else {
+    var saved = parseInt(load('lumi-guide-slide') || '0', 10);
+    if (!isNaN(saved)) start = saved;
+  }
+  go(start);
+})();
+</script>
+
+</body>
+</html>
