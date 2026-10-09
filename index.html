@@ -4,14 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Lumi · Guía</title>
+<meta name="description" content="Guía por fases para construir Lumi con React, TypeScript y shadcn/ui.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-body { margin: 0; }
-[hidden] { display: none !important; }
-img { max-width: 100%; }
-
 /* Layout: one TL;DR slide at a time in a centered column; top bar with progress and index, prev/next at the bottom. */
 :root {
   --bg: #F6F4F7;
@@ -136,13 +133,128 @@ tr:last-child td { border-bottom: 0; }
 .toc-item:hover { background: var(--surface); }
 .toc-item.current { background: var(--accent-soft); font-weight: 700; }
 .toc-item .n { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 22px; }
-</style>
 
+/* ---------- Layer colors (domain / application / infrastructure / ui) ---------- */
+:root {
+  --l-domain-bg: #FBF0DC; --l-domain-fg: #7A4F0E;
+  --l-app-bg: #F5E6EF; --l-app-fg: #8E2F68;
+  --l-infra-bg: #E9E3F7; --l-infra-fg: #4F3794;
+  --l-ui-bg: #E2F1EA; --l-ui-fg: #24664F;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --l-domain-bg: #3A2E1B; --l-domain-fg: #E8C27C;
+    --l-app-bg: #3A2232; --l-app-fg: #E58BC0;
+    --l-infra-bg: #2C2442; --l-infra-fg: #B9A6F0;
+    --l-ui-bg: #19302A; --l-ui-fg: #74CFA9;
+  }
+}
+:root[data-theme="dark"] {
+  --l-domain-bg: #3A2E1B; --l-domain-fg: #E8C27C;
+  --l-app-bg: #3A2232; --l-app-fg: #E58BC0;
+  --l-infra-bg: #2C2442; --l-infra-fg: #B9A6F0;
+  --l-ui-bg: #19302A; --l-ui-fg: #74CFA9;
+}
+.layer-domain { background: var(--l-domain-bg); color: var(--l-domain-fg); }
+.layer-application { background: var(--l-app-bg); color: var(--l-app-fg); }
+.layer-infrastructure { background: var(--l-infra-bg); color: var(--l-infra-fg); }
+.layer-ui { background: var(--l-ui-bg); color: var(--l-ui-fg); }
+.lt { font: 600 .86em var(--font-mono); padding: 1px 7px; border-radius: 6px; white-space: nowrap; }
+.layer-tag { font: 700 11px var(--font-body); letter-spacing: .04em; text-transform: uppercase; padding: 2px 7px; border-radius: 6px; margin-right: 8px; }
+
+/* ---------- Architecture diagram ---------- */
+.arch { align-items: center; }
+.arch-figure { margin: 0; min-width: 0; }
+.arch-svg { width: 100%; max-width: 560px; height: auto; display: block; margin: 0 auto; }
+.arch-svg .ring-ui { fill: var(--l-ui-bg); stroke: var(--bg); stroke-width: 3; }
+.arch-svg .ring-infra { fill: var(--l-infra-bg); stroke: var(--bg); stroke-width: 3; }
+.arch-svg .ring-app { fill: var(--l-app-bg); stroke: var(--bg); stroke-width: 3; }
+.arch-svg .ring-domain { fill: var(--l-domain-bg); stroke: var(--bg); stroke-width: 3; }
+.arch-svg .slice-lines line { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 6 6; }
+.arch-svg text { font-family: var(--font-mono); font-weight: 700; font-size: 21px; dominant-baseline: middle; paint-order: stroke; stroke-width: 8px; stroke-linejoin: round; }
+.arch-svg .t-domain { fill: var(--l-domain-fg); stroke: var(--l-domain-bg); font-size: 25px; }
+.arch-svg .t-app { fill: var(--l-app-fg); stroke: var(--l-app-bg); }
+.arch-svg .t-ui { fill: var(--l-ui-fg); stroke: var(--l-ui-bg); }
+.arch-svg .t-infra { fill: var(--l-infra-fg); stroke: var(--l-infra-bg); }
+.arch-svg .t-slice { fill: var(--ink); stroke: var(--bg); font-family: var(--font-display); font-size: 25px; }
+@media (min-width: 760px) { .cols.arch { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+
+/* ---------- Folder tree ---------- */
+.tree { font-family: var(--font-mono); font-size: 14px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.tree-root { color: var(--muted); font-weight: 600; }
+.tree-slice { border-left: 4px solid var(--accent); background: var(--surface); border-radius: 0 12px 12px 0; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.tree-slice-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-weight: 700; color: var(--ink); }
+.slice-tag { font: 700 11px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+.tree-layer { border-radius: 8px; padding: 6px 10px 6px 12px; display: flex; flex-direction: column; gap: 1px; margin-left: 12px; overflow-wrap: anywhere; }
+.tree-layer b { font-weight: 700; }
+.tree-layer span { padding-left: 16px; color: var(--ink); opacity: .85; }
+.tree-file { margin-left: 12px; color: var(--ink); }
+.tree-file em { font-family: var(--font-body); font-style: normal; color: var(--muted); font-size: 13px; }
+.tree-mini { display: flex; align-items: center; gap: 4px; color: var(--muted); font-family: var(--font-body); font-size: 13px; margin-left: 12px; }
+.tree-mini i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+
+/* ---------- Home ---------- */
+.home { display: flex; flex-direction: column; gap: 22px; animation: rise .3s ease both; }
+.home h1 { font-family: var(--font-display); font-size: clamp(34px, 6vw, 52px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.08; margin: 0; text-wrap: balance; }
+.home .lead { font-size: 18px; color: var(--muted); margin: 0; max-width: 62ch; }
+.continue { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; background: var(--accent-soft); border-radius: 16px; padding: 16px 18px; }
+.continue p { margin: 0; }
+.continue small { display: block; color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.continue b { font-size: 17px; }
+.phase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+.phase-card { text-align: left; font: inherit; color: inherit; cursor: pointer; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.phase-card:hover { border-color: var(--accent); }
+.phase-card .num { font: 700 12px var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.phase-card h3 { font-family: var(--font-display); font-size: 21px; font-weight: 700; letter-spacing: -0.01em; margin: 0; line-height: 1.2; }
+.phase-card p { margin: 0; color: var(--muted); font-size: 15px; }
+.phase-card .meter { height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; margin-top: auto; }
+.phase-card .meter span { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+.phase-card .state { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.phase-card.is-done { border-color: var(--ok); }
+.phase-card.is-done .meter span { background: var(--ok); }
+.phase-card.is-done .state { color: var(--ok); font-weight: 700; }
+.brand-btn { background: none; border: 0; padding: 0; cursor: pointer; color: inherit; font: inherit; }
+
+/* ---------- Help button + toast ---------- */
+.help-btn { font: 600 14px var(--font-body); color: var(--muted); background: transparent; border: 1px dashed var(--line); border-radius: 10px; padding: 7px 12px; cursor: pointer; }
+.help-btn:hover { color: var(--accent); border-color: var(--accent); }
+.toast { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-size: 15px; max-width: calc(100vw - 32px); box-shadow: 0 8px 24px #0003; }
+.counter .phase-pos { font-weight: 700; color: var(--ink); }
+
+/* ---------- Collapsible long code ---------- */
+.code.is-long:not(.is-open) pre { max-height: 300px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.expand { display: block; width: 100%; font: 600 13px var(--font-body); color: var(--code-fg); background: transparent; border: 0; border-top: 1px solid #ffffff1f; padding: 9px; cursor: pointer; border-radius: 0 0 12px 12px; }
+.expand:hover { background: #ffffff0d; }
+
+/* ---------- Celebration ---------- */
+.celebrate { border-radius: 16px; padding: 18px; background: var(--ok-soft); display: flex; flex-direction: column; gap: 6px; animation: rise .4s ease both; }
+.celebrate b { font-family: var(--font-display); font-size: 22px; color: var(--ok); }
+.celebrate p { margin: 0; }
+
+/* ---------- Index search ---------- */
+.toc-search { width: 100%; font: 500 15px var(--font-body); color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; margin-bottom: 4px; }
+.toc-search:focus { outline: 3px solid var(--accent); outline-offset: 1px; }
+
+.help-btn .short { display: none; }
+.counter { white-space: nowrap; }
+@media (max-width: 560px) {
+  .nav-inner { gap: 8px; }
+  .nav-btn { padding: 10px 14px; }
+  .nav-btn .lbl, .help-btn .long, .brand small { display: none; }
+  .help-btn .short { display: inline; }
+  .topbar-inner { gap: 8px; flex-wrap: nowrap; }
+  .day-chip { font-size: 11px; padding: 3px 8px; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+}
+
+body { margin: 0; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+</style>
 </head>
 <body>
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="brand"><span class="brand-dot" aria-hidden="true"></span>Lumi <small>Guía</small></div>
+    <button class="brand brand-btn" id="homeBtn" type="button" aria-label="Ir al inicio"><span class="brand-dot" aria-hidden="true"></span>Lumi <small>Guía</small></button>
     <span class="day-chip" id="dayChip">Inicio</span>
     <span class="spacer"></span>
     <button class="ghost-btn theme-btn" id="themeToggle" type="button" aria-label="Cambiar a tema oscuro">
@@ -153,13 +265,20 @@ tr:last-child td { border-bottom: 0; }
   </div>
   <div class="progress" aria-hidden="true"><div class="progress-bar" id="progressBar"></div></div>
 </header>
-
-<main id="deck">
+<main>
+<section id="home" class="home" hidden>
+  <p class="eyebrow">Tu guía para construir Lumi</p>
+  <h1>Hola, Brygith. Este es tu camino.</h1>
+  <p class="lead">Cinco fases, a tu ritmo. Tu avance se guarda en este navegador: vuelve cuando quieras y sigue donde quedaste.</p>
+  <div class="continue" id="continueBox"><p><small></small><b></b></p><button class="nav-btn primary" type="button"></button></div>
+  <div class="phase-grid" id="phaseGrid"></div>
+</section>
+<div id="deck" hidden>
 <!-- ================= FASE 1 ================= -->
 
 
 <!-- INICIO -->
-<section class="slide" data-day="Fase 1 · Inicio" data-title="Bienvenida">
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Bienvenida">
   <p class="eyebrow">Fase 1 · a tu ritmo</p>
   <h1>¡Hola, Brygith! Qué bueno tenerte en el equipo.</h1>
   <ul class="tldr">
@@ -172,7 +291,7 @@ tr:last-child td { border-bottom: 0; }
   <p class="muted">— Jorge</p>
 </section>
 
-<section class="slide" data-day="Fase 1 · Inicio" data-title="Así lo vamos a hacer">
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Así lo vamos a hacer">
   <p class="eyebrow">Nuestra forma de trabajar</p>
   <h2>Así lo vamos a hacer</h2>
   <ul class="tldr">
@@ -184,7 +303,7 @@ tr:last-child td { border-bottom: 0; }
   </ul>
 </section>
 
-<section class="slide" data-day="Fase 1 · Inicio" data-title="El mapa de la fase 1">
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="El mapa de la fase 1">
   <p class="eyebrow">El mapa</p>
   <h2>Lo que vas a lograr en esta fase</h2>
   <div class="table-wrap">
@@ -204,7 +323,7 @@ tr:last-child td { border-bottom: 0; }
 </section>
 
 <!-- PASO 1 -->
-<section class="slide" id="f1-p1" data-day="Fase 1 · Paso 1" data-title="Tu cuenta y tus herramientas">
+<section class="slide" data-phase="1" id="f1-p1" data-day="Fase 1 · Paso 1" data-title="Tu cuenta y tus herramientas">
   <p class="eyebrow">Paso 1</p>
   <h2>Primero, tu cuenta y tus herramientas</h2>
   <div class="table-wrap">
@@ -222,7 +341,7 @@ tr:last-child td { border-bottom: 0; }
   <p class="muted">En los instaladores puedes dejar las opciones por defecto.</p>
 </section>
 
-<section class="slide" data-day="Fase 1 · Paso 1" data-title="pnpm, yarn y Git">
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 1" data-title="pnpm, yarn y Git">
   <p class="eyebrow">Paso 1</p>
   <h2>Revisemos que todo quedó bien</h2>
   <div class="code"><div class="code-head"><span>terminal nueva</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c"># package managers used in the team (Lumi uses pnpm)</span>
@@ -245,7 +364,7 @@ git config --global init.defaultBranch main</code></pre></div>
 </section>
 
 <!-- PASO 2 -->
-<section class="slide" id="f1-p2" data-day="Fase 1 · Paso 2" data-title="Tu copia de Lumi">
+<section class="slide" data-phase="1" id="f1-p2" data-day="Fase 1 · Paso 2" data-title="Tu copia de Lumi">
   <p class="eyebrow">Paso 2</p>
   <h2>Nace tu proyecto</h2>
   <ul class="tldr">
@@ -260,7 +379,7 @@ pnpm dev</code></pre></div>
   <p class="muted">Si abres <code>http://localhost:5173</code> deberías ver la tarjeta de Lumi. Prueba el botón de la luna: cambia a modo oscuro.</p>
 </section>
 
-<section class="slide" data-day="Fase 1 · Paso 2" data-title="Publica en Vercel">
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 2" data-title="Publica en Vercel">
   <p class="eyebrow">Paso 2</p>
   <h2>¡Tu app en internet!</h2>
   <ul class="tldr">
@@ -274,7 +393,7 @@ pnpm dev</code></pre></div>
   </ul>
 </section>
 
-<section class="slide" data-day="Fase 1 · Paso 2" data-title="Tu rutina de cada día">
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 2" data-title="Tu rutina de cada día">
   <p class="eyebrow">Desde ahora</p>
   <h2>Tu rutina de cada día</h2>
   <div class="cols">
@@ -295,7 +414,67 @@ git push -u origin feat/treatments-domain</code></pre></div>
 </section>
 
 <!-- PASO 3 -->
-<section class="slide" id="f1-p3" data-day="Fase 1 · Paso 3" data-title="Conoce la plantilla">
+<section class="slide" data-phase="1" id="f1-p3" data-day="Fase 1 · Paso 3" data-title="Capas y slices">
+  <p class="eyebrow">Paso 3 · la idea general</p>
+  <h2>Capas por dentro, slices por fuera</h2>
+  <div class="cols arch">
+    <figure class="arch-figure">
+      <svg class="arch-svg" viewBox="-20 0 680 480" role="img" aria-label="Diagrama: domain en el centro, application alrededor y afuera ui e infrastructure. Líneas punteadas dividen el círculo en los features treatments, clients, appointments y dashboard.">
+        <path class="ring-ui" d="M320 70 A170 170 0 0 0 320 410 L320 360 A120 120 0 0 1 320 120 Z"/>
+        <path class="ring-infra" d="M320 70 A170 170 0 0 1 320 410 L320 360 A120 120 0 0 0 320 120 Z"/>
+        <circle class="ring-app" cx="320" cy="240" r="120"/>
+        <circle class="ring-domain" cx="320" cy="240" r="70"/>
+        <g class="slice-lines">
+          <line x1="320" y1="240" x2="179" y2="99"/>
+          <line x1="320" y1="240" x2="461" y2="99"/>
+          <line x1="320" y1="240" x2="461" y2="381"/>
+          <line x1="320" y1="240" x2="179" y2="381"/>
+        </g>
+        <text class="t-domain" x="320" y="245" text-anchor="middle">domain</text>
+        <text class="t-app" x="320" y="146" text-anchor="middle">application</text>
+        <text class="t-ui" x="175" y="240" text-anchor="middle" transform="rotate(-90 175 240)">ui</text>
+        <text class="t-infra" x="465" y="240" text-anchor="middle" transform="rotate(90 465 240)">infrastructure</text>
+        <text class="t-slice" x="320" y="40" text-anchor="middle">treatments</text>
+        <text class="t-slice" x="520" y="245" text-anchor="start">clients</text>
+        <text class="t-slice" x="320" y="455" text-anchor="middle">appointments</text>
+        <text class="t-slice" x="120" y="245" text-anchor="end">dashboard</text>
+      </svg>
+    </figure>
+    <ul class="tldr">
+      <li><span><b>Capas (los círculos).</b> En el centro, <span class="lt layer-domain">domain</span>: qué son las cosas. Alrededor, <span class="lt layer-application">application</span>: qué puede hacer la app. Afuera, lo que se conecta con el mundo: <span class="lt layer-ui">ui</span> (lo que ve la persona) e <span class="lt layer-infrastructure">infrastructure</span> (de dónde vienen los datos).</span></li>
+      <li><span><b>La regla de oro:</b> las dependencias apuntan hacia adentro. <code>domain</code> no conoce a nadie; todos lo conocen a él.</span></li>
+      <li><span><b>Slices (las líneas punteadas).</b> Cada feature es una rebanada que atraviesa todas las capas: tratamientos, clientas, citas.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 3" data-title="Dónde se ve en tus carpetas">
+  <p class="eyebrow">Paso 3 · en tu proyecto</p>
+  <h2>Dónde se ve en tus carpetas</h2>
+  <div class="cols">
+    <div class="tree" aria-label="Estructura de carpetas de src/features">
+      <div class="tree-root">src/features/</div>
+      <div class="tree-slice">
+        <div class="tree-slice-head"><span>treatments/</span><span class="slice-tag">slice</span></div>
+        <div class="tree-layer layer-domain"><b>domain/</b><span>treatment.ts</span><span>treatment-repository.ts</span></div>
+        <div class="tree-layer layer-application"><b>application/</b><span>get-treatments.ts</span></div>
+        <div class="tree-layer layer-infrastructure"><b>infrastructure/</b><span>treatments.mock.ts</span><span>in-memory-treatment-repository.ts</span><span>index.ts</span></div>
+        <div class="tree-layer layer-ui"><b>ui/</b><span>hooks/use-treatments.ts</span><span>components/treatment-card.tsx</span><span>pages/treatments-page.tsx</span></div>
+        <div class="tree-file">index.ts <em>← la puerta de entrada del feature</em></div>
+      </div>
+      <div class="tree-slice is-collapsed"><div class="tree-slice-head"><span>clients/</span><span class="slice-tag">slice</span></div><div class="tree-mini"><i class="layer-domain"></i><i class="layer-application"></i><i class="layer-infrastructure"></i><i class="layer-ui"></i> las mismas 4 capas</div></div>
+      <div class="tree-slice is-collapsed"><div class="tree-slice-head"><span>appointments/</span><span class="slice-tag">slice</span></div><div class="tree-mini"><i class="layer-domain"></i><i class="layer-application"></i><i class="layer-infrastructure"></i><i class="layer-ui"></i> las mismas 4 capas</div></div>
+    </div>
+    <ul class="tldr">
+      <li><span><b>Vertical:</b> cada carpeta de <code>features/</code> es un slice completo. Todo lo de tratamientos vive junto.</span></li>
+      <li><span><b>Horizontal:</b> dentro de cada slice se repiten las mismas 4 capas, siempre con los mismos colores que verás en esta guía.</span></li>
+      <li><span>Los bloques de código de la guía llevan una etiqueta con su capa, para que sepas en qué parte del círculo estás.</span></li>
+      <li><span>Desde afuera, un feature solo se usa a través de su <code>index.ts</code>.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 3" data-title="Las 4 capas en palabras simples">
   <p class="eyebrow">Paso 3</p>
   <h2>Conoce tu plantilla por dentro</h2>
   <p>Cada parte de la app (tratamientos, clientas, citas) vive en su propia carpeta dentro de <code>src/features/</code>, y cada una tiene 4 capas. Cada capa tiene un solo trabajo:</p>
@@ -313,7 +492,7 @@ git push -u origin feat/treatments-domain</code></pre></div>
   <p class="muted">Lee el <code>README.md</code> y el comentario al inicio de cada archivo de <code>src/features/_template/</code>. Ahí está todo explicado.</p>
 </section>
 
-<section class="slide" data-day="Fase 1 · Paso 3" data-title="Juega con el ejemplo">
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 3" data-title="Juega con el ejemplo">
   <p class="eyebrow">Paso 3</p>
   <h2>Juega un poco con el ejemplo</h2>
   <div class="cols">
@@ -337,7 +516,7 @@ git push -u origin feat/treatments-domain</code></pre></div>
 </section>
 
 <!-- PASO 4 -->
-<section class="slide" id="f1-p4" data-day="Fase 1 · Paso 4" data-title="El dominio">
+<section class="slide" data-phase="1" id="f1-p4" data-day="Fase 1 · Paso 4" data-title="El dominio">
   <p class="eyebrow">Paso 4 · domain</p>
   <h2>Qué es un tratamiento</h2>
   <p>Copia los archivos de <code>_template</code> en <code>features/treatments/</code> y cambia <code>Item</code> por <code>Treatment</code>. Empieza por el dominio:</p>
@@ -367,7 +546,7 @@ git push -u origin feat/treatments-domain</code></pre></div>
   <p class="ts"><b>TS</b><code>type</code> · <code>interface</code> · uniones <code>|</code> · <code>Promise&lt;T&gt;</code> · <code>import type</code></p>
 </section>
 
-<section class="slide" data-day="Fase 1 · Paso 4" data-title="Datos y caso de uso">
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 4" data-title="Datos y caso de uso">
   <p class="eyebrow">Paso 4 · infrastructure + application</p>
   <h2>De dónde salen los tratamientos</h2>
   <div class="cols">
@@ -397,7 +576,7 @@ git push -u origin feat/treatments-domain</code></pre></div>
 </section>
 
 <!-- PASO 5 -->
-<section class="slide" id="f1-p5" data-day="Fase 1 · Paso 5" data-title="El hook">
+<section class="slide" data-phase="1" id="f1-p5" data-day="Fase 1 · Paso 5" data-title="El hook">
   <p class="eyebrow">Paso 5 · ui/hooks</p>
   <h2>Tu primer hook: <code>useTreatments</code></h2>
   <div class="cols">
@@ -416,7 +595,7 @@ useEffect(() =&gt; {
   <p class="ts"><b>React</b><code>useState</code> · <code>useEffect</code> · arreglo de dependencias · <b>TS</b><code>useState&lt;T&gt;</code></p>
 </section>
 
-<section class="slide" data-day="Fase 1 · Paso 5" data-title="La tarjeta">
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 5" data-title="La tarjeta">
   <p class="eyebrow">Paso 5 · ui/components</p>
   <h2>La tarjeta de tratamiento</h2>
   <div class="cols">
@@ -452,7 +631,7 @@ useEffect(() =&gt; {
 </section>
 
 <!-- PASO 6 -->
-<section class="slide" id="f1-p6" data-day="Fase 1 · Paso 6" data-title="Página y filtros">
+<section class="slide" data-phase="1" id="f1-p6" data-day="Fase 1 · Paso 6" data-title="Página y filtros">
   <p class="eyebrow">Paso 6 · ui/pages</p>
   <h2>La página, con filtros por categoría</h2>
   <div class="code"><div class="code-head"><span>ui/pages/treatments-page.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { useState } <span class="k">from</span> <span class="s">'react'</span>
@@ -503,7 +682,7 @@ useEffect(() =&gt; {
   <p class="ts"><b>React</b><code>.map()</code> + <code>key</code> · eventos · datos derivados · <b>TS</b>unión con <code>'all'</code></p>
 </section>
 
-<section class="slide" data-day="Fase 1 · Paso 6" data-title="Conéctala a la app">
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 6" data-title="Conéctala a la app">
   <p class="eyebrow">Paso 6</p>
   <h2>Conéctala a la app</h2>
   <div class="cols">
@@ -530,7 +709,7 @@ useEffect(() =&gt; {
 </section>
 
 <!-- CIERRE -->
-<section class="slide" data-day="Fase 1 · Cierre" data-title="Fase 1 lista">
+<section class="slide" data-phase="1" data-day="Fase 1 · Cierre" data-title="Fase 1 lista">
   <p class="eyebrow">Cierre</p>
   <h2>¡Fase 1 lista!</h2>
   <ul class="checklist">
@@ -541,9 +720,10 @@ useEffect(() =&gt; {
     <li><label><input type="checkbox" id="f1-c-f1-5"><span>Puedo explicar qué hacen <code>useState</code> y <code>useEffect</code> en mi hook</span></label></li>
   </ul>
   <p class="muted">Cuando termines, escríbeme y lo vemos juntos. ¡Buen trabajo!</p>
+  <div class="celebrate" hidden><b>¡Fase 1 completada!</b><p>Ya tienes tu app en internet y tu primer feature. Escríbeme y me cuentas cómo te fue.</p><p class="muted">— Jorge</p></div>
 </section>
 
-<section class="slide" data-day="Fase 1 · Cierre" data-title="Lo que viene">
+<section class="slide" data-phase="1" data-day="Fase 1 · Cierre" data-title="Lo que viene">
   <p class="eyebrow">Lo que viene</p>
   <h2>Las próximas fases</h2>
   <div class="table-wrap">
@@ -563,7 +743,7 @@ useEffect(() =&gt; {
 <!-- ================= FASE 2 ================= -->
 
 
-<section class="slide" data-day="Fase 2 · Inicio" data-title="Bienvenida a la fase 2">
+<section class="slide" data-phase="2" data-day="Fase 2 · Inicio" data-title="Bienvenida a la fase 2">
   <p class="eyebrow">Fase 2 · a tu ritmo</p>
   <h1>¡Fase 2! Tu app empieza a sentirse de verdad.</h1>
   <ul class="tldr">
@@ -575,7 +755,7 @@ useEffect(() =&gt; {
   <p class="muted">— Jorge</p>
 </section>
 
-<section class="slide" data-day="Fase 2 · Inicio" data-title="El mapa de la fase 2">
+<section class="slide" data-phase="2" data-day="Fase 2 · Inicio" data-title="El mapa de la fase 2">
   <p class="eyebrow">El mapa</p>
   <h2>Lo que vas a lograr en esta fase</h2>
   <div class="table-wrap">
@@ -594,7 +774,7 @@ useEffect(() =&gt; {
 </section>
 
 <!-- PASO 1 -->
-<section class="slide" id="f2-p1" data-day="Fase 2 · Paso 1" data-title="Las rutas">
+<section class="slide" data-phase="2" id="f2-p1" data-day="Fase 2 · Paso 1" data-title="Las rutas">
   <p class="eyebrow">Paso 1 · React Router</p>
   <h2>Cada pantalla, su propia URL</h2>
   <div class="cols">
@@ -627,7 +807,7 @@ useEffect(() =&gt; {
   </div>
 </section>
 
-<section class="slide" data-day="Fase 2 · Paso 1" data-title="El layout con menú">
+<section class="slide" data-phase="2" data-day="Fase 2 · Paso 1" data-title="El layout con menú">
   <p class="eyebrow">Paso 1 · layout</p>
   <h2>El marco de tu app</h2>
   <div class="code"><div class="code-head"><span>src/components/common/app-layout.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { NavLink, Outlet } <span class="k">from</span> <span class="s">'react-router'</span>
@@ -672,7 +852,7 @@ useEffect(() =&gt; {
 </section>
 
 <!-- PASO 2 -->
-<section class="slide" id="f2-p2" data-day="Fase 2 · Paso 2" data-title="TanStack Query">
+<section class="slide" data-phase="2" id="f2-p2" data-day="Fase 2 · Paso 2" data-title="TanStack Query">
   <p class="eyebrow">Paso 2 · TanStack Query</p>
   <h2>Adiós al <code>useEffect</code> manual</h2>
   <ul class="tldr">
@@ -702,7 +882,7 @@ useEffect(() =&gt; {
   </div>
 </section>
 
-<section class="slide" data-day="Fase 2 · Paso 2" data-title="useQuery">
+<section class="slide" data-phase="2" data-day="Fase 2 · Paso 2" data-title="useQuery">
   <p class="eyebrow">Paso 2 · useQuery</p>
   <h2>Tu hook, versión TanStack Query</h2>
   <div class="cols">
@@ -734,7 +914,7 @@ useEffect(() =&gt; {
 </section>
 
 <!-- PASO 3 -->
-<section class="slide" id="f2-p3" data-day="Fase 2 · Paso 3" data-title="Página de detalle">
+<section class="slide" data-phase="2" id="f2-p3" data-day="Fase 2 · Paso 3" data-title="Página de detalle">
   <p class="eyebrow">Paso 3 · detalle</p>
   <h2>Un tratamiento, su propia página</h2>
   <div class="cols">
@@ -776,7 +956,7 @@ useEffect(() =&gt; {
 </section>
 
 <!-- PASO 4 -->
-<section class="slide" id="f2-p4" data-day="Fase 2 · Paso 4" data-title="Datos que se guardan">
+<section class="slide" data-phase="2" id="f2-p4" data-day="Fase 2 · Paso 4" data-title="Datos que se guardan">
   <p class="eyebrow">Paso 4 · infrastructure</p>
   <h2>Datos que sobreviven a la recarga</h2>
   <p>Hasta ahora los datos viven en un arreglo y se pierden al recargar. Vamos a crear otro adaptador que los guarde en <code>localStorage</code>, el almacenamiento del navegador.</p>
@@ -822,7 +1002,7 @@ useEffect(() =&gt; {
   </div>
 </section>
 
-<section class="slide" data-day="Fase 2 · Paso 4" data-title="El cambio de una línea">
+<section class="slide" data-phase="2" data-day="Fase 2 · Paso 4" data-title="El cambio de una línea">
   <p class="eyebrow">Paso 4 · el momento mágico</p>
   <h2>Cambias una línea y todo sigue funcionando</h2>
   <div class="code"><div class="code-head"><span>infrastructure/index.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { createLocalStorageTreatmentRepository } <span class="k">from</span> <span class="s">'./local-storage-treatment-repository'</span>
@@ -841,7 +1021,7 @@ useEffect(() =&gt; {
 </section>
 
 <!-- PASO 5 -->
-<section class="slide" id="f2-p5" data-day="Fase 2 · Paso 5" data-title="El formulario">
+<section class="slide" data-phase="2" id="f2-p5" data-day="Fase 2 · Paso 5" data-title="El formulario">
   <p class="eyebrow">Paso 5 · react-hook-form + zod</p>
   <h2>Un formulario que valida solo</h2>
   <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add react-hook-form zod @hookform/resolvers
@@ -888,7 +1068,7 @@ pnpm dlx shadcn@latest add input label textarea</code></pre></div>
   <p class="ts"><b>TS</b><code>z.infer</code> · props opcionales <code>?</code> · funciones como props · <b>React</b>formularios controlados por una librería</p>
 </section>
 
-<section class="slide" data-day="Fase 2 · Paso 5" data-title="Crear y editar">
+<section class="slide" data-phase="2" data-day="Fase 2 · Paso 5" data-title="Crear y editar">
   <p class="eyebrow">Paso 5 · useMutation</p>
   <h2>Guardar y actualizar la lista</h2>
   <div class="cols">
@@ -924,7 +1104,7 @@ pnpm dlx shadcn@latest add input label textarea</code></pre></div>
   </ul>
 </section>
 
-<section class="slide" data-day="Fase 2 · Cierre" data-title="Fase 2 lista">
+<section class="slide" data-phase="2" data-day="Fase 2 · Cierre" data-title="Fase 2 lista">
   <p class="eyebrow">Cierre</p>
   <h2>¡Fase 2 lista!</h2>
   <ul class="checklist">
@@ -936,13 +1116,14 @@ pnpm dlx shadcn@latest add input label textarea</code></pre></div>
     <li><label><input type="checkbox" id="f2-c-f2-6"><span><code>pnpm lint</code> y <code>pnpm build</code> sin errores</span></label></li>
   </ul>
   <p class="muted">Siguiente: clientas, y esta vez tú llevas el timón. Cualquier cosa, me escribes.</p>
+  <div class="celebrate" hidden><b>¡Fase 2 completada!</b><p>Tu app ya navega, guarda datos y tiene formularios. Eso ya es trabajo de verdad.</p><p class="muted">— Jorge</p></div>
 </section>
 
 
 <!-- ================= FASE 3 ================= -->
 
 
-<section class="slide" data-day="Fase 3 · Inicio" data-title="Bienvenida a la fase 3">
+<section class="slide" data-phase="3" data-day="Fase 3 · Inicio" data-title="Bienvenida a la fase 3">
   <p class="eyebrow">Fase 3 · a tu ritmo</p>
   <h1>Fase 3: esta vez tú llevas el timón.</h1>
   <ul class="tldr">
@@ -953,7 +1134,7 @@ pnpm dlx shadcn@latest add input label textarea</code></pre></div>
   <p class="muted">— Jorge</p>
 </section>
 
-<section class="slide" data-day="Fase 3 · Paso 1" data-title="Qué es una clienta">
+<section class="slide" data-phase="3" data-day="Fase 3 · Paso 1" data-title="Qué es una clienta">
   <p class="eyebrow">Paso 1 · domain</p>
   <h2>Qué es una clienta</h2>
   <div class="cols">
@@ -986,7 +1167,7 @@ pnpm dlx shadcn@latest add input label textarea</code></pre></div>
   <p class="ts"><b>TS</b>propiedades opcionales <code>?</code> · arreglos de uniones · <code>Omit</code></p>
 </section>
 
-<section class="slide" data-day="Fase 3 · Paso 2" data-title="Las pantallas">
+<section class="slide" data-phase="3" data-day="Fase 3 · Paso 2" data-title="Las pantallas">
   <p class="eyebrow">Paso 2 · ui</p>
   <h2>Lo que debe hacer la app</h2>
   <div class="table-wrap">
@@ -1007,7 +1188,7 @@ pnpm dlx shadcn@latest add input label textarea</code></pre></div>
   </ul>
 </section>
 
-<section class="slide" data-day="Fase 3 · Paso 3" data-title="Pistas">
+<section class="slide" data-phase="3" data-day="Fase 3 · Paso 3" data-title="Pistas">
   <p class="eyebrow">Paso 3 · pistas</p>
   <h2>Algunas pistas para lo nuevo</h2>
   <div class="cols">
@@ -1035,7 +1216,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
   <p class="ts"><b>React</b>inputs controlados · <code>onChange</code> · <b>TS</b>regex · <code>.optional()</code> · arreglos en zod</p>
 </section>
 
-<section class="slide" data-day="Fase 3 · Cierre" data-title="Fase 3 lista">
+<section class="slide" data-phase="3" data-day="Fase 3 · Cierre" data-title="Fase 3 lista">
   <p class="eyebrow">Cierre</p>
   <h2>¡Fase 3 lista!</h2>
   <ul class="checklist">
@@ -1047,13 +1228,14 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
     <li><label><input type="checkbox" id="f3-c-f3-6"><span><code>pnpm lint</code> y <code>pnpm build</code> sin errores</span></label></li>
   </ul>
   <p class="muted">Siguiente: citas, el corazón de Lumi. Si quieres, escríbeme y revisamos juntos lo que hiciste antes de seguir.</p>
+  <div class="celebrate" hidden><b>¡Fase 3 completada!</b><p>Construiste un feature casi sola. Así se ve cuando algo se entendió de verdad.</p><p class="muted">— Jorge</p></div>
 </section>
 
 
 <!-- ================= FASE 4 ================= -->
 
 
-<section class="slide" data-day="Fase 4 · Inicio" data-title="Bienvenida a la fase 4">
+<section class="slide" data-phase="4" data-day="Fase 4 · Inicio" data-title="Bienvenida a la fase 4">
   <p class="eyebrow">Fase 4 · a tu ritmo</p>
   <h1>Fase 4: la agenda, el corazón de Lumi.</h1>
   <ul class="tldr">
@@ -1065,7 +1247,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
   <p class="muted">— Jorge</p>
 </section>
 
-<section class="slide" data-day="Fase 4 · Paso 1" data-title="Qué es una cita">
+<section class="slide" data-phase="4" data-day="Fase 4 · Paso 1" data-title="Qué es una cita">
   <p class="eyebrow">Paso 1 · domain</p>
   <h2>Qué es una cita</h2>
   <div class="cols">
@@ -1094,7 +1276,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
   </div>
 </section>
 
-<section class="slide" data-day="Fase 4 · Paso 2" data-title="Las reglas">
+<section class="slide" data-phase="4" data-day="Fase 4 · Paso 2" data-title="Las reglas">
   <p class="eyebrow">Paso 2 · domain/rules</p>
   <h2>Las reglas, como funciones puras</h2>
   <p>Una función pura recibe datos y devuelve un resultado, sin React ni repositorios. Por eso es fácil leerla, probarla y confiar en ella.</p>
@@ -1136,7 +1318,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
   <p class="ts"><b>TS</b><code>Record&lt;K, V&gt;</code> · tipos de retorno · objetos como tipos · <b>date-fns</b><code>addMinutes</code> · <code>areIntervalsOverlapping</code></p>
 </section>
 
-<section class="slide" data-day="Fase 4 · Paso 3" data-title="Usar otros features">
+<section class="slide" data-phase="4" data-day="Fase 4 · Paso 3" data-title="Usar otros features">
   <p class="eyebrow">Paso 3 · features juntos</p>
   <h2>Las citas necesitan clientas y tratamientos</h2>
   <div class="cols">
@@ -1154,7 +1336,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
   </ul>
 </section>
 
-<section class="slide" data-day="Fase 4 · Paso 4" data-title="Las pantallas">
+<section class="slide" data-phase="4" data-day="Fase 4 · Paso 4" data-title="Las pantallas">
   <p class="eyebrow">Paso 4 · ui</p>
   <h2>Lo que debe hacer la agenda</h2>
   <div class="table-wrap">
@@ -1175,7 +1357,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
   <p class="ts"><b>React</b><code>setError</code> · <code>watch</code> para mostrar la hora de fin · <b>TS</b>funciones puras en la UI</p>
 </section>
 
-<section class="slide" data-day="Fase 4 · Extra" data-title="Retos extra">
+<section class="slide" data-phase="4" data-day="Fase 4 · Extra" data-title="Retos extra">
   <p class="eyebrow">Si te quedan ganas</p>
   <h2>Retos extra, con tu experiencia</h2>
   <ul class="tldr">
@@ -1186,7 +1368,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
   </ul>
 </section>
 
-<section class="slide" data-day="Fase 4 · Cierre" data-title="Fase 4 lista">
+<section class="slide" data-phase="4" data-day="Fase 4 · Cierre" data-title="Fase 4 lista">
   <p class="eyebrow">Cierre</p>
   <h2>¡Fase 4 lista!</h2>
   <ul class="checklist">
@@ -1198,13 +1380,14 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
     <li><label><input type="checkbox" id="f4-c-f4-6"><span><code>pnpm lint</code> y <code>pnpm build</code> sin errores</span></label></li>
   </ul>
   <p class="muted">¡Lumi ya funciona de punta a punta! Escríbeme y cuadramos una reunión para que me la muestres.</p>
+  <div class="celebrate" hidden><b>¡Fase 4 completada!</b><p>Lumi funciona de punta a punta. Escríbeme y cuadramos una reunión para que me la muestres.</p><p class="muted">— Jorge</p></div>
 </section>
 
 
 <!-- ================= FASE 5 ================= -->
 
 
-<section class="slide" data-day="Fase 5 · Inicio" data-title="Bienvenida a la fase 5">
+<section class="slide" data-phase="5" data-day="Fase 5 · Inicio" data-title="Bienvenida a la fase 5">
   <p class="eyebrow">Fase 5 · a tu ritmo</p>
   <h1>Fase 5: los detalles que la hacen brillar.</h1>
   <ul class="tldr">
@@ -1215,7 +1398,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
   <p class="muted">— Jorge</p>
 </section>
 
-<section class="slide" data-day="Fase 5 · Paso 1" data-title="Feedback visual">
+<section class="slide" data-phase="5" data-day="Fase 5 · Paso 1" data-title="Feedback visual">
   <p class="eyebrow">Paso 1 · feedback</p>
   <h2>Que la app responda a cada acción</h2>
   <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm dlx shadcn@latest add sonner skeleton</code></pre></div>
@@ -1238,7 +1421,7 @@ createMutation.mutate(values, {
   </div>
 </section>
 
-<section class="slide" data-day="Fase 5 · Paso 2" data-title="Pantalla de inicio">
+<section class="slide" data-phase="5" data-day="Fase 5 · Paso 2" data-title="Pantalla de inicio">
   <p class="eyebrow">Paso 2 · dashboard</p>
   <h2>Una pantalla de inicio útil</h2>
   <p>Crea un feature <code>dashboard</code> y llévalo a la ruta <code>/</code> en lugar de la redirección. Que muestre, en tarjetas:</p>
@@ -1260,7 +1443,7 @@ createMutation.mutate(values, {
   <p class="ts"><b>React</b><code>useMemo</code> para cálculos pesados · <b>TS</b><code>reduce</code> · <code>?.</code> · <code>??</code></p>
 </section>
 
-<section class="slide" data-day="Fase 5 · Paso 3" data-title="Revisión final">
+<section class="slide" data-phase="5" data-day="Fase 5 · Paso 3" data-title="Revisión final">
   <p class="eyebrow">Paso 3 · revisión</p>
   <h2>Mírala como la vería una clienta</h2>
   <ul class="checklist">
@@ -1271,9 +1454,10 @@ createMutation.mutate(values, {
     <li><label><input type="checkbox" id="f5-c-f5-5"><span>Borré el <code>_template</code> y los <code>.gitkeep</code> que ya no se usan</span></label></li>
     <li><label><input type="checkbox" id="f5-c-f5-6"><span><code>pnpm lint</code> y <code>pnpm build</code> sin errores</span></label></li>
   </ul>
+  <div class="celebrate" hidden><b>¡Todo listo!</b><p>Lumi está lista para tu portafolio. Sigue a las últimas diapositivas para presentarla.</p><p class="muted">— Jorge</p></div>
 </section>
 
-<section class="slide" data-day="Fase 5 · Paso 4" data-title="Preséntala">
+<section class="slide" data-phase="5" data-day="Fase 5 · Paso 4" data-title="Preséntala">
   <p class="eyebrow">Paso 4 · tu portafolio</p>
   <h2>Preséntala como se merece</h2>
   <ul class="tldr">
@@ -1283,7 +1467,7 @@ createMutation.mutate(values, {
   </ul>
 </section>
 
-<section class="slide" data-day="Fase 5 · Cierre" data-title="Lo lograste">
+<section class="slide" data-phase="5" data-day="Fase 5 · Cierre" data-title="Lo lograste">
   <p class="eyebrow">Cierre</p>
   <h2>¡Lo lograste, Brygith!</h2>
   <ul class="tldr">
@@ -1293,12 +1477,14 @@ createMutation.mutate(values, {
   <p class="muted">Gracias por tu esfuerzo. — Jorge</p>
 </section>
 
+</div>
 </main>
 
-<nav class="nav" aria-label="Navegación de la presentación">
+<nav class="nav" id="nav" aria-label="Navegación de la presentación">
   <div class="nav-inner">
-    <button class="nav-btn" id="prevBtn" type="button">← Anterior</button>
+    <button class="nav-btn" id="prevBtn" type="button" aria-label="Anterior">← <span class="lbl">Anterior</span></button>
     <div class="counter" id="counter">1 / 1</div>
+    <button class="help-btn" id="helpBtn" type="button" title="Copia un mensaje para Jorge con el link de esta diapositiva"><span class="long">¿Te trabaste?</span><span class="short">¿Dudas?</span></button>
     <button class="nav-btn primary" id="nextBtn" type="button">Siguiente →</button>
   </div>
 </nav>
@@ -1309,26 +1495,49 @@ createMutation.mutate(values, {
     <h2 id="drawerTitle">Índice</h2>
     <button class="ghost-btn" id="closeIndex" type="button">Cerrar</button>
   </div>
+  <input class="toc-search" id="tocSearch" type="search" placeholder="Buscar en la guía" aria-label="Buscar en la guía">
   <div id="toc"></div>
 </aside>
 
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <script>
 (function () {
+  var PHASES = [
+    { n: 1, title: 'Tu entorno y el catálogo', desc: 'Preparas tu computador, publicas tu app y muestras los tratamientos con filtros.' },
+    { n: 2, title: 'Navegación y formularios', desc: 'Menú, páginas, detalle, datos que se guardan y formularios para crear y editar.' },
+    { n: 3, title: 'Clientas, casi sola', desc: 'Repites el patrón por tu cuenta: búsqueda, ficha, crear, editar y eliminar.' },
+    { n: 4, title: 'La agenda de citas', desc: 'Las reglas de negocio y los tres features trabajando juntos.' },
+    { n: 5, title: 'Los detalles que la hacen brillar', desc: 'Feedback visual, dashboard y tu proyecto listo para mostrar.' }
+  ];
+
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
-  var current = 0;
+  var deck = document.getElementById('deck');
+  var home = document.getElementById('home');
+  var nav = document.getElementById('nav');
   var prevBtn = document.getElementById('prevBtn');
   var nextBtn = document.getElementById('nextBtn');
   var counter = document.getElementById('counter');
   var bar = document.getElementById('progressBar');
   var dayChip = document.getElementById('dayChip');
   var toc = document.getElementById('toc');
+  var tocSearch = document.getElementById('tocSearch');
   var drawer = document.getElementById('drawer');
   var backdrop = document.getElementById('backdrop');
+  var toastEl = document.getElementById('toast');
+  var current = -1;
+  var KEY = 'lumi-guide-';
 
-  function store(key, value) { try { localStorage.setItem(key, value); } catch (e) {} }
-  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function store(key, value) { try { localStorage.setItem(KEY + key, value); } catch (e) {} }
+  function load(key) { try { return localStorage.getItem(KEY + key); } catch (e) { return null; } }
 
-  // Theme toggle: follows the system until the viewer picks one, then remembers it
+  // ---------- Slide metadata ----------
+  slides.forEach(function (s, i) {
+    if (!s.id) s.id = 'f' + s.dataset.phase + '-s' + i;
+  });
+  function phaseSlides(n) { return slides.filter(function (s) { return s.dataset.phase === String(n); }); }
+  function shortDay(s) { return s.dataset.day.replace(/^Fase \d+ · /, ''); }
+
+  // ---------- Theme ----------
   var themeBtn = document.getElementById('themeToggle');
   var darkQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
   function isDarkNow() {
@@ -1341,17 +1550,121 @@ createMutation.mutate(values, {
     themeBtn.classList.toggle('is-dark', dark);
     themeBtn.setAttribute('aria-label', dark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
   }
-  var savedTheme = load('lumi-theme');
+  var savedTheme = load('theme');
   if (savedTheme === 'dark' || savedTheme === 'light') document.documentElement.setAttribute('data-theme', savedTheme);
   themeBtn.addEventListener('click', function () {
     var next = isDarkNow() ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
-    store('lumi-theme', next);
+    store('theme', next);
     syncThemeBtn();
   });
   if (darkQuery && darkQuery.addEventListener) darkQuery.addEventListener('change', syncThemeBtn);
   syncThemeBtn();
 
+  // ---------- Toast ----------
+  var toastTimer;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.hidden = true; }, 3200);
+  }
+
+  // ---------- Checklists + progress ----------
+  var checks = {};
+  try { checks = JSON.parse(load('checks') || '{}') || {}; } catch (e) { checks = {}; }
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.checklist input[type="checkbox"]'));
+  function phaseProgress(n) {
+    var own = boxes.filter(function (b) { return b.closest('.slide').dataset.phase === String(n); });
+    var done = own.filter(function (b) { return b.checked; }).length;
+    return { done: done, total: own.length };
+  }
+  function syncCelebrations() {
+    document.querySelectorAll('.celebrate').forEach(function (c) {
+      var slide = c.closest('.slide');
+      var list = Array.prototype.slice.call(slide.querySelectorAll('.checklist input'));
+      c.hidden = !(list.length && list.every(function (b) { return b.checked; }));
+    });
+  }
+  boxes.forEach(function (box) {
+    if (checks[box.id]) box.checked = true;
+    box.addEventListener('change', function () {
+      checks[box.id] = box.checked;
+      store('checks', JSON.stringify(checks));
+      var wasHidden = box.closest('.slide').querySelector('.celebrate');
+      var before = wasHidden ? wasHidden.hidden : true;
+      syncCelebrations();
+      if (wasHidden && before && !wasHidden.hidden) wasHidden.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+  });
+  syncCelebrations();
+
+  // ---------- Layer tags on code blocks ----------
+  document.querySelectorAll('.code-head > span:first-child').forEach(function (span) {
+    var m = span.textContent.match(/(^|[\s/(])(domain|application|infrastructure|ui)\//);
+    if (!m) return;
+    var tag = document.createElement('span');
+    tag.className = 'layer-tag layer-' + m[2];
+    tag.textContent = m[2];
+    span.insertBefore(tag, span.firstChild);
+  });
+
+  // ---------- Long code: collapsible ----------
+  document.querySelectorAll('.code').forEach(function (block) {
+    var pre = block.querySelector('pre');
+    if (!pre || pre.textContent.split('\n').length <= 18) return;
+    block.classList.add('is-long');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'expand';
+    btn.textContent = 'Ver código completo';
+    btn.addEventListener('click', function () {
+      var open = block.classList.toggle('is-open');
+      btn.textContent = open ? 'Ver menos' : 'Ver código completo';
+    });
+    block.appendChild(btn);
+  });
+
+  // ---------- Copy buttons ----------
+  function copyText(text, onDone, onFail) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onDone, onFail);
+    } else { onFail(); }
+  }
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.closest('.code').querySelector('pre');
+      copyText(code.innerText, function () {
+        btn.textContent = 'Copiado';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = 'Copiar'; btn.classList.remove('done'); }, 1600);
+      }, function () {
+        var range = document.createRange();
+        range.selectNodeContents(code);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        btn.textContent = 'Seleccionado';
+        setTimeout(function () { btn.textContent = 'Copiar'; }, 1600);
+      });
+    });
+  });
+
+  // ---------- "¿Te trabaste?" message ----------
+  document.getElementById('helpBtn').addEventListener('click', function () {
+    var s = slides[current];
+    var url = location.href.split('#')[0] + '#' + s.id;
+    var msg = 'Hola Jorge, me trabé en la ' + s.dataset.day + ' (' + s.dataset.title + ').\n' +
+      'Link: ' + url + '\n' +
+      'Mi duda es: ';
+    copyText(msg, function () {
+      toast('Mensaje copiado. Pégalo en el chat con Jorge y escribe tu duda.');
+    }, function () {
+      toast('No se pudo copiar. Escríbele a Jorge: ' + s.dataset.day + ' (' + s.dataset.title + ').');
+    });
+  });
+
+  // ---------- Index (grouped + search) ----------
   var lastDay = null;
   slides.forEach(function (slide, i) {
     var day = slide.dataset.day;
@@ -1365,86 +1678,144 @@ createMutation.mutate(values, {
     var b = document.createElement('button');
     b.type = 'button';
     b.className = 'toc-item';
-    b.innerHTML = '<span class="n">' + (i + 1) + '</span><span></span>';
+    b.dataset.search = (day + ' ' + slide.dataset.title + ' ' + slide.textContent).toLowerCase();
+    b.innerHTML = '<span class="n"></span><span></span>';
+    b.firstChild.textContent = String(i + 1);
     b.lastChild.textContent = slide.dataset.title;
     b.addEventListener('click', function () { go(i); closeDrawer(); });
     toc.appendChild(b);
   });
-  var tocItems = toc.querySelectorAll('.toc-item');
-
-  function go(i) {
-    current = Math.max(0, Math.min(slides.length - 1, i));
-    slides.forEach(function (s, k) { s.classList.toggle('is-active', k === current); });
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === slides.length - 1;
-    counter.textContent = (current + 1) + ' / ' + slides.length;
-    bar.style.width = ((current + 1) / slides.length * 100) + '%';
-    dayChip.textContent = slides[current].dataset.day;
-    tocItems.forEach(function (t, k) { t.classList.toggle('current', k === current); });
-    store('lumi-guide-slide', String(current));
-    window.scrollTo(0, 0);
-  }
-
-  prevBtn.addEventListener('click', function () { go(current - 1); });
-  nextBtn.addEventListener('click', function () { go(current + 1); });
-  document.addEventListener('keydown', function (e) {
-    if (!drawer.hidden) { if (e.key === 'Escape') closeDrawer(); return; }
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') go(current + 1);
-    if (e.key === 'ArrowLeft' || e.key === 'PageUp') go(current - 1);
+  var tocItems = Array.prototype.slice.call(toc.querySelectorAll('.toc-item'));
+  tocSearch.addEventListener('input', function () {
+    var q = tocSearch.value.trim().toLowerCase();
+    tocItems.forEach(function (t) { t.hidden = q !== '' && t.dataset.search.indexOf(q) === -1; });
+    toc.querySelectorAll('.toc-group').forEach(function (g) {
+      var el = g.nextElementSibling, any = false;
+      while (el && el.classList.contains('toc-item')) { if (!el.hidden) any = true; el = el.nextElementSibling; }
+      g.hidden = !any;
+    });
   });
 
-  function openDrawer() { drawer.hidden = false; backdrop.hidden = false; document.getElementById('closeIndex').focus(); }
+  // ---------- Home ----------
+  var phaseGrid = document.getElementById('phaseGrid');
+  var continueBox = document.getElementById('continueBox');
+  function renderHome() {
+    phaseGrid.innerHTML = '';
+    PHASES.forEach(function (p) {
+      var pr = phaseProgress(p.n);
+      var pct = pr.total ? Math.round(pr.done / pr.total * 100) : 0;
+      var card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'phase-card' + (pct === 100 ? ' is-done' : '');
+      card.innerHTML = '<span class="num"></span><h3></h3><p></p><div class="meter"><span></span></div><span class="state"></span>';
+      card.querySelector('.num').textContent = 'Fase ' + p.n;
+      card.querySelector('h3').textContent = p.title;
+      card.querySelector('p').textContent = p.desc;
+      card.querySelector('.meter span').style.width = pct + '%';
+      card.querySelector('.state').textContent = pct === 100 ? 'Completada' : (pr.done ? pct + ' % · ' + pr.done + ' de ' + pr.total + ' listas' : 'Sin empezar');
+      card.addEventListener('click', function () { go(slides.indexOf(phaseSlides(p.n)[0])); });
+      phaseGrid.appendChild(card);
+    });
+    var saved = parseInt(load('slide') || '', 10);
+    var label = continueBox.querySelector('b');
+    var btn = continueBox.querySelector('button');
+    if (!isNaN(saved) && slides[saved]) {
+      continueBox.querySelector('small').textContent = 'Continuar donde quedaste';
+      label.textContent = slides[saved].dataset.day + ' · ' + slides[saved].dataset.title;
+      btn.textContent = 'Continuar →';
+      btn.onclick = function () { go(saved); };
+    } else {
+      continueBox.querySelector('small').textContent = 'Primera vez aquí';
+      label.textContent = 'Empieza por la bienvenida de la fase 1';
+      btn.textContent = 'Empezar →';
+      btn.onclick = function () { go(0); };
+    }
+  }
+  function setHash(hash) {
+    try { history.replaceState(null, '', location.pathname + location.search + hash); } catch (e) {}
+  }
+  function showHome() {
+    current = -1;
+    home.hidden = false;
+    deck.hidden = true;
+    nav.hidden = true;
+    dayChip.textContent = 'Inicio';
+    var all = boxes.length ? boxes.filter(function (b) { return b.checked; }).length / boxes.length : 0;
+    bar.style.width = (all * 100) + '%';
+    tocItems.forEach(function (t) { t.classList.remove('current'); });
+    renderHome();
+    setHash('');
+    window.scrollTo(0, 0);
+  }
+  document.getElementById('homeBtn').addEventListener('click', showHome);
+
+  // ---------- Navigation ----------
+  function go(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    var s = slides[current];
+    var n = s.dataset.phase;
+    var own = phaseSlides(n);
+    var pos = own.indexOf(s) + 1;
+    home.hidden = true;
+    deck.hidden = false;
+    nav.hidden = false;
+    slides.forEach(function (x, k) { x.classList.toggle('is-active', k === current); });
+    prevBtn.disabled = current === 0;
+    var isLast = current === slides.length - 1;
+    var phaseEnd = pos === own.length;
+    nextBtn.disabled = false;
+    nextBtn.innerHTML = isLast ? '<span class="lbl">Ir al </span>inicio' : (phaseEnd ? '<span class="lbl">Siguiente fase </span>→' : '<span class="lbl">Siguiente </span>→');
+    nextBtn.setAttribute('aria-label', isLast ? 'Ir al inicio' : (phaseEnd ? 'Siguiente fase' : 'Siguiente'));
+    counter.innerHTML = '<span class="phase-pos"></span> · ' + pos + ' / ' + own.length;
+    counter.firstChild.textContent = 'Fase ' + n;
+    bar.style.width = (pos / own.length * 100) + '%';
+    dayChip.textContent = s.dataset.day;
+    tocItems.forEach(function (t, k) { t.classList.toggle('current', k === current); });
+    store('slide', String(current));
+    setHash('#' + s.id);
+    window.scrollTo(0, 0);
+  }
+  prevBtn.addEventListener('click', function () { go(current - 1); });
+  nextBtn.addEventListener('click', function () {
+    if (current === slides.length - 1) showHome(); else go(current + 1);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!drawer.hidden) { if (e.key === 'Escape') closeDrawer(); return; }
+    var tag = (e.target && e.target.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || current < 0) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { if (current < slides.length - 1) go(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { if (current > 0) go(current - 1); }
+  });
+
+  // Swipe on phones (ignores scrollable code and tables)
+  var touchX = null, touchY = null;
+  deck.addEventListener('touchstart', function (e) {
+    if (e.target.closest('pre, .table-wrap')) { touchX = null; return; }
+    touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+  }, { passive: true });
+  deck.addEventListener('touchend', function (e) {
+    if (touchX === null) return;
+    var dx = e.changedTouches[0].clientX - touchX;
+    var dy = e.changedTouches[0].clientY - touchY;
+    touchX = null;
+    if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    if (dx < 0 && current < slides.length - 1) go(current + 1);
+    if (dx > 0 && current > 0) go(current - 1);
+  }, { passive: true });
+
+  // ---------- Drawer ----------
+  function openDrawer() { drawer.hidden = false; backdrop.hidden = false; tocSearch.focus(); }
   function closeDrawer() { drawer.hidden = true; backdrop.hidden = true; document.getElementById('openIndex').focus(); }
   document.getElementById('openIndex').addEventListener('click', openDrawer);
   document.getElementById('closeIndex').addEventListener('click', closeDrawer);
   backdrop.addEventListener('click', closeDrawer);
 
-  var checks = {};
-  try { checks = JSON.parse(load('lumi-guide-checks') || '{}') || {}; } catch (e) { checks = {}; }
-  document.querySelectorAll('.checklist input[type="checkbox"]').forEach(function (box) {
-    if (checks[box.id]) box.checked = true;
-    box.addEventListener('change', function () {
-      checks[box.id] = box.checked;
-      store('lumi-guide-checks', JSON.stringify(checks));
-    });
-  });
-
-  document.querySelectorAll('.copy').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var code = btn.closest('.code').querySelector('pre');
-      var text = code.innerText;
-      function done() {
-        btn.textContent = 'Copiado';
-        btn.classList.add('done');
-        setTimeout(function () { btn.textContent = 'Copiar'; btn.classList.remove('done'); }, 1600);
-      }
-      function fallback() {
-        var range = document.createRange();
-        range.selectNodeContents(code);
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-        btn.textContent = 'Seleccionado';
-        setTimeout(function () { btn.textContent = 'Copiar'; }, 1600);
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, fallback);
-      } else { fallback(); }
-    });
-  });
-
-  var start = 0;
+  // ---------- Start: a link to a slide opens it; otherwise the home ----------
   var hash = (location.hash || '').replace('#', '');
-  var hashTarget = hash && document.getElementById(hash);
-  if (hashTarget && slides.indexOf(hashTarget) >= 0) {
-    start = slides.indexOf(hashTarget);
-  } else {
-    var saved = parseInt(load('lumi-guide-slide') || '0', 10);
-    if (!isNaN(saved)) start = saved;
-  }
-  go(start);
+  var target = hash && document.getElementById(hash);
+  var idx = target ? slides.indexOf(target.closest('.slide')) : -1;
+  if (idx >= 0) go(idx); else showHome();
 })();
 </script>
-
 </body>
 </html>
