@@ -474,7 +474,7 @@ img { max-width: 100%; }
     <li><span>Trabajamos por <b>fases</b>, no por semanas. Tú organizas tu tiempo; lo importante es entender bien cada paso.</span></li>
     <li><span>Cada día que trabajes, una rama y un pull request. Así tu avance queda registrado y puedes ver todo lo que has logrado.</span></li>
     <li><span>Lo ideal es escribir el código, los commits y los textos de la app en <b>inglés</b>, como en el equipo. Si en algún momento se te complica mucho, tranquila, puedes usar español.</span></li>
-    <li><span>Si te trabas o te surge una duda, escríbeme con toda confianza y cuadramos una reunión.</span></li>
+    <li><span>Si te surge una duda, escríbeme con toda confianza y cuadramos una reunión.</span></li>
     <li><span>Si te bloqueas, la IA es tu aliada: puedes pedirle explicaciones o incluso código. Lo que más me interesa es que entiendas cómo funciona, me lo puedas contar y vayas formando tu propio criterio.</span></li>
   </ul>
 </section>
@@ -1305,7 +1305,7 @@ npx shadcn@latest add input label textarea</code></pre></div>
   <ul class="tldr">
     <li><span>Vas a construir las <b>clientas</b>: lista, búsqueda, ficha, crear, editar y eliminar.</span></li>
     <li><span>Es el mismo patrón de tratamientos. Por eso aquí te doy <b>qué</b> construir y algunas pistas, y el <b>cómo</b> lo decides tú.</span></li>
-    <li><span>Si te trabas, mira cómo lo resolviste en <code>treatments</code>. Y si sigues trabada, me escribes.</span></li>
+    <li><span>Si te bloqueas, mira cómo lo resolviste en <code>treatments</code>. Y si sigues bloqueada, me escribes.</span></li>
   </ul>
   <p class="muted">— Jorge</p>
 </section>
@@ -1660,7 +1660,7 @@ createMutation.mutate(values, {
   <div class="nav-inner">
     <button class="nav-btn" id="prevBtn" type="button" aria-label="Anterior">← <span class="lbl">Anterior</span></button>
     <div class="counter" id="counter">1 / 1</div>
-    <button class="help-btn" id="helpBtn" type="button" title="Copia un mensaje para Jorge con el link de esta diapositiva"><span class="long">¿Te trabaste?</span><span class="short">¿Dudas?</span></button>
+    <button class="help-btn" id="helpBtn" type="button" title="Copia un mensaje para Jorge con el link de esta diapositiva"><span class="long">¿Te bloqueaste?</span><span class="short">¿Dudas?</span></button>
     <button class="nav-btn primary" id="nextBtn" type="button">Siguiente →</button>
   </div>
 </nav>
@@ -1827,11 +1827,11 @@ createMutation.mutate(values, {
     });
   });
 
-  // ---------- "¿Te trabaste?" message ----------
+  // ---------- "¿Te bloqueaste?" message ----------
   document.getElementById('helpBtn').addEventListener('click', function () {
     var s = slides[current];
     var url = location.href.split('#')[0] + '#' + s.id;
-    var msg = 'Hola Jorge, me trabé en la ' + s.dataset.day + ' (' + s.dataset.title + ').\n' +
+    var msg = 'Hola Jorge, me bloqueé en la ' + s.dataset.day + ' (' + s.dataset.title + ').\n' +
       'Link: ' + url + '\n' +
       'Mi duda es: ';
     copyText(msg, function () {
