@@ -244,62 +244,62 @@ tr:last-child td { border-bottom: 0; }
 }
 
 /* =====================================================================
-   Lumi guide · Apple-clean theme
-   Palette taken from the salon reference: warm ivory walls, light oak,
-   champagne-gold fixtures and sage plants.
+   Lumi guide · Apple-clean theme, greens only
+   Military olive for actions, sage and mint for states,
+   green-tinted neutrals for everything else.
    ===================================================================== */
 :root {
-  --bg: #FAF7F2;          /* ivory wall */
+  --bg: #F6F8F4;          /* green-tinted white */
   --surface: #FFFFFF;
-  --ink: #2B2620;         /* warm charcoal */
-  --muted: #776C60;       /* warm stone */
-  --line: #ECE5DA;        /* hairline */
+  --ink: #1E261F;         /* deep forest */
+  --muted: #5E6B60;       /* green gray */
+  --line: #E1E7DE;        /* hairline */
   --accent: #4F5B3A;      /* military olive green */
   --accent-ink: #FFFFFF;
-  --accent-soft: #ECEEE2; /* soft olive */
-  --ok: #5E7A50;          /* sage */
-  --ok-soft: #E8EEE1;
-  --warn: #8A5A12;
-  --warn-soft: #FBF0DC;
-  --code-bg: #2A2520;     /* espresso */
-  --code-fg: #F3ECE2;
-  --code-dim: #A89B8B;
-  --shadow: 0 1px 2px rgba(70, 50, 25, .04), 0 10px 30px rgba(70, 50, 25, .07);
-  --glass: rgba(250, 247, 242, .78);
+  --accent-soft: #ECEFE3; /* soft olive */
+  --ok: #3F7A4C;          /* leaf */
+  --ok-soft: #E3EFE4;
+  --warn: #5B6B1F;
+  --warn-soft: #EEF2DC;
+  --code-bg: #1A221B;     /* deep forest */
+  --code-fg: #E8F0E6;
+  --code-dim: #8FA090;
+  --shadow: 0 1px 2px rgba(25, 40, 25, .04), 0 10px 30px rgba(25, 40, 25, .07);
+  --glass: rgba(246, 248, 244, .78);
   --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SF Mono", ui-monospace, Menlo, "Cascadia Code", Consolas, monospace;
   --radius: 20px;
 
-  --l-domain-bg: #F3E6CF; --l-domain-fg: #7A5A2A;          /* light oak */
-  --l-app-bg: #F2E3DA;    --l-app-fg: #8A5240;             /* blush clay */
-  --l-infra-bg: #E9E5DE;  --l-infra-fg: #5C554B;           /* stone */
-  --l-ui-bg: #E4EBDD;     --l-ui-fg: #4E6B40;              /* sage */
+  --l-domain-bg: #EEF2DC; --l-domain-fg: #56661C;          /* lime olive */
+  --l-app-bg: #DFF0E4;    --l-app-fg: #2C6A44;             /* mint */
+  --l-infra-bg: #E4E9E4;  --l-infra-fg: #48574B;           /* sage gray */
+  --l-ui-bg: #DAEEEA;     --l-ui-fg: #24635A;              /* teal green */
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #15120E; --surface: #1F1B16; --ink: #F3ECE2; --muted: #A99D8E; --line: #322B23;
-    --accent: #AEBB8E; --accent-ink: #171A10; --accent-soft: #2A3020;
-    --ok: #A9C394; --ok-soft: #232D1E; --warn: #E8C27C; --warn-soft: #33281A;
-    --code-bg: #0F0C09; --code-fg: #F3ECE2; --code-dim: #94887A;
-    --shadow: 0 0 0 1px #2C261F; --glass: rgba(21, 18, 14, .74);
-    --l-domain-bg: #3A2F1E; --l-domain-fg: #E3C48E;
-    --l-app-bg: #3A2722;    --l-app-fg: #E4AE98;
-    --l-infra-bg: #2D2924;  --l-infra-fg: #CFC6BA;
-    --l-ui-bg: #232D1E;     --l-ui-fg: #A9C394;
+    --bg: #0F130F; --surface: #171D18; --ink: #E9EFE7; --muted: #9AA897; --line: #263027;
+    --accent: #AEBB8E; --accent-ink: #141810; --accent-soft: #252E1F;
+    --ok: #9CCB9F; --ok-soft: #1D2B1F; --warn: #C9D68A; --warn-soft: #262C17;
+    --code-bg: #0A0E0A; --code-fg: #E8F0E6; --code-dim: #7E8E7F;
+    --shadow: 0 0 0 1px #222B23; --glass: rgba(15, 19, 15, .74);
+    --l-domain-bg: #2A3016; --l-domain-fg: #D2DE9A;
+    --l-app-bg: #18301F;    --l-app-fg: #9FD8B2;
+    --l-infra-bg: #222823;  --l-infra-fg: #BCC8BD;
+    --l-ui-bg: #142E2A;     --l-ui-fg: #8FD3C6;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #15120E; --surface: #1F1B16; --ink: #F3ECE2; --muted: #A99D8E; --line: #322B23;
-  --accent: #AEBB8E; --accent-ink: #171A10; --accent-soft: #2A3020;
-  --ok: #A9C394; --ok-soft: #232D1E; --warn: #E8C27C; --warn-soft: #33281A;
-  --code-bg: #0F0C09; --code-fg: #F3ECE2; --code-dim: #94887A;
-  --shadow: 0 0 0 1px #2C261F; --glass: rgba(21, 18, 14, .74);
-  --l-domain-bg: #3A2F1E; --l-domain-fg: #E3C48E;
-  --l-app-bg: #3A2722;    --l-app-fg: #E4AE98;
-  --l-infra-bg: #2D2924;  --l-infra-fg: #CFC6BA;
-  --l-ui-bg: #232D1E;     --l-ui-fg: #A9C394;
+  --bg: #0F130F; --surface: #171D18; --ink: #E9EFE7; --muted: #9AA897; --line: #263027;
+  --accent: #AEBB8E; --accent-ink: #141810; --accent-soft: #252E1F;
+  --ok: #9CCB9F; --ok-soft: #1D2B1F; --warn: #C9D68A; --warn-soft: #262C17;
+  --code-bg: #0A0E0A; --code-fg: #E8F0E6; --code-dim: #7E8E7F;
+  --shadow: 0 0 0 1px #222B23; --glass: rgba(15, 19, 15, .74);
+  --l-domain-bg: #2A3016; --l-domain-fg: #D2DE9A;
+  --l-app-bg: #18301F;    --l-app-fg: #9FD8B2;
+  --l-infra-bg: #222823;  --l-infra-fg: #BCC8BD;
+  --l-ui-bg: #142E2A;     --l-ui-fg: #8FD3C6;
   color-scheme: dark;
 }
 
@@ -363,8 +363,8 @@ th, td { padding: 12px 16px; }
 .code { border-radius: 18px; }
 .code-head { padding: 12px 14px 0 18px; }
 .code pre { padding: 12px 18px 18px; }
-.k { color: #E3B97A; }
-.s { color: #B9CDA3; }
+.k { color: #A9D18E; }
+.s { color: #8FD3C6; }
 .c { color: var(--code-dim); }
 .copy { border-color: #ffffff26; }
 .expand { border-radius: 0 0 18px 18px; }
