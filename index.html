@@ -386,6 +386,42 @@ th, td { padding: 12px 16px; }
 .arch-svg .slice-lines line { stroke: var(--accent); opacity: .55; }
 .arch-svg .ring-ui, .arch-svg .ring-infra, .arch-svg .ring-app, .arch-svg .ring-domain { stroke: var(--bg); stroke-width: 4; }
 
+/* ---------- Index drawer: phases > steps > slides ---------- */
+.drawer { width: min(400px, 92vw); padding-left: 14px; padding-right: 14px; display: flex; flex-direction: column; }
+.drawer-head { padding: 2px 4px 10px; margin: 0; }
+.drawer-head h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; font-size: 24px; }
+.toc-search { margin: 0 0 12px; padding: 10px 14px; background: var(--surface); border: 1px solid var(--line); }
+#toc { display: flex; flex-direction: column; gap: 8px; }
+.toc-home { text-align: left; background: none; border: 0; font: 600 14px var(--font-body); color: var(--accent); padding: 4px 6px 8px; cursor: pointer; }
+.toc-home:hover { text-decoration: underline; text-underline-offset: 3px; }
+.toc-phase { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.toc-phase > summary { list-style: none; display: grid; grid-template-columns: 1fr auto 16px; align-items: center; gap: 10px; padding: 13px 14px; cursor: pointer; }
+.toc-phase > summary::-webkit-details-marker { display: none; }
+.toc-phase > summary:hover { background: var(--accent-soft); }
+.toc-phase > summary:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: 16px; }
+.toc-phase-text { display: flex; flex-direction: column; min-width: 0; }
+.toc-phase-num { font-size: 12px; font-weight: 600; color: var(--accent); }
+.toc-phase-title { font-weight: 600; font-size: 15px; color: var(--ink); line-height: 1.3; }
+.toc-phase-meta { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.toc-phase.is-done .toc-phase-meta { color: var(--ok); font-weight: 600; }
+.toc-phase.is-current { border-color: var(--accent); }
+.toc-chevron { width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg) translateY(-3px); transition: transform .2s ease; justify-self: center; }
+.toc-phase[open] .toc-chevron { transform: rotate(-135deg) translateY(-1px); }
+.toc-phase-body { padding: 0 8px 10px; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--line); padding-top: 8px; }
+.toc-step-title { font-size: 12px; font-weight: 600; color: var(--muted); padding: 4px 8px 2px; }
+.toc-item { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: none; border: 0; padding: 8px 10px; border-radius: 10px; font: 500 15px var(--font-body); color: var(--ink); cursor: pointer; }
+.toc-item:hover { background: var(--accent-soft); }
+.toc-item.current { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.toc-dot { width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--muted); flex: none; }
+.toc-item.visited .toc-dot { background: var(--ok); border-color: var(--ok); }
+.toc-item.current .toc-dot { background: var(--accent-ink); border-color: var(--accent-ink); }
+.toc-label { min-width: 0; }
+.toc-empty { color: var(--muted); font-size: 14px; padding: 8px; margin: 0; }
+@media (prefers-reduced-motion: reduce) { .toc-chevron { transition: none; } }
+.drawer { overflow: hidden; }
+#toc { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 2px 2px 16px; margin: 0 -2px; }
+#toc > * { flex-shrink: 0; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1731,6 +1767,7 @@ createMutation.mutate(values, {
     box.addEventListener('change', function () {
       checks[box.id] = box.checked;
       store('checks', JSON.stringify(checks));
+      if (typeof refreshToc === 'function') refreshToc();
       var wasHidden = box.closest('.slide').querySelector('.celebrate');
       var before = wasHidden ? wasHidden.hidden : true;
       syncCelebrations();
@@ -1804,37 +1841,110 @@ createMutation.mutate(values, {
     });
   });
 
-  // ---------- Index (grouped + search) ----------
-  var lastDay = null;
-  slides.forEach(function (slide, i) {
-    var day = slide.dataset.day;
-    if (day !== lastDay) {
-      var g = document.createElement('div');
-      g.className = 'toc-group';
-      g.textContent = day;
-      toc.appendChild(g);
-      lastDay = day;
-    }
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'toc-item';
-    b.dataset.search = (day + ' ' + slide.dataset.title + ' ' + slide.textContent).toLowerCase();
-    b.innerHTML = '<span class="n"></span><span></span>';
-    b.firstChild.textContent = String(i + 1);
-    b.lastChild.textContent = slide.dataset.title;
-    b.addEventListener('click', function () { go(i); closeDrawer(); });
-    toc.appendChild(b);
+  // ---------- Index: phases (accordion) > steps > slides ----------
+  var visited = {};
+  try { visited = JSON.parse(load('visited') || '{}') || {}; } catch (e) { visited = {}; }
+  var tocItems = [];
+  var tocPhases = [];
+  var tocEmpty = document.createElement('p');
+  tocEmpty.className = 'toc-empty';
+  tocEmpty.textContent = 'No hay resultados. Prueba con otra palabra.';
+  tocEmpty.hidden = true;
+
+  var homeLink = document.createElement('button');
+  homeLink.type = 'button';
+  homeLink.className = 'toc-home';
+  homeLink.textContent = '← Volver al inicio';
+  homeLink.addEventListener('click', function () { showHome(); closeDrawer(); });
+  toc.appendChild(homeLink);
+
+  PHASES.forEach(function (p) {
+    var details = document.createElement('details');
+    details.className = 'toc-phase';
+    details.dataset.phase = String(p.n);
+    var summary = document.createElement('summary');
+    summary.innerHTML = '<span class="toc-phase-text"><span class="toc-phase-num"></span><span class="toc-phase-title"></span></span><span class="toc-phase-meta"></span><span class="toc-chevron" aria-hidden="true"></span>';
+    summary.querySelector('.toc-phase-num').textContent = 'Fase ' + p.n;
+    summary.querySelector('.toc-phase-title').textContent = p.title;
+    details.appendChild(summary);
+    var body = document.createElement('div');
+    body.className = 'toc-phase-body';
+    details.appendChild(body);
+
+    var lastStep = null, stepBox = null;
+    phaseSlides(p.n).forEach(function (slide) {
+      var i = slides.indexOf(slide);
+      var step = shortDay(slide);
+      if (step !== lastStep) {
+        stepBox = document.createElement('div');
+        stepBox.className = 'toc-step';
+        var label = document.createElement('div');
+        label.className = 'toc-step-title';
+        label.textContent = step;
+        stepBox.appendChild(label);
+        body.appendChild(stepBox);
+        lastStep = step;
+      }
+      var item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'toc-item';
+      item.dataset.index = String(i);
+      item.dataset.search = (slide.dataset.day + ' ' + slide.dataset.title + ' ' + slide.textContent).toLowerCase();
+      item.innerHTML = '<span class="toc-dot" aria-hidden="true"></span><span class="toc-label"></span>';
+      item.querySelector('.toc-label').textContent = slide.dataset.title;
+      item.addEventListener('click', function () { go(i); closeDrawer(); });
+      stepBox.appendChild(item);
+      tocItems.push(item);
+    });
+    toc.appendChild(details);
+    tocPhases.push(details);
   });
-  var tocItems = Array.prototype.slice.call(toc.querySelectorAll('.toc-item'));
+  toc.appendChild(tocEmpty);
+
+  function refreshToc() {
+    tocItems.forEach(function (t) {
+      var k = Number(t.dataset.index);
+      t.classList.toggle('current', k === current);
+      t.classList.toggle('visited', !!visited[slides[k].id] && k !== current);
+      if (k === current) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
+    });
+    tocPhases.forEach(function (d) {
+      var pr = phaseProgress(Number(d.dataset.phase));
+      var meta = d.querySelector('.toc-phase-meta');
+      var done = pr.total && pr.done === pr.total;
+      meta.textContent = done ? 'Completada' : (pr.total ? pr.done + '/' + pr.total : '');
+      d.classList.toggle('is-done', !!done);
+      d.classList.toggle('is-current', current >= 0 && slides[current].dataset.phase === d.dataset.phase);
+    });
+  }
+
   tocSearch.addEventListener('input', function () {
     var q = tocSearch.value.trim().toLowerCase();
-    tocItems.forEach(function (t) { t.hidden = q !== '' && t.dataset.search.indexOf(q) === -1; });
-    toc.querySelectorAll('.toc-group').forEach(function (g) {
-      var el = g.nextElementSibling, any = false;
-      while (el && el.classList.contains('toc-item')) { if (!el.hidden) any = true; el = el.nextElementSibling; }
-      g.hidden = !any;
+    var anyAll = false;
+    tocPhases.forEach(function (d) {
+      var anyPhase = false;
+      d.querySelectorAll('.toc-step').forEach(function (stepBox) {
+        var anyStep = false;
+        stepBox.querySelectorAll('.toc-item').forEach(function (t) {
+          var show = q === '' || t.dataset.search.indexOf(q) !== -1;
+          t.hidden = !show;
+          if (show) anyStep = true;
+        });
+        stepBox.hidden = !anyStep;
+        if (anyStep) anyPhase = true;
+      });
+      d.hidden = !anyPhase;
+      if (q !== '') d.open = anyPhase;
+      if (anyPhase) anyAll = true;
     });
+    if (q === '') syncOpenPhase();
+    tocEmpty.hidden = anyAll;
   });
+
+  function syncOpenPhase() {
+    var phase = current >= 0 ? slides[current].dataset.phase : '1';
+    tocPhases.forEach(function (d) { d.open = d.dataset.phase === phase; });
+  }
 
   // ---------- Home ----------
   var phaseGrid = document.getElementById('phaseGrid');
@@ -1882,7 +1992,7 @@ createMutation.mutate(values, {
     dayChip.textContent = 'Inicio';
     var all = boxes.length ? boxes.filter(function (b) { return b.checked; }).length / boxes.length : 0;
     bar.style.width = (all * 100) + '%';
-    tocItems.forEach(function (t) { t.classList.remove('current'); });
+    refreshToc();
     renderHome();
     setHash('');
     window.scrollTo(0, 0);
@@ -1910,7 +2020,9 @@ createMutation.mutate(values, {
     counter.firstChild.textContent = 'Fase ' + n;
     bar.style.width = (pos / own.length * 100) + '%';
     dayChip.textContent = s.dataset.day;
-    tocItems.forEach(function (t, k) { t.classList.toggle('current', k === current); });
+    visited[s.id] = true;
+    store('visited', JSON.stringify(visited));
+    refreshToc();
     store('slide', String(current));
     setHash('#' + s.id);
     window.scrollTo(0, 0);
@@ -1944,7 +2056,17 @@ createMutation.mutate(values, {
   }, { passive: true });
 
   // ---------- Drawer ----------
-  function openDrawer() { drawer.hidden = false; backdrop.hidden = false; tocSearch.focus(); }
+  function openDrawer() {
+    tocSearch.value = '';
+    tocSearch.dispatchEvent(new Event('input'));
+    refreshToc();
+    syncOpenPhase();
+    drawer.hidden = false;
+    backdrop.hidden = false;
+    var cur = toc.querySelector('.toc-item.current');
+    if (cur) { cur.scrollIntoView({ block: 'center' }); cur.focus({ preventScroll: true }); }
+    else document.getElementById('closeIndex').focus();
+  }
   function closeDrawer() { drawer.hidden = true; backdrop.hidden = true; document.getElementById('openIndex').focus(); }
   document.getElementById('openIndex').addEventListener('click', openDrawer);
   document.getElementById('closeIndex').addEventListener('click', closeDrawer);
