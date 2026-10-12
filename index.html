@@ -1184,6 +1184,34 @@ body { background: var(--bg); }
 .tree-slice.is-collapsed { padding: 6px 10px; flex-direction: row; align-items: center; justify-content: space-between; }
 .tree-file { margin-left: 2px; }
 
+/* ---------- VS Code extensions ---------- */
+.ext-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 1100px) { .ext-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .ext-grid { grid-template-columns: 1fr; } }
+.ext-card { display: flex; flex-direction: column; gap: 4px; background: var(--surface); border: 2px solid var(--line); border-bottom-width: 4px; border-radius: 16px; padding: 10px 12px; min-width: 0; }
+.ext-card.must { border-color: var(--cm); }
+.ext-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ext-top b { font: 900 15px/1.2 var(--font-display); min-width: 0; }
+.ext-emoji { width: 30px; height: 30px; flex: none; display: grid; place-items: center; font-size: 16px; border-radius: 9px; background: var(--ct); border: 2px solid var(--cm); }
+.ext-must { margin-left: auto; flex: none; font-size: 10px; font-weight: 800; color: var(--cd); background: var(--ct); border-radius: 999px; padding: 2px 8px; }
+.ext-desc { color: var(--muted); font-size: 13px; line-height: 1.35; }
+.ext-cmd { margin-top: 4px !important; padding: 3px 4px 3px 8px !important; border-radius: 8px !important; }
+.ext-cmd code { font-size: 11px !important; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.ext-cmd .tool-cmd-lbl { width: 22px; height: 22px; flex: none; }
+#copyAllExt { flex: none; }
+
+/* ---------- VS Code extensions: compact horizontal cards ---------- */
+.ext-card { flex-direction: row; align-items: center; gap: 10px; padding: 10px 10px 10px 12px; }
+.ext-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+.ext-text b { font: 900 14px/1.2 var(--font-display); }
+.ext-desc { font-size: 12px; }
+.ext-emoji { width: 34px; height: 34px; font-size: 18px; }
+.ext-card.must { border-color: var(--c); border-bottom-color: var(--c); }
+.ext-copy { flex: none; width: 32px; height: 32px; display: grid; place-items: center; cursor: pointer; color: var(--muted); background: var(--surface); border: 2px solid var(--line); border-radius: 10px; box-shadow: 0 3px 0 var(--line); transition: transform .1s ease, box-shadow .1s ease, color .15s ease, background-color .15s ease; }
+.ext-copy:hover { transform: translateY(2px); box-shadow: 0 1px 0 var(--line); color: var(--cd); }
+.ext-copy:active { transform: translateY(3px); box-shadow: none; }
+.ext-copy.done { background: var(--c); border-color: var(--c); color: #fff; box-shadow: 0 3px 0 var(--cd); }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1452,7 +1480,7 @@ img { max-width: 100%; }
     </div>
     <div class="tool-card">
       <div class="tool-top"><span class="tool-n">4</span><b>VS Code</b></div>
-      <span class="tool-q">Revisa que abra y agrega ESLint, Prettier, Tailwind CSS IntelliSense y Error Lens.</span>
+      <span class="tool-q">Revisa que abra. Las extensiones van en la siguiente diapositiva.</span>
       <button class="tool-cmd" type="button" data-copy="code --version" title="Copiar comando"><code>code --version</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button>
       <div class="tool-actions">
         <label class="tool-check"><input type="checkbox" id="f1-tool-vscode"><span>Ya lo tengo</span></label>
@@ -1470,6 +1498,29 @@ img { max-width: 100%; }
     </div>
   </div>
   <p class="muted">En los instaladores puedes dejar las opciones por defecto.</p>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 1" data-title="Extensiones de VS Code">
+  <p class="eyebrow">Paso 1 · tu editor</p>
+  <h2>Extensiones que te harán la vida fácil 🧩</h2>
+  <div class="skills-head">
+    <p class="lead">Las que tengo antes de escribir código. Las de borde verde son imprescindibles.</p>
+    <button class="nav-btn primary" type="button" id="copyAllExt" data-copy="code --install-extension dbaeumer.vscode-eslint&#10;code --install-extension esbenp.prettier-vscode&#10;code --install-extension bradlc.vscode-tailwindcss&#10;code --install-extension usernamehw.errorlens&#10;code --install-extension yoavbls.pretty-ts-errors&#10;code --install-extension dsznajder.es7-react-js-snippets&#10;code --install-extension formulahendry.auto-rename-tag&#10;code --install-extension christian-kohler.path-intellisense&#10;code --install-extension eamodio.gitlens&#10;code --install-extension streetsidesoftware.code-spell-checker&#10;code --install-extension PKief.material-icon-theme">📋 Copiar todas</button>
+  </div>
+  <div class="ext-grid stagger">
+    <div class="ext-card must"><span class="ext-emoji">🧹</span><div class="ext-text"><b>ESLint</b><span class="ext-desc">Marca errores y malas prácticas mientras escribes.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension dbaeumer.vscode-eslint" title="Copiar: code --install-extension dbaeumer.vscode-eslint" aria-label="Copiar comando de ESLint"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card must"><span class="ext-emoji">✨</span><div class="ext-text"><b>Prettier</b><span class="ext-desc">Deja el código ordenado al guardar.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension esbenp.prettier-vscode" title="Copiar: code --install-extension esbenp.prettier-vscode" aria-label="Copiar comando de Prettier"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card must"><span class="ext-emoji">🎨</span><div class="ext-text"><b>Tailwind CSS IntelliSense</b><span class="ext-desc">Autocompleta y previsualiza las clases.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension bradlc.vscode-tailwindcss" title="Copiar: code --install-extension bradlc.vscode-tailwindcss" aria-label="Copiar comando de Tailwind CSS IntelliSense"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card must"><span class="ext-emoji">🚨</span><div class="ext-text"><b>Error Lens</b><span class="ext-desc">Muestra el error en la misma línea.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension usernamehw.errorlens" title="Copiar: code --install-extension usernamehw.errorlens" aria-label="Copiar comando de Error Lens"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card"><span class="ext-emoji">🩹</span><div class="ext-text"><b>Pretty TypeScript Errors</b><span class="ext-desc">Errores de TS fáciles de leer.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension yoavbls.pretty-ts-errors" title="Copiar: code --install-extension yoavbls.pretty-ts-errors" aria-label="Copiar comando de Pretty TypeScript Errors"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card"><span class="ext-emoji">⚛️</span><div class="ext-text"><b>ES7+ React snippets</b><span class="ext-desc">Atajos como rafce para crear componentes.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension dsznajder.es7-react-js-snippets" title="Copiar: code --install-extension dsznajder.es7-react-js-snippets" aria-label="Copiar comando de ES7+ React snippets"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card"><span class="ext-emoji">🏷️</span><div class="ext-text"><b>Auto Rename Tag</b><span class="ext-desc">Cambias una etiqueta y se cambia su pareja.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension formulahendry.auto-rename-tag" title="Copiar: code --install-extension formulahendry.auto-rename-tag" aria-label="Copiar comando de Auto Rename Tag"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card"><span class="ext-emoji">🗂️</span><div class="ext-text"><b>Path Intellisense</b><span class="ext-desc">Autocompleta rutas de archivos.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension christian-kohler.path-intellisense" title="Copiar: code --install-extension christian-kohler.path-intellisense" aria-label="Copiar comando de Path Intellisense"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card"><span class="ext-emoji">🔎</span><div class="ext-text"><b>GitLens</b><span class="ext-desc">Quién cambió cada línea y cuándo.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension eamodio.gitlens" title="Copiar: code --install-extension eamodio.gitlens" aria-label="Copiar comando de GitLens"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card"><span class="ext-emoji">🔤</span><div class="ext-text"><b>Code Spell Checker</b><span class="ext-desc">Avisa errores de ortografía en inglés.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension streetsidesoftware.code-spell-checker" title="Copiar: code --install-extension streetsidesoftware.code-spell-checker" aria-label="Copiar comando de Code Spell Checker"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+    <div class="ext-card"><span class="ext-emoji">📁</span><div class="ext-text"><b>Material Icon Theme</b><span class="ext-desc">Íconos para reconocer cada archivo.</span></div><button class="ext-copy" type="button" data-copy="code --install-extension PKief.material-icon-theme" title="Copiar: code --install-extension PKief.material-icon-theme" aria-label="Copiar comando de Material Icon Theme"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
+  </div>
+  <p class="muted tip">💡 Pega el comando en la terminal, o busca cada una por nombre en VS Code (Ctrl + Shift + X). Luego activa <b>Format On Save</b> y elige Prettier como formateador.</p>
 </section>
 
 <section class="slide" data-phase="1" data-day="Fase 1 · Paso 1" data-title="pnpm, yarn y Git">
@@ -3146,6 +3197,32 @@ createMutation.mutate(values, {
       var text = btn.getAttribute('data-copy');
       var ICON = lbl.innerHTML; var CHECK = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>';
       function ok() { btn.classList.add('done'); lbl.innerHTML = CHECK; setTimeout(function () { btn.classList.remove('done'); lbl.innerHTML = ICON; }, 1600); }
+      function fallback() { var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} ta.remove(); }
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
+    });
+  });
+})();
+</script>
+<script>
+(function () {
+  var btn = document.getElementById('copyAllExt');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var text = btn.getAttribute('data-copy');
+    function ok() { var t = btn.textContent; btn.textContent = '✓ Copiadas'; setTimeout(function () { btn.textContent = t; }, 1600); }
+    function fallback() { var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} ta.remove(); }
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
+  });
+})();
+</script>
+<script>
+(function () {
+  var check = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>';
+  document.querySelectorAll('.ext-copy').forEach(function (btn) {
+    var icon = btn.innerHTML;
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      function ok() { btn.classList.add('done'); btn.innerHTML = check; setTimeout(function () { btn.classList.remove('done'); btn.innerHTML = icon; }, 1500); }
       function fallback() { var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} ta.remove(); }
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
     });
