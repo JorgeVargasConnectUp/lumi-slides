@@ -680,6 +680,142 @@ main, .topbar-inner, .nav-inner { max-width: 1440px; }
 @media (min-width: 1000px) { .cols:has(> .code) { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 28px; } }
 .phase-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 
+/* ---------- Visual intro slides ---------- */
+.slide .lead { font-size: clamp(18px, 2vw, 22px); color: var(--muted); max-width: 60ch; }
+.slide .lead.big { font-size: clamp(22px, 3vw, 32px); color: var(--ink); font-weight: 500; }
+.hl { color: var(--c); }
+.stagger > * { opacity: 0; }
+.slide.is-active .stagger > * { animation: pop .55s cubic-bezier(.2,.8,.2,1) both; }
+.slide.is-active .stagger > *:nth-child(1) { animation-delay: .2s; }
+.slide.is-active .stagger > *:nth-child(2) { animation-delay: .3s; }
+.slide.is-active .stagger > *:nth-child(3) { animation-delay: .4s; }
+.slide.is-active .stagger > *:nth-child(4) { animation-delay: .5s; }
+.slide.is-active .stagger > *:nth-child(5) { animation-delay: .6s; }
+.slide.is-active .stagger > *:nth-child(6) { animation-delay: .7s; }
+
+/* hero */
+.s-hero.is-active { min-height: calc(100vh - 230px); justify-content: center; gap: 26px; }
+.slide h1.mega { font-size: clamp(56px, 11vw, 140px); line-height: .95; letter-spacing: -0.05em; }
+.from-card { display: inline-flex; align-self: flex-start; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 22px 8px 8px; box-shadow: var(--shadow); }
+.from-card .avatar { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font: 800 22px var(--font-display); color: #fff; background: linear-gradient(135deg, var(--p1), var(--p2), var(--p3)); }
+.from-card b { display: block; font-size: 17px; }
+.from-card small { display: block; color: var(--muted); font-size: 14px; }
+.hint { color: var(--muted); font-size: 15px; }
+
+/* split + mini cards */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 36px; align-items: center; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
+.stack { display: flex; flex-direction: column; gap: 20px; }
+.mini-cards { display: flex; flex-direction: column; gap: 12px; }
+.mini { display: flex; flex-direction: column; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--c); border-radius: 16px; padding: 14px 18px; box-shadow: var(--shadow); }
+.mini b { font: 800 20px var(--font-display); color: var(--cd); }
+.mini span { color: var(--muted); font-size: 15px; }
+
+/* fake app window */
+.mock { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 30px 60px -30px var(--c), var(--shadow); overflow: hidden; transform: perspective(1200px) rotateY(-6deg) rotateX(2deg); transition: transform .5s ease; }
+.mock:hover { transform: none; }
+.mock-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+.mock-bar i:nth-child(1) { background: #FF6F3C; } .mock-bar i:nth-child(2) { background: #EFA20A; } .mock-bar i:nth-child(3) { background: #16B26E; }
+.mock-bar span { margin-left: 10px; font: 500 12px var(--font-mono); color: var(--muted); background: var(--surface); border-radius: 999px; padding: 3px 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mock-body { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.mock-title { font: 800 22px var(--font-display); }
+.mock-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.mock-chips span { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.mock-chips .on { background: var(--c); border-color: var(--c); color: #fff; }
+.mock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mock-card { border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 4px; background: var(--bg); }
+.mock-card em { align-self: flex-start; font-style: normal; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--ct); color: var(--cd); }
+.mock-card b { font-size: 14px; line-height: 1.3; }
+.mock-card small { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* flow of 3 */
+.flow { display: grid; grid-template-columns: 1fr 48px 1fr 48px 1fr; align-items: stretch; gap: 8px; }
+.flow-card { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 26px 22px 22px; display: flex; flex-direction: column; gap: 6px; box-shadow: var(--shadow); overflow: hidden; }
+.flow-card::before { content: ""; position: absolute; inset: 0 0 auto; height: 5px; background: var(--c); }
+.flow-card b { font: 800 clamp(20px, 2.2vw, 26px)/1.15 var(--font-display); }
+.flow-card > span:last-child { color: var(--muted); }
+.flow-n { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font: 800 20px var(--font-display); color: #fff; background: var(--c); margin-bottom: 6px; box-shadow: 0 8px 18px -8px var(--c); }
+.flow-arrow { align-self: center; height: 3px; background: linear-gradient(90deg, var(--line), var(--muted)); position: relative; border-radius: 2px; }
+.flow-arrow::after { content: ""; position: absolute; right: -2px; top: -6px; border-left: 10px solid var(--muted); border-top: 7px solid transparent; border-bottom: 7px solid transparent; }
+@media (max-width: 760px) { .flow { grid-template-columns: 1fr; } .flow-arrow { width: 3px; height: 24px; justify-self: center; background: var(--muted); } .flow-arrow::after { right: -6px; top: auto; bottom: -8px; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 10px solid var(--muted); border-bottom: 0; } }
+
+/* timeline */
+.timeline { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 10%; right: 10%; top: 31px; height: 4px; border-radius: 4px; background: var(--spectrum); opacity: .35; }
+.timeline li { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+.tl-dot { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font: 800 28px var(--font-display); color: var(--cd); background: var(--ct); border: 3px solid var(--c); position: relative; z-index: 1; }
+.timeline li.here .tl-dot { background: var(--c); color: #fff; transform: scale(1.12); box-shadow: 0 0 0 8px var(--ct), 0 12px 24px -8px var(--c); }
+.timeline b { font: 700 16px/1.25 var(--font-display); max-width: 14ch; }
+.timeline small { font-size: 12px; font-weight: 800; color: #fff; background: var(--c); padding: 2px 10px; border-radius: 999px; }
+@media (max-width: 760px) { .timeline { grid-template-columns: 1fr; } .timeline::before { display: none; } .timeline li { flex-direction: row; text-align: left; } .tl-dot { width: 48px; height: 48px; font-size: 22px; } }
+.note-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.note { background: var(--ct); border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 2px; }
+.note b { color: var(--cd); font-size: 17px; }
+.note span { color: var(--ink); opacity: .85; }
+
+/* git graph */
+.git-fig { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px 18px 8px; box-shadow: var(--shadow); }
+.git-svg { width: 100%; height: auto; display: block; }
+.g-main { stroke: var(--muted); stroke-width: 5; stroke-linecap: round; opacity: .55; }
+.g-label { font: 700 16px var(--font-mono); fill: var(--muted); }
+.g-branch path { fill: none; stroke: var(--c); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 520; stroke-dashoffset: 520; }
+.g-branch circle { fill: var(--surface); stroke: var(--c); stroke-width: 4; opacity: 0; }
+.g-day { font: 800 20px var(--font-display); fill: var(--ink); text-anchor: middle; opacity: 0; }
+.g-pr rect { fill: var(--ok); }
+.g-pr text { font: 800 13px var(--font-body); fill: var(--surface); text-anchor: middle; dominant-baseline: middle; }
+.g-pr { opacity: 0; }
+.g-node { fill: var(--c); stroke: var(--surface); stroke-width: 4; }
+.slide.is-active .g-branch path { animation: draw 1s ease forwards; }
+.slide.is-active .g-branch circle, .slide.is-active .g-day, .slide.is-active .g-pr { animation: fade-in .4s ease forwards; }
+.slide.is-active .b1 path { animation-delay: .2s; } .slide.is-active .b1 circle, .slide.is-active .b1 .g-day { animation-delay: .6s; } .slide.is-active .b1 .g-pr { animation-delay: 1.1s; }
+.slide.is-active .b2 path { animation-delay: .7s; } .slide.is-active .b2 circle, .slide.is-active .b2 .g-day { animation-delay: 1.1s; } .slide.is-active .b2 .g-pr { animation-delay: 1.6s; }
+.slide.is-active .b3 path { animation-delay: 1.2s; } .slide.is-active .b3 circle, .slide.is-active .b3 .g-day { animation-delay: 1.6s; } .slide.is-active .b3 .g-pr { animation-delay: 2.1s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fade-in { to { opacity: 1; } }
+
+/* duo */
+.duo { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; }
+@media (max-width: 760px) { .duo { grid-template-columns: 1fr; } }
+.duo-card { border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+.duo-card.yes { background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--c); box-shadow: var(--shadow); }
+.duo-card.soft { background: var(--ct); justify-content: center; }
+.duo-tag { align-self: flex-start; font-size: 13px; font-weight: 800; color: var(--cd); background: var(--ct); border-radius: 999px; padding: 3px 12px; }
+.duo-card.soft .duo-tag { background: var(--surface); }
+.duo-big { font: 800 clamp(24px, 3vw, 34px)/1.15 var(--font-display); }
+.eg { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.eg li { display: grid; grid-template-columns: 150px 1fr; align-items: center; gap: 12px; }
+.eg li > span { color: var(--muted); font-weight: 600; font-size: 15px; }
+.eg code { font-size: 15px; padding: 6px 12px; border-radius: 10px; }
+@media (max-width: 560px) { .eg li { grid-template-columns: 1fr; gap: 4px; } }
+
+/* step grid */
+.step-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 860px) { .step-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .step-grid { grid-template-columns: 1fr; } }
+.step-card { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow); overflow: hidden; transition: transform .2s ease, border-color .2s ease; }
+.step-card:hover { transform: translateY(-3px); border-color: var(--cm); }
+.step-card b { font: 700 18px/1.25 var(--font-display); padding-right: 40px; }
+.step-n { position: absolute; right: 12px; top: -8px; font: 800 64px/1 var(--font-display); color: var(--c); opacity: .14; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.chips i { font-style: normal; font-size: 12px; font-weight: 700; color: var(--cd); background: var(--ct); border-radius: 999px; padding: 3px 10px; }
+.goal { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; background: linear-gradient(120deg, var(--c), var(--cd)); color: #fff; border-radius: 20px; padding: 16px 22px; box-shadow: 0 16px 34px -18px var(--c); }
+.goal b { font: 800 13px var(--font-body); text-transform: uppercase; letter-spacing: .08em; background: rgba(255,255,255,.2); padding: 3px 10px; border-radius: 999px; }
+.goal span { font: 700 clamp(17px, 2vw, 21px) var(--font-display); }
+
+/* tools */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.tool-card { position: relative; text-decoration: none; color: var(--ink); font-weight: 400; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 20px 18px 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow); transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.tool-card:hover { transform: translateY(-4px); border-color: var(--c); box-shadow: 0 18px 36px -18px var(--c); }
+.tool-card b { font: 800 22px var(--font-display); }
+.tool-card > span:not(.tool-n) { color: var(--muted); font-size: 15px; line-height: 1.45; }
+.tool-card em { margin-top: auto; font-style: normal; font-size: 13px; font-weight: 700; color: var(--cd); }
+.tool-n { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; font: 800 16px var(--font-display); color: var(--cd); background: var(--ct); }
+
+:root[data-theme="dark"] .mock-chips .on, :root[data-theme="dark"] .timeline small, :root[data-theme="dark"] .timeline li.here .tl-dot, :root[data-theme="dark"] .flow-n, :root[data-theme="dark"] .goal { color: var(--accent-ink); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mock-chips .on, :root:not([data-theme="light"]) .timeline small, :root:not([data-theme="light"]) .timeline li.here .tl-dot, :root:not([data-theme="light"]) .flow-n, :root:not([data-theme="light"]) .goal { color: var(--accent-ink); } }
+@media (prefers-reduced-motion: reduce) { .stagger > *, .g-branch circle, .g-day, .g-pr { opacity: 1 !important; } .g-branch path { stroke-dashoffset: 0 !important; } .mock { transform: none; } }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -713,65 +849,166 @@ img { max-width: 100%; }
 
 
 <!-- INICIO -->
-<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Bienvenida">
+<section class="slide s-hero" data-phase="1" data-day="Fase 1 · Inicio" data-title="Bienvenida">
   <p class="eyebrow">Fase 1 · a tu ritmo</p>
-  <h1>¡Hola, Brygith! Qué bueno tenerte en el equipo.</h1>
-  <ul class="tldr">
-    <li><span>Soy Jorge y voy a estar acompañándote en ConnectUp. Estoy muy contento de que te unas.</span></li>
-    <li><span>Para arrancar con buen pie, te propongo construir tu propia app: <b>Lumi</b>, la agenda de un centro estético. Pensé en ese tema porque tú conoces ese mundo mucho mejor que yo, y eso lo hace más divertido.</span></li>
-    <li><span>Ya te preparé una base con el diseño y la estructura lista. Tú la vas a convertir en una app de verdad, por fases y a tu ritmo.</span></li>
-    <li><span>En esta primera fase vas a dejar tu computador listo, publicar tu app y construir el catálogo de tratamientos.</span></li>
-    <li><span>Puedes avanzar con <kbd>←</kbd> <kbd>→</kbd>, y las casillas que vayas marcando se guardan. ¡Vamos!</span></li>
-  </ul>
-  <p class="muted">— Jorge</p>
+  <h1 class="mega">¡Hola, Brygith!</h1>
+  <p class="lead big">Qué bueno tenerte en el equipo.</p>
+  <div class="from-card">
+    <span class="avatar" aria-hidden="true">J</span>
+    <span><b>Soy Jorge</b><small>y voy a acompañarte en ConnectUp</small></span>
+  </div>
+  <p class="hint">Avanza con <kbd>←</kbd> <kbd>→</kbd> · lo que marques se guarda</p>
 </section>
 
-<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Así lo vamos a hacer">
-  <p class="eyebrow">Nuestra forma de trabajar</p>
-  <h2>Así lo vamos a hacer</h2>
-  <ul class="tldr">
-    <li><span>Trabajamos por <b>fases</b>, no por semanas. Tú organizas tu tiempo; lo importante es entender bien cada paso.</span></li>
-    <li><span>Cada día que trabajes, una rama y un pull request. Así tu avance queda registrado y puedes ver todo lo que has logrado.</span></li>
-    <li><span>Lo ideal es escribir el código, los commits y los textos de la app en <b>inglés</b>, como en el equipo. Si en algún momento se te complica mucho, tranquila, puedes usar español.</span></li>
-    <li><span>Si te surge una duda, escríbeme con toda confianza y cuadramos una reunión.</span></li>
-    <li><span>Si te bloqueas, la IA es tu aliada: puedes pedirle explicaciones o incluso código. Lo que más me interesa es que entiendas cómo funciona, me lo puedas contar y vayas formando tu propio criterio.</span></li>
-  </ul>
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Tu proyecto: Lumi">
+  <p class="eyebrow">Tu proyecto</p>
+  <h2>Vas a construir <span class="hl">Lumi</span></h2>
+  <div class="split">
+    <div class="stack">
+      <p class="lead">La agenda de un centro estético. Tú conoces ese mundo mucho mejor que yo.</p>
+      <div class="mini-cards stagger">
+        <div class="mini t1"><b>Tratamientos</b><span>El catálogo, con filtros</span></div>
+        <div class="mini t2"><b>Clientas</b><span>Fichas, búsqueda y alertas</span></div>
+        <div class="mini t3"><b>Citas</b><span>La agenda con sus reglas</span></div>
+      </div>
+    </div>
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><i></i><i></i><i></i><span>lumi-beauty-center.vercel.app</span></div>
+      <div class="mock-body">
+        <div class="mock-title">Treatments</div>
+        <div class="mock-chips"><span class="on">All</span><span>Facial</span><span>Body</span><span>Hair removal</span></div>
+        <div class="mock-grid stagger">
+          <div class="mock-card"><em class="t1">Facial</em><b>Deep facial cleansing</b><small>60 min · $120.000</small></div>
+          <div class="mock-card"><em class="t2">Body</em><b>Relaxing massage</b><small>50 min · $95.000</small></div>
+          <div class="mock-card"><em class="t3">Hair removal</em><b>Waxing, legs</b><small>30 min · $45.000</small></div>
+          <div class="mock-card"><em class="t4">Hands &amp; feet</em><b>Spa manicure</b><small>45 min · $40.000</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="No empiezas de cero">
+  <p class="eyebrow">El punto de partida</p>
+  <h2>No empiezas de cero</h2>
+  <div class="flow stagger">
+    <div class="flow-card t1"><span class="flow-n">1</span><b>Mi plantilla</b><span>Diseño y estructura listos</span></div>
+    <div class="flow-arrow" aria-hidden="true"></div>
+    <div class="flow-card t2"><span class="flow-n">2</span><b>Tu copia</b><span>Tu propio repositorio en GitHub</span></div>
+    <div class="flow-arrow" aria-hidden="true"></div>
+    <div class="flow-card t3"><span class="flow-n">3</span><b>Tu app</b><span>Publicada en internet, construida por ti</span></div>
+  </div>
+  <p class="lead">Tú la conviertes en una app de verdad, fase por fase.</p>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="5 fases, a tu ritmo">
+  <p class="eyebrow">El camino</p>
+  <h2>5 fases, a tu ritmo</h2>
+  <ol class="timeline stagger">
+    <li class="t1 here"><span class="tl-dot">1</span><b>Entorno y catálogo</b><small>Estás aquí</small></li>
+    <li class="t2"><span class="tl-dot">2</span><b>Navegación y formularios</b></li>
+    <li class="t3"><span class="tl-dot">3</span><b>Clientas, casi sola</b></li>
+    <li class="t4"><span class="tl-dot">4</span><b>La agenda de citas</b></li>
+    <li class="t5"><span class="tl-dot">5</span><b>Los detalles que brillan</b></li>
+  </ol>
+  <div class="note-row stagger">
+    <div class="note"><b>Fases, no semanas</b><span>Tú organizas tu tiempo.</span></div>
+    <div class="note"><b>Entender &gt; correr</b><span>Lo importante es que cada paso te quede claro.</span></div>
+  </div>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Una rama y un PR por día">
+  <p class="eyebrow">Tu rutina</p>
+  <h2>Cada día: una rama y un PR</h2>
+  <figure class="git-fig">
+    <svg class="git-svg" viewBox="0 0 960 230" role="img" aria-label="La rama main con tres ramas, una por día, que vuelven a main con un pull request">
+      <line class="g-main" x1="20" y1="180" x2="940" y2="180"/>
+      <text class="g-label" x="24" y="212">main</text>
+      <g class="g-branch b1">
+        <path d="M60 180 C100 180 100 80 140 80 L240 80 C280 80 280 180 320 180"/>
+        <circle cx="160" cy="80" r="7"/><circle cx="200" cy="80" r="7"/>
+        <text class="g-day" x="190" y="50">Día 1</text>
+        <g class="g-pr"><rect x="282" y="112" width="64" height="26" rx="13"/><text x="314" y="126">PR ✓</text></g>
+      </g>
+      <g class="g-branch b2">
+        <path d="M340 180 C380 180 380 80 420 80 L520 80 C560 80 560 180 600 180"/>
+        <circle cx="440" cy="80" r="7"/><circle cx="480" cy="80" r="7"/><circle cx="510" cy="80" r="7"/>
+        <text class="g-day" x="470" y="50">Día 2</text>
+        <g class="g-pr"><rect x="562" y="112" width="64" height="26" rx="13"/><text x="594" y="126">PR ✓</text></g>
+      </g>
+      <g class="g-branch b3">
+        <path d="M620 180 C660 180 660 80 700 80 L800 80 C840 80 840 180 880 180"/>
+        <circle cx="730" cy="80" r="7"/>
+        <text class="g-day" x="750" y="50">Día 3</text>
+        <g class="g-pr"><rect x="842" y="112" width="64" height="26" rx="13"/><text x="874" y="126">PR ✓</text></g>
+      </g>
+      <circle class="g-node" cx="320" cy="180" r="9"/><circle class="g-node" cx="600" cy="180" r="9"/><circle class="g-node" cx="880" cy="180" r="9"/>
+    </svg>
+  </figure>
+  <div class="note-row stagger">
+    <div class="note"><b>Tu avance queda registrado</b><span>Ves todo lo que has logrado, día por día.</span></div>
+    <div class="note"><b>Preview en Vercel</b><span>Cada PR tiene su propio link para probar.</span></div>
+    <div class="note"><b>Tú haces el merge</b><span>Cuando todo funciona, lo unes a <code>main</code>.</span></div>
+  </div>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="En inglés, si puedes">
+  <p class="eyebrow">El idioma</p>
+  <h2>Código en inglés, como en el equipo</h2>
+  <div class="duo stagger">
+    <div class="duo-card yes">
+      <span class="duo-tag">Lo ideal</span>
+      <ul class="eg">
+        <li><span>Código</span><code>const treatments = []</code></li>
+        <li><span>Commits</span><code>feat: add treatment card</code></li>
+        <li><span>Textos de la app</span><code>Book appointment</code></li>
+      </ul>
+    </div>
+    <div class="duo-card soft">
+      <span class="duo-tag">¿Se te complica?</span>
+      <p class="duo-big">Tranquila, usa español.</p>
+      <p class="muted">Prefiero que avances y entiendas a que te frene el idioma.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Si te bloqueas">
+  <p class="eyebrow">Cuando te bloquees</p>
+  <h2>Tres pasos para desbloquearte</h2>
+  <div class="flow stagger">
+    <div class="flow-card t1"><span class="flow-n">1</span><b>Pregúntale a la IA</b><span>Explicaciones, ejemplos, incluso código.</span></div>
+    <div class="flow-arrow" aria-hidden="true"></div>
+    <div class="flow-card t2"><span class="flow-n">2</span><b>Entiéndelo</b><span>Que me lo puedas contar con tus palabras.</span></div>
+    <div class="flow-arrow" aria-hidden="true"></div>
+    <div class="flow-card t3"><span class="flow-n">3</span><b>Escríbeme</b><span>Con toda confianza. Cuadramos una reunión.</span></div>
+  </div>
+  <p class="lead">Abajo tienes el botón <b>¿Te bloqueaste?</b>: copia un mensaje para mí con el link de la diapositiva.</p>
 </section>
 
 <section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="El mapa de la fase 1">
   <p class="eyebrow">El mapa</p>
-  <h2>Lo que vas a lograr en esta fase</h2>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>Paso</th><th>Qué haces</th><th>Qué aprendes</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>Preparas tu computador</td><td>Git, Node, pnpm, VS Code</td></tr>
-        <tr><td>2</td><td>Creas tu copia de Lumi y la publicas</td><td>GitHub, Vercel</td></tr>
-        <tr><td>3</td><td>Conoces la plantilla por dentro</td><td>Estructura por features y sus 4 capas</td></tr>
-        <tr><td>4</td><td>Defines qué es un tratamiento y de dónde salen los datos</td><td>Tipos e interfaces de TypeScript</td></tr>
-        <tr><td>5</td><td>Muestras los tratamientos en pantalla</td><td>Componentes, props, <code>useState</code>, <code>useEffect</code></td></tr>
-        <tr><td>6</td><td>Agregas filtros por categoría</td><td>Estado y datos derivados</td></tr>
-      </tbody>
-    </table>
+  <h2>Lo que vas a lograr en la fase 1</h2>
+  <div class="step-grid stagger">
+    <div class="step-card"><span class="step-n">1</span><b>Preparas tu computador</b><span class="chips"><i>Git</i><i>Node</i><i>pnpm</i><i>VS Code</i></span></div>
+    <div class="step-card"><span class="step-n">2</span><b>Creas tu copia y la publicas</b><span class="chips"><i>GitHub</i><i>Vercel</i></span></div>
+    <div class="step-card"><span class="step-n">3</span><b>Conoces la plantilla por dentro</b><span class="chips"><i>features</i><i>4 capas</i></span></div>
+    <div class="step-card"><span class="step-n">4</span><b>Defines qué es un tratamiento</b><span class="chips"><i>types</i><i>interfaces</i></span></div>
+    <div class="step-card"><span class="step-n">5</span><b>Los muestras en pantalla</b><span class="chips"><i>props</i><i>useState</i><i>useEffect</i></span></div>
+    <div class="step-card"><span class="step-n">6</span><b>Agregas filtros</b><span class="chips"><i>estado</i><i>datos derivados</i></span></div>
   </div>
-  <p class="muted">Al final de la fase, tu app publicada muestra el catálogo de tratamientos con filtros.</p>
+  <div class="goal"><b>Meta</b><span>Tu app publicada, mostrando el catálogo de tratamientos con filtros.</span></div>
 </section>
 
 <!-- PASO 1 -->
 <section class="slide" data-phase="1" id="f1-p1" data-day="Fase 1 · Paso 1" data-title="Tu cuenta y tus herramientas">
   <p class="eyebrow">Paso 1</p>
-  <h2>Primero, tu cuenta y tus herramientas</h2>
-  <div class="table-wrap">
-    <table>
-      <thead><tr><th>#</th><th>Qué</th><th>Link</th></tr></thead>
-      <tbody>
-        <tr><td>1</td><td>Cuenta de GitHub (usuario profesional, verificación en dos pasos)</td><td><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a></td></tr>
-        <tr><td>2</td><td>Git</td><td><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com</a></td></tr>
-        <tr><td>3</td><td>Node.js, versión <b>LTS</b> (trae npm)</td><td><a href="https://nodejs.org/en/download" target="_blank" rel="noopener">nodejs.org</a></td></tr>
-        <tr><td>4</td><td>VS Code + extensiones: ESLint, Prettier, Tailwind CSS IntelliSense, Error Lens</td><td><a href="https://code.visualstudio.com/" target="_blank" rel="noopener">code.visualstudio.com</a></td></tr>
-        <tr><td>5</td><td>Chrome + React Developer Tools</td><td><a href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener">react.dev</a></td></tr>
-      </tbody>
-    </table>
+  <h2>Tu cuenta y tus herramientas</h2>
+  <div class="tool-grid stagger">
+    <a class="tool-card" href="https://github.com/signup" target="_blank" rel="noopener"><span class="tool-n">1</span><b>GitHub</b><span>Crea tu cuenta con un usuario profesional y activa la verificación en dos pasos.</span><em>github.com/signup ↗</em></a>
+    <a class="tool-card" href="https://git-scm.com/downloads" target="_blank" rel="noopener"><span class="tool-n">2</span><b>Git</b><span>Guarda el historial de tu código.</span><em>git-scm.com ↗</em></a>
+    <a class="tool-card" href="https://nodejs.org/en/download" target="_blank" rel="noopener"><span class="tool-n">3</span><b>Node.js LTS</b><span>Ejecuta JavaScript en tu computador. Trae npm.</span><em>nodejs.org ↗</em></a>
+    <a class="tool-card" href="https://code.visualstudio.com/" target="_blank" rel="noopener"><span class="tool-n">4</span><b>VS Code</b><span>Con ESLint, Prettier, Tailwind CSS IntelliSense y Error Lens.</span><em>code.visualstudio.com ↗</em></a>
+    <a class="tool-card" href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener"><span class="tool-n">5</span><b>React DevTools</b><span>Extensión de Chrome para ver tus componentes.</span><em>react.dev ↗</em></a>
   </div>
   <p class="muted">En los instaladores puedes dejar las opciones por defecto.</p>
 </section>
