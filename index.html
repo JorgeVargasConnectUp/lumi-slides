@@ -1173,6 +1173,15 @@ body { background: var(--bg); }
 /* ---------- Arch diagram fits the viewport ---------- */
 .arch-svg { max-height: min(340px, calc(100vh - 330px)); }
 
+/* ---------- Compact folder tree: layers in a 2x2 grid ---------- */
+.tree { font-size: 13px; gap: 6px; }
+.tree-slice:not(.is-collapsed) { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; }
+.tree-slice:not(.is-collapsed) > .tree-slice-head, .tree-slice:not(.is-collapsed) > .tree-file { grid-column: 1 / -1; }
+.tree-slice .tree-layer { margin-left: 0; padding: 6px 10px; border-radius: 10px; line-height: 1.45; }
+.tree-layer span { padding-left: 10px; }
+.tree-slice.is-collapsed { padding: 6px 10px; flex-direction: row; align-items: center; justify-content: space-between; }
+.tree-file { margin-left: 2px; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
