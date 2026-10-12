@@ -1232,6 +1232,23 @@ body { background: var(--bg); }
 .gh-user { color: #FFD166; }
 .gh-user.filled { color: #7EE0B5; }
 
+/* ---------- Custom rounded checkboxes ---------- */
+.checklist input[type="checkbox"] {
+  -webkit-appearance: none; appearance: none; flex: none; cursor: pointer;
+  width: 26px; height: 26px; margin: 0; border-radius: 9px;
+  background: var(--surface) center / 16px 16px no-repeat; border: 2px solid var(--line);
+  box-shadow: 0 3px 0 var(--line); transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease, transform .1s ease;
+}
+.checklist label:hover input[type="checkbox"]:not(:checked) { border-color: var(--cm); }
+.checklist input[type="checkbox"]:checked {
+  background-color: var(--c); border-color: var(--c); box-shadow: 0 3px 0 var(--cd);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+}
+.checklist input[type="checkbox"]:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--line); }
+.checklist input[type="checkbox"]:focus-visible { outline: 3px solid var(--c); outline-offset: 2px; }
+.checklist label { align-items: center; }
+.checklist label:has(input:checked) span { color: var(--ink); opacity: .7; text-decoration-thickness: 2px; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1938,7 +1955,7 @@ useEffect(() =&gt; {
     <li><label><input type="checkbox" id="f1-c-f1-5"><span>Puedo explicar qué hacen <code>useState</code> y <code>useEffect</code> en mi hook</span></label></li>
   </ul>
   <p class="muted">Cuando termines, escríbeme y lo vemos juntos. ¡Buen trabajo!</p>
-  <div class="celebrate" hidden><b>¡Fase 1 completada!</b><p>Ya tienes tu app en internet y tu primer feature. Escríbeme y me cuentas cómo te fue.</p><p class="muted">— Jorge</p></div>
+  <div class="celebrate" hidden><b>¡Fase 1 completada! 🎉</b><p>¡Excelente trabajo! Hasta aquí te acompañé paso a paso; desde ahora puedes ir avanzando por tu cuenta, a tu ritmo. Igual voy a estar siempre pendiente: ante cualquier duda, escríbeme por Teams. Te deseo muchos éxitos en esta nueva etapa que comienza 🚀</p><p class="muted">— Jorge</p></div>
 </section>
 
 <section class="slide" data-phase="1" data-day="Fase 1 · Cierre" data-title="Lo que viene">
