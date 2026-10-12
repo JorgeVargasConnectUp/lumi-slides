@@ -1073,6 +1073,13 @@ body { background: var(--bg); }
 .ask b, .mini b { color: var(--ink); }
 .ask-emoji { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 26px; background: var(--ct); border: 2px solid var(--cm); border-bottom-width: 4px; margin-bottom: 4px; }
 
+/* ---------- Compact ask cards: emoji tile beside the text ---------- */
+.ask { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 14px; row-gap: 2px; align-content: start; padding: 14px 16px; }
+.ask .ask-emoji { grid-row: 1 / span 2; width: 44px; height: 44px; font-size: 22px; border-radius: 12px; margin: 0; }
+.ask b { font-size: 17px; align-self: end; }
+.ask > span:last-child { font-size: 14px; }
+.ask-grid { gap: 12px; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
