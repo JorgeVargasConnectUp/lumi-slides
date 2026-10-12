@@ -1225,6 +1225,13 @@ body { background: var(--bg); }
 .local-link { align-self: flex-start; font-weight: 900; font-size: 16px; text-decoration: none; color: #fff; background: var(--c); border-radius: 12px; padding: 6px 14px; box-shadow: 0 4px 0 var(--cd); transition: transform .1s ease, box-shadow .1s ease; }
 .local-link:hover { transform: translateY(2px); box-shadow: 0 2px 0 var(--cd); }
 
+/* ---------- GitHub username input ---------- */
+.gh-field { display: flex; flex-direction: column; gap: 4px; font-size: 13px; font-weight: 800; color: var(--muted); }
+.gh-field input { font: 700 16px var(--font-mono); color: var(--ink); background: var(--bg); border: 2px solid var(--line); border-bottom-width: 4px; border-radius: 12px; padding: 8px 12px; outline: none; transition: border-color .15s ease; }
+.gh-field input:focus { border-color: var(--c); }
+.gh-user { color: #FFD166; }
+.gh-user.filled { color: #7EE0B5; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1565,7 +1572,7 @@ git config --global init.defaultBranch main</code></pre></div></div>
         <li><b>Create repository</b> ✅</li>
       </ul>
     </div>
-    <div class="setup-card"><div class="tool-top"><span class="tool-n">2</span><b>Descárgala a tu computador</b></div><span class="tool-q">En una terminal, cambiando <code>&lt;tu-usuario&gt;</code> por el tuyo:</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>git clone https://github.com/&lt;tu-usuario&gt;/lumi-beauty-center.git
+    <div class="setup-card"><div class="tool-top"><span class="tool-n">2</span><b>Descárgala a tu computador</b></div><label class="gh-field"><span>Tu usuario de GitHub</span><input type="text" id="ghUser" placeholder="ej. brygith-arboleda" autocomplete="off" spellcheck="false"></label><span class="tool-q">Luego copia y pégalo en una terminal:</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>git clone https://github.com/<span class="gh-user">&lt;tu-usuario&gt;</span>/lumi-beauty-center.git
 cd lumi-beauty-center</code></pre></div></div>
   </div>
   <p class="muted tip">💡 Hazlo en una carpeta fácil de encontrar, como el Escritorio o <code>Documentos/proyectos</code>.</p>
@@ -3255,6 +3262,21 @@ createMutation.mutate(values, {
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
     });
   });
+})();
+</script>
+<script>
+(function () {
+  var input = document.getElementById('ghUser');
+  if (!input) return;
+  var KEY = 'lumi-guide:gh-user';
+  function apply() {
+    var v = input.value.trim().replace(/^@/, '').replace(/[^A-Za-z0-9-]/g, '');
+    document.querySelectorAll('.gh-user').forEach(function (el) { el.textContent = v || '<tu-usuario>'; el.classList.toggle('filled', !!v); });
+    try { localStorage.setItem(KEY, v); } catch (e) {}
+  }
+  try { input.value = localStorage.getItem(KEY) || ''; } catch (e) {}
+  input.addEventListener('input', apply);
+  apply();
 })();
 </script>
 </body>
