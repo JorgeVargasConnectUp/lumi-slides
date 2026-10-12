@@ -1170,6 +1170,9 @@ body { background: var(--bg); }
 .arch-svg .slice-lines line { stroke: var(--muted); opacity: .6; }
 .arch-svg .t-slice { stroke: var(--bg); }
 
+/* ---------- Arch diagram fits the viewport ---------- */
+.arch-svg { max-height: min(340px, calc(100vh - 330px)); }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
