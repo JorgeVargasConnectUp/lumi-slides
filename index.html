@@ -1249,6 +1249,16 @@ body { background: var(--bg); }
 .checklist label { align-items: center; }
 .checklist label:has(input:checked) span { color: var(--ink); opacity: .7; text-decoration-thickness: 2px; }
 
+/* ---------- Compact closing checklists ---------- */
+.checklist:has(> li:nth-child(4)) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.checklist:has(> li:nth-child(4)) > li:last-child:nth-child(odd) { grid-column: 1 / -1; }
+@media (max-width: 760px) { .checklist:has(> li:nth-child(4)) { grid-template-columns: 1fr; } }
+.checklist:has(> li:nth-child(4)) label { height: 100%; padding: 10px 14px; font-size: 15px; }
+.slide:has(.celebrate:not([hidden])) .celebrate ~ *, .slide:has(.celebrate:not([hidden])) > p.muted { display: none; }
+.celebrate { padding: 16px 20px; gap: 4px; }
+.celebrate b { font-size: 22px; }
+.celebrate p { font-size: 15px; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
