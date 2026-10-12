@@ -817,8 +817,9 @@ main, .topbar-inner, .nav-inner { max-width: 1440px; }
 @media (prefers-reduced-motion: reduce) { .stagger > *, .g-branch circle, .g-day, .g-pr { opacity: 1 !important; } .g-branch path { stroke-dashoffset: 0 !important; } .mock { transform: none; } }
 
 /* ---------- Profile card ---------- */
+.profile-photo img { width: 100%; height: 100%; display: block; object-fit: cover; transform: scale(1.45); transform-origin: 50% 35%; }
 .profile { display: flex; align-items: center; gap: 20px; align-self: flex-start; max-width: 640px; background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: 16px 24px 16px 16px; box-shadow: var(--shadow); }
-.profile-photo { width: 96px; height: 96px; border-radius: 50%; flex: none; object-fit: cover; background: var(--ct); box-shadow: 0 0 0 4px var(--surface), 0 0 0 7px var(--c), 0 14px 30px -12px var(--c); animation: float 5s ease-in-out infinite; }
+.profile-photo { overflow: hidden; display: block; width: 96px; height: 96px; border-radius: 50%; flex: none; background: var(--ct); box-shadow: 0 0 0 4px var(--surface), 0 0 0 7px var(--c), 0 14px 30px -12px var(--c); animation: float 5s ease-in-out infinite; }
 @keyframes float { 50% { transform: translateY(-4px) rotate(-2deg); } }
 .profile-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .profile-info b { font: 800 22px var(--font-display); }
@@ -867,7 +868,7 @@ img { max-width: 100%; }
   <h1 class="mega">¡Hola, Brygith!</h1>
   <p class="lead big">Qué bueno tenerte en el equipo.</p>
   <div class="profile">
-    <img class="profile-photo" src="https://avatars.githubusercontent.com/u/71688330?v=4&amp;s=192" loading="eager" referrerpolicy="no-referrer" alt="Jorge Vargas" width="96" height="96">
+    <span class="profile-photo"><img src="https://avatars.githubusercontent.com/u/71688330?v=4&amp;s=256" loading="eager" referrerpolicy="no-referrer" alt="Jorge Vargas" width="96" height="96"></span>
     <div class="profile-info">
       <b>Soy Jorge Vargas</b>
       <small>Frontend / Fullstack Engineer en ConnectUp. Voy a acompañarte en este camino.</small>
