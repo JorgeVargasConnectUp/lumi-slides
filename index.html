@@ -1080,6 +1080,33 @@ body { background: var(--bg); }
 .ask > span:last-child { font-size: 14px; }
 .ask-grid { gap: 12px; }
 
+/* ---------- Tool check cards ---------- */
+.tool-card { cursor: default; gap: 8px; padding: 16px; }
+.tool-card:hover { transform: none; border-color: var(--line); box-shadow: none; }
+.tool-top { display: flex; align-items: center; gap: 10px; }
+.tool-top b { font: 900 19px/1.15 var(--font-display); }
+.tool-q { color: var(--muted); font-size: 14px; line-height: 1.4; }
+.tool-cmd { align-self: flex-start; font-size: 13px; background: var(--code-bg); color: var(--code-fg); padding: 5px 10px; border-radius: 10px; }
+.tool-actions { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding-top: 6px; }
+.tool-check { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 800; font-size: 14px; color: var(--ink); background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 6px 12px; box-shadow: 0 4px 0 var(--line); transition: transform .1s ease, box-shadow .1s ease, background-color .15s ease, border-color .15s ease; }
+.tool-check:hover { transform: translateY(2px); box-shadow: 0 2px 0 var(--line); }
+.tool-check:active { transform: translateY(4px); box-shadow: none; }
+.tool-check input { width: 18px; height: 18px; margin: 0; accent-color: var(--c); }
+.tool-get { font-size: 13px; font-weight: 800; color: var(--cd); text-decoration: none; }
+.tool-get:hover { text-decoration: underline; }
+.tool-card:has(input:checked) { background: var(--ct); border-color: var(--c); }
+.tool-card:has(input:checked) .tool-check { background: var(--c); border-color: var(--c); color: #fff; box-shadow: 0 4px 0 var(--cd); }
+.tool-card:has(input:checked) .tool-check span::before { content: "✓ "; }
+.tool-card:has(input:checked) .tool-n { background: var(--c); color: #fff; }
+.tool-card:has(input:checked) .tool-get { display: none; }
+.tool-count { font-weight: 800; }
+
+.tool-check { position: relative; }
+.tool-check input { position: absolute; opacity: 0; pointer-events: none; }
+.tool-check span::before { content: ""; display: inline-block; width: 14px; height: 14px; border: 2px solid var(--muted); border-radius: 5px; margin-right: 8px; vertical-align: -2px; }
+.tool-card:has(input:checked) .tool-check span::before { content: "✓"; border: 0; width: auto; height: auto; margin-right: 6px; vertical-align: 0; }
+.tool-check:has(input:focus-visible) { outline: 3px solid var(--c); outline-offset: 2px; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1311,15 +1338,59 @@ img { max-width: 100%; }
 </section>
 
 <!-- PASO 1 -->
-<section class="slide" data-phase="1" id="f1-p1" data-day="Fase 1 · Paso 1" data-title="Tu cuenta y tus herramientas">
+<section class="slide" data-phase="1" id="f1-p1" data-day="Fase 1 · Paso 1" data-title="Revisemos tu computador">
   <p class="eyebrow">Paso 1</p>
-  <h2>Tu cuenta y tus herramientas</h2>
+  <h2>Revisemos tu computador 🔍</h2>
+  <div class="skills-head">
+    <p class="lead">Uno por uno: si ya lo tienes, márcalo ✅. Si no, lo instalamos juntos.</p>
+    <span class="tool-count muted" id="toolCount"></span>
+  </div>
   <div class="tool-grid stagger">
-    <a class="tool-card" href="https://github.com/signup" target="_blank" rel="noopener"><span class="tool-n">1</span><b>GitHub</b><span>Crea tu cuenta con un usuario profesional y activa la verificación en dos pasos.</span><em>github.com/signup ↗</em></a>
-    <a class="tool-card" href="https://git-scm.com/downloads" target="_blank" rel="noopener"><span class="tool-n">2</span><b>Git</b><span>Guarda el historial de tu código.</span><em>git-scm.com ↗</em></a>
-    <a class="tool-card" href="https://nodejs.org/en/download" target="_blank" rel="noopener"><span class="tool-n">3</span><b>Node.js LTS</b><span>Ejecuta JavaScript en tu computador. Trae npm.</span><em>nodejs.org ↗</em></a>
-    <a class="tool-card" href="https://code.visualstudio.com/" target="_blank" rel="noopener"><span class="tool-n">4</span><b>VS Code</b><span>Con ESLint, Prettier, Tailwind CSS IntelliSense y Error Lens.</span><em>code.visualstudio.com ↗</em></a>
-    <a class="tool-card" href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener"><span class="tool-n">5</span><b>React DevTools</b><span>Extensión de Chrome para ver tus componentes.</span><em>react.dev ↗</em></a>
+    <div class="tool-card">
+      <div class="tool-top"><span class="tool-n">1</span><b>GitHub</b></div>
+      <span class="tool-q">¿Ya tienes cuenta? Usuario profesional y verificación en dos pasos.</span>
+      
+      <div class="tool-actions">
+        <label class="tool-check"><input type="checkbox" id="f1-tool-github"><span>Ya lo tengo</span></label>
+        <a class="tool-get" href="https://github.com/signup" target="_blank" rel="noopener">Crear cuenta ↗</a>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-top"><span class="tool-n">2</span><b>Git</b></div>
+      <span class="tool-q">Abre una terminal y escribe:</span>
+      <code class="tool-cmd">git --version</code>
+      <div class="tool-actions">
+        <label class="tool-check"><input type="checkbox" id="f1-tool-git"><span>Ya lo tengo</span></label>
+        <a class="tool-get" href="https://git-scm.com/downloads" target="_blank" rel="noopener">Instalar ↗</a>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-top"><span class="tool-n">3</span><b>Node.js LTS</b></div>
+      <span class="tool-q">Debe salir v20 o superior:</span>
+      <code class="tool-cmd">node -v</code>
+      <div class="tool-actions">
+        <label class="tool-check"><input type="checkbox" id="f1-tool-node"><span>Ya lo tengo</span></label>
+        <a class="tool-get" href="https://nodejs.org/en/download" target="_blank" rel="noopener">Instalar ↗</a>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-top"><span class="tool-n">4</span><b>VS Code</b></div>
+      <span class="tool-q">Revisa que abra y agrega ESLint, Prettier, Tailwind CSS IntelliSense y Error Lens.</span>
+      <code class="tool-cmd">code --version</code>
+      <div class="tool-actions">
+        <label class="tool-check"><input type="checkbox" id="f1-tool-vscode"><span>Ya lo tengo</span></label>
+        <a class="tool-get" href="https://code.visualstudio.com/" target="_blank" rel="noopener">Instalar ↗</a>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-top"><span class="tool-n">5</span><b>React DevTools</b></div>
+      <span class="tool-q">En Chrome, abre DevTools (F12) y busca la pestaña ⚛️ Components.</span>
+      
+      <div class="tool-actions">
+        <label class="tool-check"><input type="checkbox" id="f1-tool-devtools"><span>Ya lo tengo</span></label>
+        <a class="tool-get" href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener">Instalar ↗</a>
+      </div>
+    </div>
   </div>
   <p class="muted">En los instaladores puedes dejar las opciones por defecto.</p>
 </section>
@@ -2556,7 +2627,7 @@ createMutation.mutate(values, {
   // ---------- Checklists + progress ----------
   var checks = {};
   try { checks = JSON.parse(load('checks') || '{}') || {}; } catch (e) { checks = {}; }
-  var boxes = Array.prototype.slice.call(document.querySelectorAll('.checklist input[type="checkbox"]'));
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.checklist input[type="checkbox"], .tool-check input[type="checkbox"]'));
   function phaseProgress(n) {
     var own = boxes.filter(function (b) { return b.closest('.slide').dataset.phase === String(n); });
     var done = own.filter(function (b) { return b.checked; }).length;
@@ -2974,6 +3045,19 @@ createMutation.mutate(values, {
       ta.remove();
     }
   });
+})();
+</script>
+<script>
+(function () {
+  var out = document.getElementById('toolCount');
+  if (!out) return;
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('.tool-check input'));
+  function upd() {
+    var n = boxes.filter(function (b) { return b.checked; }).length;
+    out.textContent = n === boxes.length ? '¡Todo listo! 🎉' : n + ' de ' + boxes.length + ' listas';
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', upd); });
+  setTimeout(upd, 0);
 })();
 </script>
 </body>
