@@ -1065,6 +1065,10 @@ main { padding-block: 24px 20px; }
   .phase-card .state { font-size: 12px; }
 }
 
+/* ---------- Plain soft background (no blurred blobs) ---------- */
+body::before, body::after { display: none !important; content: none !important; }
+body { background: var(--bg); }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
