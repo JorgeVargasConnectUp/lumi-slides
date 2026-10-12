@@ -1212,6 +1212,19 @@ body { background: var(--bg); }
 .ext-copy:active { transform: translateY(3px); box-shadow: none; }
 .ext-copy.done { background: var(--c); border-color: var(--c); color: #fff; box-shadow: 0 3px 0 var(--cd); }
 
+/* ---------- Setup grid variants ---------- */
+.setup-grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.setup-grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .setup-grid.four { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .setup-grid.two, .setup-grid.four { grid-template-columns: 1fr; } }
+.mini-steps { margin: 2px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; }
+.mini-steps li::marker { color: var(--c); font-weight: 900; }
+.keys { margin-top: auto; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; font-weight: 800; }
+.keys kbd { font-size: 15px; padding: 4px 10px; border-radius: 8px; border-bottom-width: 3px; }
+.keys small { flex-basis: 100%; color: var(--muted); font-weight: 600; font-size: 13px; }
+.local-link { align-self: flex-start; font-weight: 900; font-size: 16px; text-decoration: none; color: #fff; background: var(--c); border-radius: 12px; padding: 6px 14px; box-shadow: 0 4px 0 var(--cd); transition: transform .1s ease, box-shadow .1s ease; }
+.local-link:hover { transform: translateY(2px); box-shadow: 0 2px 0 var(--cd); }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1542,17 +1555,33 @@ git config --global init.defaultBranch main</code></pre></div></div>
 <!-- PASO 2 -->
 <section class="slide" data-phase="1" id="f1-p2" data-day="Fase 1 · Paso 2" data-title="Tu copia de Lumi">
   <p class="eyebrow">Paso 2</p>
-  <h2>Nace tu proyecto</h2>
-  <ul class="tldr">
-    <li><span>Entra a <a href="https://github.com/JorgeVargasConnectUp/lumi-beauty-project" target="_blank" rel="noopener">la plantilla de Lumi</a> → botón verde <b>Use this template</b> → <b>Create a new repository</b>.</span></li>
-    <li><span>Owner: tu cuenta. Nombre: <code>lumi-beauty-center</code>. Visibilidad: <b>Public</b>. → Create repository.</span></li>
-    <li><span>Luego, en la terminal (cambiando <code>&lt;tu-usuario&gt;</code> por el tuyo):</span></li>
-  </ul>
-  <div class="code"><div class="code-head"><span>terminal (en el Escritorio)</span><button class="copy" type="button">Copiar</button></div><pre><code>git clone https://github.com/&lt;tu-usuario&gt;/lumi-beauty-center.git
-cd lumi-beauty-center
-pnpm install
-pnpm dev</code></pre></div>
-  <p class="muted">Si abres <code>http://localhost:5173</code> deberías ver la tarjeta de Lumi. Prueba el botón de la luna: cambia a modo oscuro.</p>
+  <h2>Nace tu proyecto 🌱</h2>
+  <div class="setup-grid two stagger">
+    <div class="setup-card"><div class="tool-top"><span class="tool-n">1</span><b>Crea tu copia en GitHub</b></div>
+      <ul class="mini-steps">
+        <li>Entra a <a href="https://github.com/JorgeVargasConnectUp/lumi-beauty-project" target="_blank" rel="noopener">la plantilla de Lumi</a></li>
+        <li>Botón verde <b>Use this template</b> → <b>Create a new repository</b></li>
+        <li>Nombre: <code>lumi-beauty-center</code> · Visibilidad: <b>Public</b></li>
+        <li><b>Create repository</b> ✅</li>
+      </ul>
+    </div>
+    <div class="setup-card"><div class="tool-top"><span class="tool-n">2</span><b>Descárgala a tu computador</b></div><span class="tool-q">En una terminal, cambiando <code>&lt;tu-usuario&gt;</code> por el tuyo:</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>git clone https://github.com/&lt;tu-usuario&gt;/lumi-beauty-center.git
+cd lumi-beauty-center</code></pre></div></div>
+  </div>
+  <p class="muted tip">💡 Hazlo en una carpeta fácil de encontrar, como el Escritorio o <code>Documentos/proyectos</code>.</p>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Paso 2" data-title="Ábrelo en VS Code">
+  <p class="eyebrow">Paso 2 · manos a la obra</p>
+  <h2>Ábrelo en VS Code y arráncalo 🚀</h2>
+  <div class="setup-grid four stagger">
+    <div class="setup-card"><div class="tool-top"><span class="tool-n">1</span><b>Abre el proyecto</b></div><span class="tool-q">Desde la carpeta del proyecto, o en VS Code: <b>File → Open Folder</b>.</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>code .</code></pre></div></div>
+    <div class="setup-card"><div class="tool-top"><span class="tool-n">2</span><b>Abre la terminal de VS Code</b></div><span class="tool-q">Así tienes todo en un solo lugar.</span><div class="keys"><kbd>Ctrl</kbd> + <kbd>ñ</kbd><small>o <b>Terminal → New Terminal</b></small></div></div>
+    <div class="setup-card"><div class="tool-top"><span class="tool-n">3</span><b>Instala y arranca</b></div><span class="tool-q">La primera vez instala todo; luego solo <code>pnpm dev</code>.</span><div class="code"><div class="code-head"><span>terminal de VS Code</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm install
+pnpm dev</code></pre></div></div>
+    <div class="setup-card"><div class="tool-top"><span class="tool-n">4</span><b>Mírala en el navegador</b></div><span class="tool-q">Abre el link que muestra la terminal:</span><a class="local-link" href="http://localhost:5173" target="_blank" rel="noopener">localhost:5173 ↗</a><span class="tool-q">Deberías ver la tarjeta de Lumi. Prueba la 🌙 para el modo oscuro.</span></div>
+  </div>
+  <p class="muted tip">💡 Deja esa terminal abierta mientras trabajas: cada vez que guardes, la página se actualiza sola. Para detenerla, <kbd>Ctrl</kbd> + <kbd>C</kbd>.</p>
 </section>
 
 <section class="slide" data-phase="1" data-day="Fase 1 · Paso 2" data-title="Publica en Vercel">
