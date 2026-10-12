@@ -845,6 +845,12 @@ main, .topbar-inner, .nav-inner { max-width: 1440px; }
 .freedom-swatches i:nth-child(5) { background: var(--p5); animation-delay: .6s; }
 @keyframes bob { 50% { transform: translateY(-6px); } }
 
+/* ---------- Friendly hero ---------- */
+.slide h1.mega .wave { display: inline-block; -webkit-text-fill-color: initial; color: initial; background: none; transform-origin: 70% 75%; animation: wave 2.4s ease-in-out .6s infinite; }
+@keyframes wave { 0%, 60%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(16deg); } 20%, 40% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+.hello-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.hello-chips span { font-size: 16px; font-weight: 600; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; box-shadow: var(--shadow); }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -880,8 +886,13 @@ img { max-width: 100%; }
 <!-- INICIO -->
 <section class="slide s-hero" data-phase="1" data-day="Fase 1 · Inicio" data-title="Bienvenida">
   <p class="eyebrow">Fase 1 · a tu ritmo</p>
-  <h1 class="mega">¡Hola, Brygith!</h1>
-  <p class="lead big">Qué bueno tenerte en el equipo.</p>
+  <h1 class="mega">¡Hola, Brygith! <span class="wave" aria-hidden="true">👋</span></h1>
+  <p class="lead big">¡Qué alegría tenerte en el equipo! 🎉 Vamos a construir algo muy bonito juntos ✨</p>
+  <div class="hello-chips stagger">
+    <span>💅 Tú pones el mundo de la belleza</span>
+    <span>💻 Yo te acompaño con el código</span>
+    <span>🚀 Y juntos la hacemos realidad</span>
+  </div>
   <div class="profile">
     <span class="profile-photo"><img src="https://avatars.githubusercontent.com/u/71688330?v=4&amp;s=256" loading="eager" referrerpolicy="no-referrer" alt="Jorge Vargas" width="96" height="96"></span>
     <div class="profile-info">
