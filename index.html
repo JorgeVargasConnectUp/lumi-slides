@@ -1135,6 +1135,11 @@ body { background: var(--bg); }
 .help-btn { font-size: 13px; padding: 6px 12px; border-radius: 12px; }
 .nav-inner { padding-block: 10px; }
 
+/* ---------- Side-by-side code windows: equal width and height ---------- */
+.cols:has(> .code):not(:has(> :not(.code))) { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important; align-items: stretch; }
+.cols:has(> .code):not(:has(> :not(.code))) > .code { display: flex; flex-direction: column; }
+.cols:has(> .code):not(:has(> :not(.code))) > .code pre { flex: 1; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
