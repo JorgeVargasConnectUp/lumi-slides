@@ -1146,6 +1146,30 @@ body { background: var(--bg); }
 .layer-list .lt { justify-self: start; }
 .layer-list em { font-style: normal; color: var(--ink); }
 
+/* ---------- Layer colors from the phase palette ---------- */
+:root {
+  --l-domain-bg: var(--p5t) !important; --l-domain-fg: var(--p5d) !important;
+  --l-app-bg: var(--p3t) !important;    --l-app-fg: var(--p3d) !important;
+  --l-infra-bg: var(--p2t) !important;  --l-infra-fg: var(--p2d) !important;
+  --l-ui-bg: var(--p4t) !important;     --l-ui-fg: var(--p4d) !important;
+  --r-domain: color-mix(in srgb, var(--p5) 26%, var(--surface));
+  --r-app: color-mix(in srgb, var(--p3) 18%, var(--surface));
+  --r-infra: color-mix(in srgb, var(--p2) 18%, var(--surface));
+  --r-ui: color-mix(in srgb, var(--p4) 16%, var(--surface));
+}
+.layer-domain, .layer-application, .layer-infrastructure, .layer-ui { border: 1.5px solid currentColor; border-color: color-mix(in srgb, currentColor 30%, transparent); }
+.arch-svg .ring-domain { fill: var(--r-domain); }
+.arch-svg .ring-app { fill: var(--r-app); }
+.arch-svg .ring-infra { fill: var(--r-infra); }
+.arch-svg .ring-ui { fill: var(--r-ui); }
+.arch-svg .ring-ui, .arch-svg .ring-infra, .arch-svg .ring-app, .arch-svg .ring-domain { stroke: var(--surface); stroke-width: 5; }
+.arch-svg .t-domain { stroke: var(--r-domain); }
+.arch-svg .t-app { stroke: var(--r-app); }
+.arch-svg .t-infra { stroke: var(--r-infra); }
+.arch-svg .t-ui { stroke: var(--r-ui); }
+.arch-svg .slice-lines line { stroke: var(--muted); opacity: .6; }
+.arch-svg .t-slice { stroke: var(--bg); }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
