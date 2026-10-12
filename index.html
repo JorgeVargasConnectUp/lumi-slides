@@ -1115,6 +1115,11 @@ body { background: var(--bg); }
 .tool-cmd:active { transform: translateY(3px); box-shadow: none; }
 .tool-cmd.done .tool-cmd-lbl { background: var(--c); color: #fff; }
 
+/* ---------- Full-width command bar at the bottom of the card ---------- */
+.tool-cmd { align-self: stretch; justify-content: space-between; margin-top: auto; padding: 6px 6px 6px 12px; }
+.tool-cmd code { font-size: 14px; }
+.tool-cmd + .tool-actions { margin-top: 0; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
