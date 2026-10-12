@@ -1110,7 +1110,7 @@ body { background: var(--bg); }
 /* ---------- Copyable commands ---------- */
 .tool-cmd { display: inline-flex; align-items: center; gap: 10px; align-self: flex-start; cursor: pointer; background: var(--code-bg); color: var(--code-fg); border: 2px solid var(--code-bg); border-radius: 10px; padding: 4px 6px 4px 10px; box-shadow: 0 3px 0 #00000040; transition: transform .1s ease, box-shadow .1s ease; font: inherit; }
 .tool-cmd code { background: none; color: inherit; padding: 0; font-size: 13px; font-weight: 600; }
-.tool-cmd-lbl { font-size: 11px; font-weight: 800; background: #ffffff1f; border-radius: 7px; padding: 2px 7px; white-space: nowrap; }
+.tool-cmd-lbl { display: grid; place-items: center; width: 24px; height: 24px; background: #ffffff1f; border-radius: 7px; }
 .tool-cmd:hover { transform: translateY(1px); box-shadow: 0 2px 0 #00000040; }
 .tool-cmd:active { transform: translateY(3px); box-shadow: none; }
 .tool-cmd.done .tool-cmd-lbl { background: var(--c); color: #fff; }
@@ -1366,7 +1366,7 @@ img { max-width: 100%; }
     <div class="tool-card">
       <div class="tool-top"><span class="tool-n">2</span><b>Git</b></div>
       <span class="tool-q">Abre una terminal y escribe:</span>
-      <button class="tool-cmd" type="button" data-copy="git --version" title="Copiar comando"><code>git --version</code><span class="tool-cmd-lbl">📋 Copiar</span></button>
+      <button class="tool-cmd" type="button" data-copy="git --version" title="Copiar comando"><code>git --version</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button>
       <div class="tool-actions">
         <label class="tool-check"><input type="checkbox" id="f1-tool-git"><span>Ya lo tengo</span></label>
         <a class="tool-get" href="https://git-scm.com/downloads" target="_blank" rel="noopener">Instalar ↗</a>
@@ -1375,7 +1375,7 @@ img { max-width: 100%; }
     <div class="tool-card">
       <div class="tool-top"><span class="tool-n">3</span><b>Node.js LTS</b></div>
       <span class="tool-q">Debe salir v20 o superior:</span>
-      <button class="tool-cmd" type="button" data-copy="node -v" title="Copiar comando"><code>node -v</code><span class="tool-cmd-lbl">📋 Copiar</span></button>
+      <button class="tool-cmd" type="button" data-copy="node -v" title="Copiar comando"><code>node -v</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button>
       <div class="tool-actions">
         <label class="tool-check"><input type="checkbox" id="f1-tool-node"><span>Ya lo tengo</span></label>
         <a class="tool-get" href="https://nodejs.org/en/download" target="_blank" rel="noopener">Instalar ↗</a>
@@ -1384,7 +1384,7 @@ img { max-width: 100%; }
     <div class="tool-card">
       <div class="tool-top"><span class="tool-n">4</span><b>VS Code</b></div>
       <span class="tool-q">Revisa que abra y agrega ESLint, Prettier, Tailwind CSS IntelliSense y Error Lens.</span>
-      <button class="tool-cmd" type="button" data-copy="code --version" title="Copiar comando"><code>code --version</code><span class="tool-cmd-lbl">📋 Copiar</span></button>
+      <button class="tool-cmd" type="button" data-copy="code --version" title="Copiar comando"><code>code --version</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button>
       <div class="tool-actions">
         <label class="tool-check"><input type="checkbox" id="f1-tool-vscode"><span>Ya lo tengo</span></label>
         <a class="tool-get" href="https://code.visualstudio.com/" target="_blank" rel="noopener">Instalar ↗</a>
@@ -3074,7 +3074,8 @@ createMutation.mutate(values, {
     var lbl = btn.querySelector('.tool-cmd-lbl');
     btn.addEventListener('click', function () {
       var text = btn.getAttribute('data-copy');
-      function ok() { btn.classList.add('done'); lbl.textContent = '✓ Copiado'; setTimeout(function () { btn.classList.remove('done'); lbl.textContent = '📋 Copiar'; }, 1600); }
+      var ICON = lbl.innerHTML; var CHECK = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>';
+      function ok() { btn.classList.add('done'); lbl.innerHTML = CHECK; setTimeout(function () { btn.classList.remove('done'); lbl.innerHTML = ICON; }, 1600); }
       function fallback() { var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (e) {} ta.remove(); }
       if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
     });
