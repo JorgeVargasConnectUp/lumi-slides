@@ -1120,6 +1120,21 @@ body { background: var(--bg); }
 .tool-cmd code { font-size: 14px; }
 .tool-cmd + .tool-actions { margin-top: 0; }
 
+/* ---------- Setup step cards ---------- */
+.setup-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.7fr); gap: 14px; align-items: stretch; }
+@media (max-width: 980px) { .setup-grid { grid-template-columns: 1fr; } }
+.setup-card { display: flex; flex-direction: column; gap: 8px; background: var(--surface); border: 2px solid var(--line); border-bottom-width: 4px; border-radius: 20px; padding: 16px; min-width: 0; }
+.setup-card .tool-top b { font: 900 18px/1.2 var(--font-display); }
+.setup-card .code { margin-top: auto; }
+.setup-card .code pre { font-size: 13px; padding: 8px 14px 12px; }
+.setup-card .code-head { padding-top: 8px; }
+.tip { font-size: 14px; }
+
+/* ---------- Smaller nav buttons ---------- */
+.nav-btn { font-size: 13px; padding: 8px 16px; border-radius: 12px; }
+.help-btn { font-size: 13px; padding: 6px 12px; border-radius: 12px; }
+.nav-inner { padding-block: 10px; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1410,21 +1425,16 @@ img { max-width: 100%; }
 
 <section class="slide" data-phase="1" data-day="Fase 1 · Paso 1" data-title="pnpm, yarn y Git">
   <p class="eyebrow">Paso 1</p>
-  <h2>Revisemos que todo quedó bien</h2>
-  <div class="code"><div class="code-head"><span>terminal nueva</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c"># package managers used in the team (Lumi uses pnpm)</span>
-npm install -g pnpm yarn
-
-<span class="c"># each one must print a version</span>
-git --version
-node -v
-pnpm -v
-yarn -v
-
-<span class="c"># once, with your GitHub email</span>
-git config --global user.name <span class="s">"Brygith Arboleda"</span>
-git config --global user.email <span class="s">"tu-correo-de-github@ejemplo.com"</span>
-git config --global init.defaultBranch main</code></pre></div>
-  <p class="muted">Si aparece "no se reconoce el comando", no pasa nada: abre una terminal nueva o reinicia el computador. Si PowerShell no deja ejecutar <code>pnpm</code> o <code>yarn</code>, prueba en <b>Command Prompt</b> (cmd).</p>
+  <h2>Últimos detalles: pnpm, yarn y Git ⚙️</h2>
+  <div class="setup-grid stagger">
+    <div class="setup-card"><div class="tool-top"><span class="tool-n">1</span><b>Instala pnpm y yarn</b></div><span class="tool-q">Los gestores de paquetes del equipo. Lumi usa pnpm.</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>npm install -g pnpm yarn</code></pre></div></div>
+    <div class="setup-card"><div class="tool-top"><span class="tool-n">2</span><b>Comprueba</b></div><span class="tool-q">Cada uno debe mostrar un número de versión.</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm -v
+yarn -v</code></pre></div></div>
+    <div class="setup-card wide"><div class="tool-top"><span class="tool-n">3</span><b>Preséntate a Git</b></div><span class="tool-q">Una sola vez, con tu nombre y el correo de tu GitHub.</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>git config --global user.name <span class="s">"Brygith Arboleda"</span>
+git config --global user.email <span class="s">"tu-correo@ejemplo.com"</span>
+git config --global init.defaultBranch main</code></pre></div></div>
+  </div>
+  <p class="muted tip">💡 ¿"No se reconoce el comando"? Abre una terminal nueva o reinicia el computador. Si PowerShell no deja ejecutar <code>pnpm</code>, prueba en <b>Command Prompt</b>.</p>
   <ul class="checklist">
     <li><label><input type="checkbox" id="f1-c-p1"><span>Paso 1 listo: cuenta creada, todo instalado y Git configurado</span></label></li>
   </ul>
