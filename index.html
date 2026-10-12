@@ -1021,6 +1021,29 @@ body:not([data-phase]) .progress-bar { background: var(--spectrum); }
 main { padding-block: 24px 20px; }
 .nav-inner { padding-block: 12px; }
 
+/* ---------- Press-on-hover buttons (edge drawn with box-shadow: no layout shift) ---------- */
+.nav-btn, .ghost-btn, .help-btn, .levels button, .profile-links a, .copy {
+  --btn-edge: var(--line);
+  border-bottom-width: 2px !important;
+  box-shadow: 0 4px 0 var(--btn-edge) !important;
+  transform: translateY(0);
+  transition: transform .1s ease, box-shadow .1s ease, background-color .15s ease, color .15s ease, border-color .15s ease !important;
+}
+.nav-btn.primary { --btn-edge: var(--cd); border-bottom-color: var(--c) !important; }
+:root[data-theme="dark"] .nav-btn.primary { --btn-edge: color-mix(in srgb, var(--c) 55%, #000); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .nav-btn.primary { --btn-edge: color-mix(in srgb, var(--c) 55%, #000); } }
+.continue .nav-btn.primary { --btn-edge: color-mix(in srgb, var(--c) 35%, #ffffff); border-bottom-color: #fff !important; }
+.profile-links a, .levels button[aria-pressed="true"] { --btn-edge: var(--cm); }
+.levels button[aria-pressed="true"] { --btn-edge: var(--c); }
+.copy { --btn-edge: #ffffff30; }
+.nav-btn:not(:disabled):hover, .ghost-btn:hover, .help-btn:hover, .levels button:hover, .profile-links a:hover, .copy:hover {
+  transform: translateY(2px) !important; box-shadow: 0 2px 0 var(--btn-edge) !important; filter: none;
+}
+.nav-btn:not(:disabled):active, .ghost-btn:active, .help-btn:active, .levels button:active, .profile-links a:active, .copy:active {
+  transform: translateY(4px) !important; box-shadow: 0 0 0 var(--btn-edge) !important;
+}
+.nav-btn:disabled { box-shadow: 0 4px 0 var(--line) !important; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
