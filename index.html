@@ -1140,6 +1140,12 @@ body { background: var(--bg); }
 .cols:has(> .code):not(:has(> :not(.code))) > .code { display: flex; flex-direction: column; }
 .cols:has(> .code):not(:has(> :not(.code))) > .code pre { flex: 1; }
 
+/* ---------- Layer list ---------- */
+.layer-list { display: grid; grid-template-columns: max-content 1fr; gap: 6px 12px; margin-top: 8px; align-items: center; }
+.layer-list > span { display: contents; }
+.layer-list .lt { justify-self: start; }
+.layer-list em { font-style: normal; color: var(--ink); }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1523,7 +1529,13 @@ git push -u origin feat/treatments-domain</code></pre></div>
       </svg>
     </figure>
     <ul class="tldr">
-      <li><span><b>Capas (los círculos).</b> En el centro, <span class="lt layer-domain">domain</span>: qué son las cosas. Alrededor, <span class="lt layer-application">application</span>: qué puede hacer la app. Afuera, lo que se conecta con el mundo: <span class="lt layer-ui">ui</span> (lo que ve la persona) e <span class="lt layer-infrastructure">infrastructure</span> (de dónde vienen los datos).</span></li>
+      <li><span><b>Capas (los círculos), de adentro hacia afuera:</b>
+        <span class="layer-list">
+          <span><span class="lt layer-domain">domain</span><em>qué son las cosas</em></span>
+          <span><span class="lt layer-application">application</span><em>qué puede hacer la app</em></span>
+          <span><span class="lt layer-ui">ui</span><em>lo que ve la persona</em></span>
+          <span><span class="lt layer-infrastructure">infrastructure</span><em>de dónde vienen los datos</em></span>
+        </span></span></li>
       <li><span><b>La regla de oro:</b> las dependencias apuntan hacia adentro. <code>domain</code> no conoce a nadie; todos lo conocen a él.</span></li>
       <li><span><b>Slices (las líneas punteadas).</b> Cada feature es una rebanada que atraviesa todas las capas: tratamientos, clientas, citas.</span></li>
     </ul>
