@@ -755,11 +755,11 @@ main, .topbar-inner, .nav-inner { max-width: 1440px; }
 .note span { color: var(--ink); opacity: .85; }
 
 /* git graph */
-.git-fig { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px 18px 8px; box-shadow: var(--shadow); }
-.git-svg { width: 100%; height: auto; display: block; }
+.git-fig { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px 18px 10px; box-shadow: var(--shadow); }
+.git-svg { width: 100%; height: auto; max-height: 220px; display: block; overflow: visible; }
 .g-main { stroke: var(--muted); stroke-width: 5; stroke-linecap: round; opacity: .55; }
 .g-label { font: 700 16px var(--font-mono); fill: var(--muted); }
-.g-branch path { fill: none; stroke: var(--c); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 520; stroke-dashoffset: 520; }
+.g-branch path { fill: none; stroke: var(--c); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 420; stroke-dashoffset: 420; }
 .g-branch circle { fill: var(--surface); stroke: var(--c); stroke-width: 4; opacity: 0; }
 .g-day { font: 800 20px var(--font-display); fill: var(--ink); text-anchor: middle; opacity: 0; }
 .g-pr rect { fill: var(--ok); }
@@ -966,28 +966,28 @@ img { max-width: 100%; }
   <p class="eyebrow">Tu rutina</p>
   <h2>Cada día: una rama y un PR</h2>
   <figure class="git-fig">
-    <svg class="git-svg" viewBox="0 0 960 230" role="img" aria-label="La rama main con tres ramas, una por día, que vuelven a main con un pull request">
-      <line class="g-main" x1="20" y1="180" x2="940" y2="180"/>
-      <text class="g-label" x="24" y="212">main</text>
+    <svg class="git-svg" viewBox="0 0 960 160" role="img" aria-label="La rama main con tres ramas, una por día, que vuelven a main con un pull request">
+      <line class="g-main" x1="20" y1="120" x2="940" y2="120"/>
+      <text class="g-label" x="24" y="150">main</text>
       <g class="g-branch b1">
-        <path d="M60 180 C100 180 100 80 140 80 L240 80 C280 80 280 180 320 180"/>
-        <circle cx="160" cy="80" r="7"/><circle cx="200" cy="80" r="7"/>
-        <text class="g-day" x="190" y="50">Día 1</text>
-        <g class="g-pr"><rect x="282" y="112" width="64" height="26" rx="13"/><text x="314" y="126">PR ✓</text></g>
+        <path d="M60 120 C100 120 100 50 140 50 L240 50 C280 50 280 120 320 120"/>
+        <circle cx="160" cy="50" r="7"/><circle cx="200" cy="50" r="7"/>
+        <text class="g-day" x="190" y="22">Día 1</text>
+        <g class="g-pr"><rect x="282" y="68" width="64" height="26" rx="13"/><text x="314" y="82">PR ✓</text></g>
       </g>
       <g class="g-branch b2">
-        <path d="M340 180 C380 180 380 80 420 80 L520 80 C560 80 560 180 600 180"/>
-        <circle cx="440" cy="80" r="7"/><circle cx="480" cy="80" r="7"/><circle cx="510" cy="80" r="7"/>
-        <text class="g-day" x="470" y="50">Día 2</text>
-        <g class="g-pr"><rect x="562" y="112" width="64" height="26" rx="13"/><text x="594" y="126">PR ✓</text></g>
+        <path d="M340 120 C380 120 380 50 420 50 L520 50 C560 50 560 120 600 120"/>
+        <circle cx="440" cy="50" r="7"/><circle cx="480" cy="50" r="7"/><circle cx="510" cy="50" r="7"/>
+        <text class="g-day" x="470" y="22">Día 2</text>
+        <g class="g-pr"><rect x="562" y="68" width="64" height="26" rx="13"/><text x="594" y="82">PR ✓</text></g>
       </g>
       <g class="g-branch b3">
-        <path d="M620 180 C660 180 660 80 700 80 L800 80 C840 80 840 180 880 180"/>
-        <circle cx="730" cy="80" r="7"/>
-        <text class="g-day" x="750" y="50">Día 3</text>
-        <g class="g-pr"><rect x="842" y="112" width="64" height="26" rx="13"/><text x="874" y="126">PR ✓</text></g>
+        <path d="M620 120 C660 120 660 50 700 50 L800 50 C840 50 840 120 880 120"/>
+        <circle cx="730" cy="50" r="7"/>
+        <text class="g-day" x="750" y="22">Día 3</text>
+        <g class="g-pr"><rect x="842" y="68" width="64" height="26" rx="13"/><text x="874" y="82">PR ✓</text></g>
       </g>
-      <circle class="g-node" cx="320" cy="180" r="9"/><circle class="g-node" cx="600" cy="180" r="9"/><circle class="g-node" cx="880" cy="180" r="9"/>
+      <circle class="g-node" cx="320" cy="120" r="9"/><circle class="g-node" cx="600" cy="120" r="9"/><circle class="g-node" cx="880" cy="120" r="9"/>
     </svg>
   </figure>
   <div class="note-row stagger">
