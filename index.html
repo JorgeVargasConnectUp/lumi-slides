@@ -863,6 +863,34 @@ main, .topbar-inner, .nav-inner { max-width: 1440px; }
 .s-hero .profile-links a { font-size: 12px; padding: 4px 10px; }
 .s-hero .hint { font-size: 13px; }
 
+/* ---------- Getting to know you ---------- */
+.ask-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 900px) { .ask-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .ask-grid { grid-template-columns: 1fr; } }
+.ask { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 6px; box-shadow: var(--shadow); overflow: hidden; transition: transform .2s ease, border-color .2s ease; }
+.ask::before { content: ""; position: absolute; inset: 0 0 auto; height: 4px; background: var(--c); }
+.ask:hover { transform: translateY(-3px) rotate(-.3deg); border-color: var(--cm); }
+.ask-emoji { font-size: 30px; line-height: 1; }
+.ask b { font: 800 19px/1.2 var(--font-display); color: var(--cd); }
+.ask > span:last-child { color: var(--muted); font-size: 15px; line-height: 1.45; }
+
+.skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; }
+@media (max-width: 900px) { .skills { grid-template-columns: 1fr; } }
+.skill { display: grid; grid-template-columns: 150px 1fr; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 8px 10px 8px 14px; box-shadow: var(--shadow); }
+.skill > b { font-size: 15px; font-weight: 700; }
+.skill > b small { display: block; font-weight: 500; color: var(--muted); font-size: 12px; }
+.levels { display: flex; flex-wrap: wrap; gap: 6px; }
+.levels button { font: 600 13px var(--font-body); color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; cursor: pointer; transition: all .15s ease; }
+.levels button:hover { border-color: var(--c); color: var(--cd); }
+.levels button[aria-pressed="true"] { background: var(--c); border-color: var(--c); color: #fff; transform: scale(1.05); box-shadow: 0 6px 14px -6px var(--c); }
+:root[data-theme="dark"] .levels button[aria-pressed="true"] { color: var(--accent-ink); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .levels button[aria-pressed="true"] { color: var(--accent-ink); } }
+@media (max-width: 560px) { .skill { grid-template-columns: 1fr; gap: 6px; } }
+.skills-foot { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.skills-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.skills { gap: 8px 14px; }
+.skill { padding: 6px 8px 6px 14px; border-radius: 14px; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -918,6 +946,33 @@ img { max-width: 100%; }
     </div>
   </div>
   <p class="hint">Avanza con <kbd>←</kbd> <kbd>→</kbd> · lo que marques se guarda</p>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Cuéntame de ti">
+  <p class="eyebrow">Antes de arrancar</p>
+  <h2>Cuéntame de ti ☕</h2>
+  <p class="lead">Quiero conocerte un poco. Charlemos con calma, no hay respuestas malas.</p>
+  <div class="ask-grid stagger">
+    <div class="ask t1"><span class="ask-emoji">🙋‍♀️</span><b>¿Quién es Brygith?</b><span>De dónde eres, qué te gusta hacer cuando no estás programando.</span></div>
+    <div class="ask t2"><span class="ask-emoji">🎓</span><b>Tu paso por el SENA</b><span>¿Qué has aprendido? ¿Qué es lo que más te ha gustado?</span></div>
+    <div class="ask t3"><span class="ask-emoji">💅</span><b>Tu mundo de la estética</b><span>¿Cómo pasaste de la cosmetología a la programación?</span></div>
+    <div class="ask t4"><span class="ask-emoji">🛠️</span><b>Tus proyectos</b><span>Vi que trabajaste en CASS con PHP, MySQL y JS. ¡Cuéntame cómo fue!</span></div>
+    <div class="ask t5"><span class="ask-emoji">🎯</span><b>Tus metas</b><span>¿Qué te gustaría aprender o lograr en estas prácticas?</span></div>
+    <div class="ask t2"><span class="ask-emoji">🧠</span><b>Cómo aprendes mejor</b><span>¿Videos, documentación, haciendo, preguntando?</span></div>
+  </div>
+</section>
+
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="¿Qué tanto conoces?">
+  <p class="eyebrow">Tu punto de partida</p>
+  <h2>¿Qué tanto conoces? 🧭</h2>
+  <div class="skills-head">
+    <p class="lead">Marca con sinceridad. Esto es solo para saber por dónde arrancamos 💛</p>
+    <div class="skills-foot">
+      <span class="muted" id="skillsCount"></span>
+      <button class="nav-btn primary" type="button" id="copySkills">📋 Copiar mis respuestas</button>
+    </div>
+  </div>
+  <div class="skills" id="skills"></div>
 </section>
 
 <section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Tu proyecto: Lumi">
@@ -2662,6 +2717,74 @@ createMutation.mutate(values, {
   var target = hash && document.getElementById(hash);
   var idx = target ? slides.indexOf(target.closest('.slide')) : -1;
   if (idx >= 0) go(idx); else showHome();
+})();
+</script>
+<script>
+(function () {
+  var box = document.getElementById('skills');
+  if (!box) return;
+  var KEY = 'lumi-guide:skills';
+  var scale = ['Nada aún', 'Lo básico', 'Me defiendo', 'Lo domino'];
+  var SKILLS = [
+    { k: 'git', name: 'Git', opts: scale },
+    { k: 'github', name: 'Cuenta de GitHub', opts: ['No tengo', 'Sí tengo'] },
+    { k: 'terminal', name: 'Terminal (consola)', opts: scale },
+    { k: 'html', name: 'HTML y CSS', opts: scale },
+    { k: 'js', name: 'JavaScript', opts: scale },
+    { k: 'ts', name: 'TypeScript', opts: scale },
+    { k: 'react', name: 'React', opts: scale },
+    { k: 'tailwind', name: 'Tailwind CSS', opts: scale },
+    { k: 'vscode', name: 'VS Code', opts: scale },
+    { k: 'ai', name: 'IA para programar', opts: scale }
+  ];
+  var answers = {};
+  try { answers = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { answers = {}; }
+  var count = document.getElementById('skillsCount');
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(answers)); } catch (e) {} }
+  function updateCount() {
+    var n = SKILLS.filter(function (s) { return answers[s.k] != null; }).length;
+    count.textContent = n === SKILLS.length ? '¡Listo! Ya respondiste todo 🙌' : n + ' de ' + SKILLS.length + ' respondidas';
+  }
+  SKILLS.forEach(function (s) {
+    var row = document.createElement('div');
+    row.className = 'skill';
+    var label = document.createElement('b');
+    label.textContent = s.name;
+    if (s.hint) { var sm = document.createElement('small'); sm.textContent = s.hint; label.appendChild(sm); }
+    var lv = document.createElement('div');
+    lv.className = 'levels';
+    lv.setAttribute('role', 'group');
+    lv.setAttribute('aria-label', s.name);
+    s.opts.forEach(function (o, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = o;
+      b.setAttribute('aria-pressed', String(answers[s.k] === i));
+      b.addEventListener('click', function () {
+        answers[s.k] = i;
+        lv.querySelectorAll('button').forEach(function (x, j) { x.setAttribute('aria-pressed', String(j === i)); });
+        save(); updateCount();
+      });
+      lv.appendChild(b);
+    });
+    row.appendChild(label); row.appendChild(lv);
+    box.appendChild(row);
+  });
+  updateCount();
+  document.getElementById('copySkills').addEventListener('click', function () {
+    var lines = ['Hola Jorge 👋 Este es mi punto de partida:', ''];
+    SKILLS.forEach(function (s) { lines.push('• ' + s.name + ': ' + (answers[s.k] != null ? s.opts[answers[s.k]] : '(sin responder)')); });
+    var text = lines.join('\n');
+    var toast = document.getElementById('toast');
+    function ok() { if (toast) { toast.textContent = 'Copiado ✅ Pégalo en un mensaje para Jorge'; toast.hidden = false; setTimeout(function () { toast.hidden = true; }, 3200); } }
+    if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(ok, fallback); } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); ok(); } catch (e) {}
+      ta.remove();
+    }
+  });
 })();
 </script>
 </body>
