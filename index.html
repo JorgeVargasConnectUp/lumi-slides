@@ -1660,6 +1660,7 @@ img { max-width: 100%; }
     <div class="ext-card"><span class="ext-emoji">📁</span><div class="ext-text"><b>Material Icon Theme</b><span class="ext-desc">Íconos para reconocer cada archivo.</span></div><button class="ext-copy" type="button" data-copy="Material Icon Theme" title="Copiar nombre" aria-label="Copiar nombre de Material Icon Theme"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></button></div>
   </div>
   <p class="muted tip">💡 Copia el nombre y búscalo en VS Code (Ctrl + Shift + X) → <b>Install</b>. Luego activa <b>Format On Save</b> y elige Prettier como formateador.</p>
+  <p class="muted tip">🔄 Para no repetir esto en otro computador, activa la sincronización de VS Code con tu cuenta de GitHub (<a href="#g-git-pc">ver cómo</a>).</p>
 </section>
 
 <section class="slide" data-phase="1" data-day="Fase 1 · Paso 1" data-title="pnpm, yarn y Git">
@@ -2938,7 +2939,8 @@ createMutation.mutate(values, {
     </div>
     <div class="travel-card"><b>🏠 Se queda en cada computador</b>
       <ul class="tldr">
-        <li><span>Git, Node, pnpm, yarn y VS Code con sus extensiones</span></li>
+        <li><span>Git, Node, pnpm, yarn y VS Code</span></li>
+        <li><span>Tus extensiones y ajustes de VS Code, a menos que actives la sincronización 👇</span></li>
         <li><span>Tu nombre y correo en Git (<code>git config</code>)</span></li>
         <li><span>La sesión de GitHub con la que haces push</span></li>
         <li><span>La carpeta del proyecto (<code>git clone</code>) y <code>node_modules</code> (<code>pnpm install</code>)</span></li>
@@ -2947,6 +2949,7 @@ createMutation.mutate(values, {
     </div>
   </div>
   <div class="callout"><i>⚠️</i><span>Antes de dejar un computador: <code>git add .</code> → <code>git commit</code> → <code>git push</code>. Lo que no subas, se queda ahí.</span></div>
+  <div class="callout"><i>🔄</i><span><b>Tus extensiones y ajustes de VS Code sí pueden viajar.</b> En el computador donde ya los tienes: ícono de cuenta (abajo a la izquierda) → <b>Backup and Sync Settings…</b> → inicia sesión con GitHub. En el otro computador, haz lo mismo con la misma cuenta y listo.</span></div>
 </section>
 
 <section class="slide" data-phase="g-git" id="g-git-nuevo" data-day="Guía Git · Otro computador" data-title="Computador nuevo en 5 pasos">
