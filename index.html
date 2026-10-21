@@ -1268,6 +1268,82 @@ body { background: var(--bg); }
 .nav-inner .help-btn { font: 800 13px var(--font-body); text-transform: uppercase; letter-spacing: .06em; padding: 8px 16px; border-radius: 12px; color: var(--muted); line-height: inherit; }
 .nav-inner .nav-btn, .nav-inner .help-btn { height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 0; white-space: pre; }
 
+
+/* ---------- Guías rápidas: color propio (pizarra) ---------- */
+:root { --pg: #3B4A63; --pgd: #1F2A3D; --pgt: #EDF1F7; --pgm: #C9D3E3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --pg: #9FB0CC; --pgd: #C9D6EA; --pgt: #1A2234; --pgm: #33405A; } }
+:root[data-theme="dark"] { --pg: #9FB0CC; --pgd: #C9D6EA; --pgt: #1A2234; --pgm: #33405A; }
+body[data-phase^="g-"], .tg { --c: var(--pg); --cd: var(--pgd); --ct: var(--pgt); --cm: var(--pgm); }
+.guide-card { --accent: var(--cd); --accent-soft: var(--ct); }
+
+/* home: guías */
+.guides { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 760px; margin: 8px auto 0; }
+@media (min-width: 900px) { .guides { max-width: none; margin: 0; } }
+.guides-head { display: flex; align-items: baseline; gap: 6px 12px; flex-wrap: wrap; }
+.guides-head h2 { font: 900 22px/1.2 var(--font-display); margin: 0; }
+.guides-head span { color: var(--muted); font-size: 14px; font-weight: 600; }
+.guide-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.guide-card { font: inherit; color: inherit; text-align: left; cursor: pointer; display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 14px; row-gap: 2px; align-items: center; background: var(--surface); border: 2px solid var(--line); border-bottom-width: 5px; border-radius: 20px; padding: 14px 16px; transition: transform .1s ease, border-color .15s ease; }
+.guide-card:hover { transform: translateY(-2px); border-color: var(--cm); }
+.guide-card:active { transform: translateY(2px); border-bottom-width: 2px; }
+.guide-emoji { grid-row: 1 / span 2; width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: var(--ct); border: 2px solid var(--cm); border-bottom-width: 4px; }
+.guide-card b { font: 900 18px/1.2 var(--font-display); align-self: end; }
+.guide-card small { color: var(--muted); font-size: 14px; line-height: 1.35; font-weight: 600; align-self: start; }
+.toc-group { font: 800 12px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 10px 6px 2px; }
+
+/* link a la guía (mismo color en cualquier fase) */
+.guide-link { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 14px; text-decoration: none; color: var(--pgd); background: var(--pgt); border: 2px solid var(--pgm); border-radius: 12px; padding: 6px 12px; box-shadow: 0 3px 0 var(--pgm); transition: transform .1s ease, box-shadow .1s ease; }
+.guide-link:hover { transform: translateY(2px); box-shadow: 0 1px 0 var(--pgm); }
+.guide-jump { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* "¿Qué acabo de ejecutar?" */
+.did { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); background: var(--ct); border: 2px dashed var(--cm); border-radius: 18px; overflow: hidden; }
+.did > div { display: flex; flex-direction: column; gap: 4px; padding: 12px 16px; font-size: 14px; line-height: 1.45; font-weight: 600; min-width: 0; }
+.did > div + div { border-left: 2px dashed var(--cm); }
+.did b { font: 900 15px/1.2 var(--font-display); color: var(--cd); }
+.did code, .callout code { background: var(--surface); overflow-wrap: anywhere; }
+@media (max-width: 760px) { .did { grid-template-columns: 1fr; } .did > div + div { border-left: 0; border-top: 2px dashed var(--cm); } }
+
+.callout { display: flex; gap: 12px; align-items: flex-start; background: var(--ct); border: 2px solid var(--cm); border-radius: 16px; padding: 12px 16px; font-size: 15px; font-weight: 600; line-height: 1.5; }
+.callout > i { font-style: normal; font-size: 20px; line-height: 1.3; flex: none; }
+
+/* los 4 lugares */
+.gflow { display: grid; grid-template-columns: minmax(0, 3.3fr) auto minmax(0, 1fr); gap: 10px; align-items: stretch; }
+.gf-zone { position: relative; border: 2px dashed var(--line); border-radius: 22px; padding: 34px 12px 12px; display: flex; }
+.gf-zone.cloud { border-color: var(--cm); background: var(--ct); }
+.gf-zone-lbl { position: absolute; top: 9px; left: 14px; font-size: 12px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.gf-row { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: stretch; }
+.gf-box { flex: 1; background: var(--surface); border: 2px solid var(--line); border-bottom-width: 4px; border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.gf-box b { font: 900 16px/1.2 var(--font-display); }
+.gf-box span { font-size: 13px; color: var(--muted); line-height: 1.35; font-weight: 600; }
+.gf-box.gh { border-color: var(--c); }
+.gf-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+.gf-arrow code { font-size: 12px; white-space: nowrap; background: var(--c); color: var(--surface); padding: 3px 8px; border-radius: 8px; }
+.gf-arrow::after { content: "→"; font: 900 22px/1 var(--font-body); color: var(--c); }
+@media (max-width: 860px) {
+  .gflow, .gf-row { grid-template-columns: 1fr; }
+  .gf-arrow { flex-direction: row; gap: 8px; }
+  .gf-arrow::after { content: "↓"; }
+}
+
+/* pasos numerados */
+.gsteps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; counter-reset: gs; }
+.gsteps > li { counter-increment: gs; position: relative; background: var(--surface); border: 2px solid var(--line); border-bottom-width: 4px; border-radius: 18px; padding: 12px 14px 12px 54px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.gsteps > li::before { content: counter(gs); position: absolute; left: 12px; top: 12px; width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; font: 900 16px var(--font-display); color: var(--surface); background: var(--c); }
+.gsteps b { font: 900 16px/1.25 var(--font-display); }
+.gsteps .cmds { display: flex; flex-wrap: wrap; gap: 6px; }
+.gsteps code { overflow-wrap: anywhere; }
+.gsteps > li > span:not(.cmds) { font-size: 14px; color: var(--muted); font-weight: 600; line-height: 1.4; }
+.btn-chip { font-style: normal; font-size: 13px; font-weight: 800; color: #fff; background: #1F883D; border-radius: 8px; padding: 3px 10px; }
+
+/* viaja / se queda */
+.travel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .travel { grid-template-columns: 1fr; } }
+.travel-card { background: var(--surface); border: 2px solid var(--line); border-bottom-width: 4px; border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.travel-card > b { font: 900 18px/1.2 var(--font-display); }
+.travel-card.yes { border-color: var(--c); }
+.travel-card .tldr { gap: 8px; font-size: 15px; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1299,6 +1375,10 @@ img { max-width: 100%; }
   <p class="lead">Cinco fases, a tu ritmo. Tu avance se guarda en este navegador: vuelve cuando quieras y sigue donde quedaste.</p>
   <div class="continue" id="continueBox"><p><small></small><b></b></p><button class="nav-btn primary" type="button"></button></div>
   <div class="phase-grid" id="phaseGrid"></div>
+  <div class="guides">
+    <div class="guides-head"><h2>Guías rápidas</h2><span>Para consultar cuando quieras, en cualquier fase.</span></div>
+    <div class="guide-grid" id="guideGrid"></div>
+  </div>
 </section>
 <div id="deck" hidden>
 <!-- ================= FASE 1 ================= -->
@@ -1557,7 +1637,7 @@ img { max-width: 100%; }
       </div>
     </div>
   </div>
-  <p class="muted">En los instaladores puedes dejar las opciones por defecto.</p>
+  <p class="muted">En los instaladores puedes dejar las opciones por defecto. Ojo: todo esto se instala <b>en cada computador</b> donde trabajes. Si cambias de equipo, mira la <a href="#g-git-pc">guía rápida de Git</a>.</p>
 </section>
 
 <section class="slide" data-phase="1" data-day="Fase 1 · Paso 1" data-title="Extensiones de VS Code">
@@ -1593,6 +1673,10 @@ yarn -v</code></pre></div></div>
 git config --global user.email <span class="s">"tu-correo@ejemplo.com"</span>
 git config --global init.defaultBranch main</code></pre></div></div>
   </div>
+  <div class="did">
+    <div><b>🔎 ¿Qué acabo de ejecutar?</b><span><code>npm install -g</code> instaló pnpm y yarn para todo tu computador. Los <code>git config</code> le dicen a Git quién eres: ese nombre y correo firman cada commit. Todo esto queda guardado solo en este computador.</span></div>
+    <div><b>✅ ¿Cómo lo compruebo?</b><span><code>git config --global --list</code> → deben aparecer tu <code>user.name</code> y tu <code>user.email</code>.</span></div>
+  </div>
   <p class="muted tip">💡 ¿"No se reconoce el comando"? Abre una terminal nueva o reinicia el computador. Si PowerShell no deja ejecutar <code>pnpm</code>, prueba en <b>Command Prompt</b>.</p>
   <ul class="checklist">
     <li><label><input type="checkbox" id="f1-c-p1"><span>Paso 1 listo: cuenta creada, todo instalado y Git configurado</span></label></li>
@@ -1615,6 +1699,10 @@ git config --global init.defaultBranch main</code></pre></div></div>
     <div class="setup-card"><div class="tool-top"><span class="tool-n">2</span><b>Descárgala a tu computador</b></div><label class="gh-field"><span>Tu usuario de GitHub</span><input type="text" id="ghUser" placeholder="ej. brygith-arboleda" autocomplete="off" spellcheck="false"></label><span class="tool-q">Luego copia y pégalo en una terminal:</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>git clone https://github.com/<span class="gh-user">&lt;tu-usuario&gt;</span>/lumi-beauty-center.git
 cd lumi-beauty-center</code></pre></div></div>
   </div>
+  <div class="did">
+    <div><b>🔎 ¿Qué acabo de ejecutar?</b><span><code>git clone</code> descargó tu repositorio y creó la carpeta <code>lumi-beauty-center</code>, ya conectada a tu GitHub (esa conexión se llama <code>origin</code>). <code>cd</code> te mete en esa carpeta: los comandos de Git solo funcionan dentro de ella.</span></div>
+    <div><b>✅ ¿Cómo lo compruebo?</b><span><code>git status</code> → dice <code>On branch main</code><br><code>git remote -v</code> → aparece la URL de tu repo</span></div>
+  </div>
   <p class="muted tip">💡 Hazlo en una carpeta fácil de encontrar, como el Escritorio o <code>Documentos/proyectos</code>.</p>
 </section>
 
@@ -1627,6 +1715,10 @@ cd lumi-beauty-center</code></pre></div></div>
     <div class="setup-card"><div class="tool-top"><span class="tool-n">3</span><b>Instala y arranca</b></div><span class="tool-q">La primera vez instala todo; luego solo <code>pnpm dev</code>.</span><div class="code"><div class="code-head"><span>terminal de VS Code</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm install
 pnpm dev</code></pre></div></div>
     <div class="setup-card"><div class="tool-top"><span class="tool-n">4</span><b>Mírala en el navegador</b></div><span class="tool-q">Abre el link que muestra la terminal:</span><a class="local-link" href="http://localhost:5173" target="_blank" rel="noopener">localhost:5173 ↗</a><span class="tool-q">Deberías ver la tarjeta de Lumi. Prueba la 🌙 para el modo oscuro.</span></div>
+  </div>
+  <div class="did">
+    <div><b>🔎 ¿Qué acabo de ejecutar?</b><span><code>pnpm install</code> descargó las librerías del proyecto en la carpeta <code>node_modules</code>. Esa carpeta no se sube a GitHub: en cada computador nuevo se instala otra vez. <code>pnpm dev</code> arranca la app solo en tu computador.</span></div>
+    <div><b>✅ ¿Cómo lo compruebo?</b><span>Ves la carpeta <code>node_modules</code> en VS Code y la terminal muestra <code>Local: http://localhost:5173</code>.</span></div>
   </div>
   <p class="muted tip">💡 Deja esa terminal abierta mientras trabajas: cada vez que guardes, la página se actualiza sola. Para detenerla, <kbd>Ctrl</kbd> + <kbd>C</kbd>.</p>
 </section>
@@ -1663,6 +1755,27 @@ git push -u origin feat/treatments-domain</code></pre></div>
     <li><span>El nombre de la rama cuenta lo que hiciste ese día. Si <code>lint</code> o <code>build</code> muestran errores, corrígelos antes del commit.</span></li>
     <li><span>En GitHub aparece <b>Compare &amp; pull request</b>. Vercel deja una vista previa en el PR; si al probarla todo funciona, puedes hacer el merge a <code>main</code> tú misma.</span></li>
   </ul>
+</section>
+
+<section class="slide" data-phase="1" id="f1-comandos" data-day="Fase 1 · Paso 2" data-title="Qué hace cada comando">
+  <p class="eyebrow">Tu rutina, línea por línea</p>
+  <h2>¿Qué hace cada comando? 🔎</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Comando</th><th>Qué hace</th><th>Cómo compruebas</th></tr></thead>
+      <tbody>
+        <tr><td><code>git checkout main</code></td><td>Te pasa a la rama principal</td><td><code>git status</code> → <code>On branch main</code></td></tr>
+        <tr><td><code>git pull</code></td><td>Trae lo nuevo de GitHub, como el merge de ayer</td><td><code>Already up to date</code> o la lista de lo que llegó</td></tr>
+        <tr><td><code>git checkout -b feat/…</code></td><td>Crea la rama del día y te pasa a ella</td><td><code>git status</code> → <code>On branch feat/…</code></td></tr>
+        <tr><td><code>pnpm format</code> · <code>lint</code> · <code>build</code></td><td>Ordena el código, busca errores y revisa que compile</td><td>Terminan sin errores en rojo</td></tr>
+        <tr><td><code>git add .</code></td><td>Prepara todos tus cambios para el commit</td><td><code>git status</code> → archivos en verde</td></tr>
+        <tr><td><code>git commit -m "…"</code></td><td>Guarda una "foto" de tus cambios, <b>solo en tu computador</b></td><td><code>git log --oneline</code> → tu commit de primero</td></tr>
+        <tr><td><code>git push -u origin feat/…</code></td><td>Sube tu rama a GitHub</td><td>En GitHub aparece <b>Compare &amp; pull request</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><i>⚠️</i><span>Hasta que haces <code>git push</code>, tus cambios solo existen en ese computador. ¿No sabes en qué vas? <code>git status</code> siempre te dice en qué rama estás y qué falta.</span></div>
+  <a class="guide-link" href="#g-git">📘 Guía rápida: Git y GitHub →</a>
 </section>
 
 <!-- PASO 3 -->
@@ -2735,6 +2848,142 @@ createMutation.mutate(values, {
   <p class="muted">Gracias por tu esfuerzo. — Jorge</p>
 </section>
 
+<!-- ================= GUÍAS RÁPIDAS ================= -->
+
+<section class="slide" data-phase="g-git" id="g-git" data-day="Guía Git · Lo básico" data-title="Git y GitHub">
+  <p class="eyebrow">Guía rápida · consúltala cuando quieras</p>
+  <h2>Git y GitHub, sin enredos 🌿</h2>
+  <div class="note-row stagger">
+    <div class="note"><b>💻 Git</b><span>Un programa en tu computador. Guarda "fotos" de tu proyecto (commits) y te deja trabajar en ramas.</span></div>
+    <div class="note"><b>☁️ GitHub</b><span>La página donde subes esas fotos. Desde ahí Vercel publica tu app y yo veo tu avance.</span></div>
+    <div class="note"><b>🔑 La regla de oro</b><span>GitHub solo ve lo que subes con <code>git push</code>. Lo demás vive solo en tu computador.</span></div>
+  </div>
+  <nav class="guide-jump" aria-label="En esta guía">
+    <a class="guide-link" href="#g-git-lugares">Los 4 lugares</a>
+    <a class="guide-link" href="#g-git-mirar">Comandos para mirar</a>
+    <a class="guide-link" href="#g-git-dia">Tu día, en orden</a>
+    <a class="guide-link" href="#g-git-pc">¿Otro computador?</a>
+    <a class="guide-link" href="#g-git-errores">Errores comunes</a>
+  </nav>
+</section>
+
+<section class="slide" data-phase="g-git" id="g-git-lugares" data-day="Guía Git · Lo básico" data-title="Los 4 lugares">
+  <p class="eyebrow">La idea clave</p>
+  <h2>Tus cambios pasan por 4 lugares</h2>
+  <div class="gflow">
+    <div class="gf-zone">
+      <span class="gf-zone-lbl">💻 En tu computador</span>
+      <div class="gf-row">
+        <div class="gf-box"><b>📝 Tus archivos</b><span>Lo que editas en VS Code</span></div>
+        <div class="gf-arrow"><code>git add</code></div>
+        <div class="gf-box"><b>📦 Preparados</b><span>Lo que irá en la próxima foto</span></div>
+        <div class="gf-arrow"><code>git commit</code></div>
+        <div class="gf-box"><b>📸 Tu historial</b><span>Tus commits, guardados en este computador</span></div>
+      </div>
+    </div>
+    <div class="gf-arrow"><code>git push</code></div>
+    <div class="gf-zone cloud">
+      <span class="gf-zone-lbl">☁️ En internet</span>
+      <div class="gf-box gh"><b>GitHub</b><span>Vercel lo publica y yo lo veo</span></div>
+    </div>
+  </div>
+  <div class="callout"><i>↩️</i><span><code>git pull</code> hace el camino de vuelta: trae a tu computador lo nuevo que hay en GitHub, por ejemplo el merge de tu PR.</span></div>
+  <ul class="tldr">
+    <li><span><code>git status</code> te dice dónde está cada cambio: <b>en rojo</b>, solo en tus archivos; <b>en verde</b>, preparado para el commit.</span></li>
+  </ul>
+</section>
+
+<section class="slide" data-phase="g-git" id="g-git-mirar" data-day="Guía Git · Comandos" data-title="Comandos para mirar">
+  <p class="eyebrow">Úsalos sin miedo</p>
+  <h2>Comandos para mirar 👀</h2>
+  <p>Estos solo muestran información, no cambian nada.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Comando</th><th>Te muestra</th></tr></thead>
+      <tbody>
+        <tr><td><code>git status</code></td><td>En qué rama estás y qué archivos cambiaron. <b>Tu brújula</b>: úsalo antes y después de cada comando.</td></tr>
+        <tr><td><code>git branch</code></td><td>Tus ramas. La que tiene <code>*</code> es en la que estás.</td></tr>
+        <tr><td><code>git log --oneline</code></td><td>Tus últimos commits, del más nuevo al más viejo. Sales con <kbd>q</kbd>.</td></tr>
+        <tr><td><code>git diff</code></td><td>Qué líneas cambiaste y aún no preparas. Sales con <kbd>q</kbd>.</td></tr>
+        <tr><td><code>git remote -v</code></td><td>A qué repositorio de GitHub está conectada la carpeta.</td></tr>
+        <tr><td><code>git config --global --list</code></td><td>Con qué nombre y correo firma Git en este computador.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="slide" data-phase="g-git" id="g-git-dia" data-day="Guía Git · Comandos" data-title="Tu día, en orden">
+  <p class="eyebrow">Ramas y PRs</p>
+  <h2>Tu día, en orden 🗓️</h2>
+  <ol class="gsteps">
+    <li><b>Empieza con main al día</b><span class="cmds"><code>git checkout main</code><code>git pull</code></span><span>Tu <code>main</code> no sabe del merge de ayer hasta que haces pull.</span></li>
+    <li><b>Crea la rama del día</b><span class="cmds"><code>git checkout -b feat/…</code></span><span>Una copia de main para trabajar sin miedo a dañarla.</span></li>
+    <li><b>Trabaja y guarda</b><span class="cmds"><code>git add .</code><code>git commit -m "…"</code></span><span>Puedes hacer varios commits en el día.</span></li>
+    <li><b>Súbela</b><span class="cmds"><code>git push -u origin feat/…</code></span><span>La primera vez con <code>-u</code>; después basta con <code>git push</code>.</span></li>
+    <li><b>Abre el PR en GitHub</b><span class="cmds"><i class="btn-chip">Compare &amp; pull request</i></span><span>Pides unir tu rama a main. Vercel deja una vista previa para probar.</span></li>
+    <li><b>Haz el merge</b><span class="cmds"><i class="btn-chip">Merge pull request</i></span><span>Tu trabajo llega a main y se publica. Mañana, de vuelta al paso 1.</span></li>
+  </ol>
+</section>
+
+<section class="slide" data-phase="g-git" id="g-git-pc" data-day="Guía Git · Otro computador" data-title="¿Cambiaste de computador?">
+  <p class="eyebrow">Ojo con esto</p>
+  <h2>¿Cambiaste de computador? 💻</h2>
+  <div class="travel">
+    <div class="travel-card yes"><b>☁️ Viaja contigo (está en GitHub)</b>
+      <ul class="tldr">
+        <li><span>Tu código, <b>pero solo lo que subiste con push</b></span></li>
+        <li><span>Tus ramas y tus PRs</span></li>
+        <li><span>Tu app publicada en Vercel</span></li>
+      </ul>
+    </div>
+    <div class="travel-card"><b>🏠 Se queda en cada computador</b>
+      <ul class="tldr">
+        <li><span>Git, Node, pnpm, yarn y VS Code con sus extensiones</span></li>
+        <li><span>Tu nombre y correo en Git (<code>git config</code>)</span></li>
+        <li><span>La sesión de GitHub con la que haces push</span></li>
+        <li><span>La carpeta del proyecto (<code>git clone</code>) y <code>node_modules</code> (<code>pnpm install</code>)</span></li>
+        <li><span>Los commits que no subiste</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><i>⚠️</i><span>Antes de dejar un computador: <code>git add .</code> → <code>git commit</code> → <code>git push</code>. Lo que no subas, se queda ahí.</span></div>
+</section>
+
+<section class="slide" data-phase="g-git" id="g-git-nuevo" data-day="Guía Git · Otro computador" data-title="Computador nuevo en 5 pasos">
+  <p class="eyebrow">Otro computador</p>
+  <h2>Computador nuevo en 5 pasos 🧰</h2>
+  <ol class="gsteps">
+    <li><b>Revisa las herramientas</b><span class="cmds"><code>git --version</code><code>node -v</code><code>pnpm -v</code></span><span>Si alguno falla, instálalo como en la <a href="#f1-p1">fase 1, paso 1</a>.</span></li>
+    <li><b>Preséntate a Git</b><span class="cmds"><code>git config --global user.name "…"</code><code>git config --global user.email "…"</code></span><span>Con el correo de tu GitHub.</span></li>
+    <li><b>Descarga tu proyecto</b><span class="cmds"><code>git clone &lt;link-de-tu-repo&gt;</code><code>cd lumi-beauty-center</code></span><span>El link está en tu repo, botón verde <b>Code</b>.</span></li>
+    <li><b>Instala y arranca</b><span class="cmds"><code>pnpm install</code><code>pnpm dev</code></span><span>Como el primer día.</span></li>
+    <li><b>Haz tu primer push</b><span>Git te pide iniciar sesión: elige <b>Sign in with your browser</b> y entra con <b>tu</b> cuenta.</span></li>
+  </ol>
+  <div class="callout"><i>🔐</i><span><b>¿El computador era de otra persona?</b> Si el push dice <code>403</code> o <code>Permission denied</code>, Git está usando su cuenta. En Windows abre <b>Administrador de credenciales → Credenciales de Windows</b>, quita <code>git:https://github.com</code> y vuelve a hacer push.</span></div>
+</section>
+
+<section class="slide" data-phase="g-git" id="g-git-errores" data-day="Guía Git · Errores" data-title="Errores comunes">
+  <p class="eyebrow">Que no te asusten</p>
+  <h2>Errores comunes y qué hacer 🩹</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Si ves…</th><th>Significa</th><th>Haz esto</th></tr></thead>
+      <tbody>
+        <tr><td><code>not a git repository</code></td><td>Estás fuera de la carpeta del proyecto</td><td><code>cd lumi-beauty-center</code></td></tr>
+        <tr><td><code>pnpm</code> no se reconoce</td><td>No está instalado en este computador</td><td><code>npm install -g pnpm</code> y abre una terminal nueva</td></tr>
+        <tr><td><code>Please tell me who you are</code></td><td>Git no sabe quién eres en este computador</td><td>Los dos <code>git config</code> (<a href="#g-git-nuevo">paso 2 de aquí</a>)</td></tr>
+        <tr><td><code>403</code> o <code>Permission denied</code></td><td>Git está usando otra cuenta de GitHub</td><td>Quita la credencial guardada (<a href="#g-git-nuevo">ver cómo</a>) y vuelve a hacer push</td></tr>
+        <tr><td><code>has no upstream branch</code></td><td>Es la primera vez que subes esta rama</td><td><code>git push -u origin &lt;tu-rama&gt;</code></td></tr>
+        <tr><td><code>rejected</code> … <code>fetch first</code></td><td>GitHub tiene cambios que tú no tienes</td><td><code>git pull</code> y luego <code>git push</code></td></tr>
+        <tr><td><code>would be overwritten</code></td><td>Tienes cambios sin commit y quieres cambiar de rama</td><td><code>git add .</code> + <code>git commit</code>, y luego cambias</td></tr>
+        <tr><td>Se abre una pantalla rara al hacer <code>git pull</code></td><td>Es el editor Vim pidiendo un mensaje</td><td>Escribe <code>:wq</code> y presiona <kbd>Enter</kbd></td></tr>
+        <tr><td><code>nothing to commit, working tree clean</code></td><td>¡No es un error! Todo está guardado</td><td>Sigue tranquila 😊</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="muted tip">💡 ¿No está aquí? Copia lo que dice la terminal y el resultado de <code>git status</code>, y usa el botón <b>¿Te bloqueaste?</b></p>
+</section>
+
 </div>
 </main>
 
@@ -2767,6 +3016,10 @@ createMutation.mutate(values, {
     { n: 4, title: 'La agenda de citas', desc: 'Las reglas de negocio y los tres features trabajando juntos.' },
     { n: 5, title: 'Los detalles que la hacen brillar', desc: 'Feedback visual, dashboard y tu proyecto listo para mostrar.' }
   ];
+  var GUIDES = [
+    { n: 'g-git', emoji: '🌿', title: 'Git y GitHub', desc: 'Qué hace cada comando, cómo comprobarlo, qué hacer si cambias de computador y los errores más comunes.' }
+  ];
+  function isGuide(n) { return String(n).indexOf('g-') === 0; }
 
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var deck = document.getElementById('deck');
@@ -2783,6 +3036,7 @@ createMutation.mutate(values, {
   var backdrop = document.getElementById('backdrop');
   var toastEl = document.getElementById('toast');
   var current = -1;
+  var atStart = true, atEnd = false;
   var KEY = 'lumi-guide-';
 
   function store(key, value) { try { localStorage.setItem(KEY + key, value); } catch (e) {} }
@@ -2793,7 +3047,7 @@ createMutation.mutate(values, {
     if (!s.id) s.id = 'f' + s.dataset.phase + '-s' + i;
   });
   function phaseSlides(n) { return slides.filter(function (s) { return s.dataset.phase === String(n); }); }
-  function shortDay(s) { return s.dataset.day.replace(/^Fase \d+ · /, ''); }
+  function shortDay(s) { return s.dataset.day.replace(/^(Fase \d+|Guía [^·]+) · /, ''); }
 
   // ---------- Theme ----------
   var themeBtn = document.getElementById('themeToggle');
@@ -2958,13 +3212,19 @@ createMutation.mutate(values, {
   homeLink.addEventListener('click', function () { showHome(); closeDrawer(); });
   toc.appendChild(homeLink);
 
-  PHASES.forEach(function (p) {
+  PHASES.concat(GUIDES).forEach(function (p) {
+    if (p === GUIDES[0]) {
+      var group = document.createElement('div');
+      group.className = 'toc-group';
+      group.textContent = 'Guías rápidas';
+      toc.appendChild(group);
+    }
     var details = document.createElement('details');
     details.className = 'toc-phase';
     details.dataset.phase = String(p.n);
     var summary = document.createElement('summary');
     summary.innerHTML = '<span class="toc-phase-text"><span class="toc-phase-num"></span><span class="toc-phase-title"></span></span><span class="toc-phase-meta"></span><span class="toc-chevron" aria-hidden="true"></span>';
-    summary.querySelector('.toc-phase-num').textContent = 'Fase ' + p.n;
+    summary.querySelector('.toc-phase-num').textContent = isGuide(p.n) ? 'Guía' : 'Fase ' + p.n;
     summary.querySelector('.toc-phase-title').textContent = p.title;
     details.appendChild(summary);
     var body = document.createElement('div');
@@ -3037,6 +3297,8 @@ createMutation.mutate(values, {
       if (q !== '') d.open = anyPhase;
       if (anyPhase) anyAll = true;
     });
+    var groupLbl = toc.querySelector('.toc-group');
+    if (groupLbl) groupLbl.hidden = !tocPhases.some(function (d) { return isGuide(d.dataset.phase) && !d.hidden; });
     if (q === '') syncOpenPhase();
     tocEmpty.hidden = anyAll;
   });
@@ -3049,6 +3311,7 @@ createMutation.mutate(values, {
   // ---------- Home ----------
   var phaseGrid = document.getElementById('phaseGrid');
   var continueBox = document.getElementById('continueBox');
+  var guideGrid = document.getElementById('guideGrid');
   function renderHome() {
     phaseGrid.innerHTML = '';
     PHASES.forEach(function (p) {
@@ -3065,6 +3328,20 @@ createMutation.mutate(values, {
       card.querySelector('.state').textContent = pct === 100 ? 'Completada' : (pr.done ? pct + ' % · ' + pr.done + ' de ' + pr.total + ' listas' : 'Sin empezar');
       card.addEventListener('click', function () { go(slides.indexOf(phaseSlides(p.n)[0])); });
       phaseGrid.appendChild(card);
+    });
+    guideGrid.innerHTML = '';
+    GUIDES.forEach(function (g) {
+      var first = phaseSlides(g.n)[0];
+      if (!first) return;
+      var card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'guide-card tg';
+      card.innerHTML = '<span class="guide-emoji" aria-hidden="true"></span><b></b><small></small>';
+      card.querySelector('.guide-emoji').textContent = g.emoji;
+      card.querySelector('b').textContent = g.title;
+      card.querySelector('small').textContent = g.desc;
+      card.addEventListener('click', function () { go(slides.indexOf(first)); });
+      guideGrid.appendChild(card);
     });
     var saved = parseInt(load('slide') || '', 10);
     var label = continueBox.querySelector('b');
@@ -3114,27 +3391,33 @@ createMutation.mutate(values, {
     deck.hidden = false;
     nav.hidden = false;
     slides.forEach(function (x, k) { x.classList.toggle('is-active', k === current); });
-    prevBtn.disabled = current === 0;
-    var isLast = current === slides.length - 1;
+    var guide = isGuide(n);
     var phaseEnd = pos === own.length;
+    var nextSlide = slides[current + 1];
+    atStart = current === 0 || (guide && pos === 1);
+    atEnd = !nextSlide || (phaseEnd && (guide || isGuide(nextSlide.dataset.phase)));
+    prevBtn.disabled = atStart;
     nextBtn.disabled = false;
-    nextBtn.innerHTML = isLast ? '<span class="lbl">Ir al </span>inicio' : (phaseEnd ? '<span class="lbl">Siguiente fase </span>→' : '<span class="lbl">Siguiente </span>→');
-    nextBtn.setAttribute('aria-label', isLast ? 'Ir al inicio' : (phaseEnd ? 'Siguiente fase' : 'Siguiente'));
+    nextBtn.innerHTML = atEnd ? '<span class="lbl">Ir al </span>inicio' : (phaseEnd ? '<span class="lbl">Siguiente fase </span>→' : '<span class="lbl">Siguiente </span>→');
+    nextBtn.setAttribute('aria-label', atEnd ? 'Ir al inicio' : (phaseEnd ? 'Siguiente fase' : 'Siguiente'));
     counter.innerHTML = '<span class="phase-pos"></span> · ' + pos + ' / ' + own.length;
-    counter.firstChild.textContent = 'Fase ' + n;
+    counter.firstChild.textContent = guide ? 'Guía' : 'Fase ' + n;
     bar.style.width = (pos / own.length * 100) + '%';
     dayChip.textContent = s.dataset.day;
     visited[s.id] = true;
     store('visited', JSON.stringify(visited));
     refreshToc();
-    store('slide', String(current));
+    if (!guide) store('slide', String(current));
     setHash('#' + s.id);
     window.scrollTo(0, 0);
   }
-  prevBtn.addEventListener('click', function () { go(current - 1); });
-  nextBtn.addEventListener('click', function () {
-    if (current === slides.length - 1) showHome(); else go(current + 1);
-  });
+  function stepBy(d) {
+    if (current < 0) return;
+    if (d > 0) { if (atEnd) showHome(); else go(current + 1); }
+    else if (!atStart) go(current - 1);
+  }
+  prevBtn.addEventListener('click', function () { stepBy(-1); });
+  nextBtn.addEventListener('click', function () { stepBy(1); });
   // ---------- Fullscreen ----------
   var fsBtn = document.getElementById('fsToggle');
   var docEl = document.documentElement;
@@ -3168,8 +3451,8 @@ createMutation.mutate(values, {
     if (!drawer.hidden) { if (e.key === 'Escape') closeDrawer(); return; }
     var tag = (e.target && e.target.tagName) || '';
     if (tag === 'INPUT' || tag === 'TEXTAREA' || current < 0) return;
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') { if (current < slides.length - 1) go(current + 1); }
-    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { if (current > 0) go(current - 1); }
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { if (!atEnd) go(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { if (!atStart) go(current - 1); }
   });
 
   // Swipe on phones (ignores scrollable code and tables)
@@ -3184,8 +3467,8 @@ createMutation.mutate(values, {
     var dy = e.changedTouches[0].clientY - touchY;
     touchX = null;
     if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
-    if (dx < 0 && current < slides.length - 1) go(current + 1);
-    if (dx > 0 && current > 0) go(current - 1);
+    if (dx < 0 && !atEnd) go(current + 1);
+    if (dx > 0 && !atStart) go(current - 1);
   }, { passive: true });
 
   // ---------- Drawer ----------
@@ -3210,6 +3493,14 @@ createMutation.mutate(values, {
   var target = hash && document.getElementById(hash);
   var idx = target ? slides.indexOf(target.closest('.slide')) : -1;
   if (idx >= 0) go(idx); else showHome();
+
+  // In-page links to a slide (e.g. href="#g-git")
+  window.addEventListener('hashchange', function () {
+    var h = (location.hash || '').replace('#', '');
+    var t = h && document.getElementById(h);
+    var k = t ? slides.indexOf(t.closest('.slide')) : -1;
+    if (k >= 0 && k !== current) go(k);
+  });
 })();
 </script>
 <script>
