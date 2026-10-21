@@ -1344,6 +1344,13 @@ body[data-phase^="g-"], .tg { --c: var(--pg); --cd: var(--pgd); --ct: var(--pgt)
 .travel-card.yes { border-color: var(--c); }
 .travel-card .tldr { gap: 8px; font-size: 15px; }
 
+/* nombre y correo para git config */
+.git-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 640px) { .git-fields { grid-template-columns: 1fr; } }
+.git-fields .gh-field input { font-size: 15px; min-width: 0; }
+.code .git-name, .code .git-email { color: #FFD166; }
+.code .git-name.filled, .code .git-email.filled { color: #7EE0B5; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1670,8 +1677,8 @@ img { max-width: 100%; }
     <div class="setup-card"><div class="tool-top"><span class="tool-n">1</span><b>Instala pnpm y yarn</b></div><span class="tool-q">Los gestores de paquetes del equipo. Lumi usa pnpm.</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>npm install -g pnpm yarn</code></pre></div></div>
     <div class="setup-card"><div class="tool-top"><span class="tool-n">2</span><b>Comprueba</b></div><span class="tool-q">Cada uno debe mostrar un número de versión.</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm -v
 yarn -v</code></pre></div></div>
-    <div class="setup-card wide"><div class="tool-top"><span class="tool-n">3</span><b>Preséntate a Git</b></div><span class="tool-q">Una sola vez, con tu nombre y el correo de tu GitHub.</span><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>git config --global user.name <span class="s">"Brygith Arboleda"</span>
-git config --global user.email <span class="s">"tu-correo@ejemplo.com"</span>
+    <div class="setup-card wide"><div class="tool-top"><span class="tool-n">3</span><b>Preséntate a Git</b></div><span class="tool-q">Escribe tu nombre y el correo de tu GitHub; el comando se completa solo.</span><div class="git-fields"><label class="gh-field"><span>Tu nombre</span><input type="text" id="gitName" placeholder="ej. Brygith Arboleda" autocomplete="name"></label><label class="gh-field"><span>Correo de tu GitHub</span><input type="email" id="gitEmail" placeholder="tu-correo@ejemplo.com" autocomplete="email" spellcheck="false"></label></div><div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>git config --global user.name <span class="s">"<span class="git-name">Brygith Arboleda</span>"</span>
+git config --global user.email <span class="s">"<span class="git-email">tu-correo@ejemplo.com</span>"</span>
 git config --global init.defaultBranch main</code></pre></div></div>
   </div>
   <div class="did">
@@ -2957,7 +2964,7 @@ createMutation.mutate(values, {
   <h2>Computador nuevo en 5 pasos 🧰</h2>
   <ol class="gsteps">
     <li><b>Revisa las herramientas</b><span class="cmds"><code>git --version</code><code>node -v</code><code>pnpm -v</code></span><span>Si alguno falla, instálalo como en la <a href="#f1-p1">fase 1, paso 1</a>.</span></li>
-    <li><b>Preséntate a Git</b><span class="cmds"><code>git config --global user.name "…"</code><code>git config --global user.email "…"</code></span><span>Con el correo de tu GitHub.</span></li>
+    <li><b>Preséntate a Git</b><span class="cmds"><code>git config --global user.name "<span class="git-name">Brygith Arboleda</span>"</code><code>git config --global user.email "<span class="git-email">tu-correo@ejemplo.com</span>"</code></span><span>Con el correo de tu GitHub.</span></li>
     <li><b>Descarga tu proyecto</b><span class="cmds"><code>git clone &lt;link-de-tu-repo&gt;</code><code>cd lumi-beauty-center</code></span><span>El link está en tu repo, botón verde <b>Code</b>.</span></li>
     <li><b>Instala y arranca</b><span class="cmds"><code>pnpm install</code><code>pnpm dev</code></span><span>Como el primer día.</span></li>
     <li><b>Haz tu primer push</b><span>Git te pide iniciar sesión: elige <b>Sign in with your browser</b> y entra con <b>tu</b> cuenta.</span></li>
@@ -3640,6 +3647,23 @@ createMutation.mutate(values, {
   try { input.value = localStorage.getItem(KEY) || ''; } catch (e) {}
   input.addEventListener('input', apply);
   apply();
+})();
+</script>
+<script>
+(function () {
+  [['gitName', 'git-name', 'Brygith Arboleda', 'lumi-guide:git-name'],
+   ['gitEmail', 'git-email', 'tu-correo@ejemplo.com', 'lumi-guide:git-email']].forEach(function (m) {
+    var input = document.getElementById(m[0]);
+    if (!input) return;
+    function apply() {
+      var v = input.value.trim().replace(/["\\`$]/g, '');
+      document.querySelectorAll('.' + m[1]).forEach(function (el) { el.textContent = v || m[2]; el.classList.toggle('filled', !!v); });
+      try { localStorage.setItem(m[3], v); } catch (e) {}
+    }
+    try { input.value = localStorage.getItem(m[3]) || ''; } catch (e) {}
+    input.addEventListener('input', apply);
+    apply();
+  });
 })();
 </script>
 </body>
