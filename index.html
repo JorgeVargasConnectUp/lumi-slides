@@ -1357,6 +1357,77 @@ a.stack-card:hover { transform: translateY(-2px); border-color: var(--cm); }
 a.stack-card .ext-desc code { font-size: 11px; }
 .stack-go { flex: none; margin-left: auto; font-weight: 900; color: var(--cd); }
 
+/* ---------- Simuladores de Git ---------- */
+:root { --sim-r: #B91C1C; --sim-rb: #FEF2F2; --sim-rl: #FECACA; --sim-g: #15803D; --sim-gb: #F0FDF4; --sim-gl: #BBF7D0; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --sim-r: #FCA5A5; --sim-rb: #3A1518; --sim-rl: #7F1D1D; --sim-g: #86EFAC; --sim-gb: #12291F; --sim-gl: #14532D; } }
+:root[data-theme="dark"] { --sim-r: #FCA5A5; --sim-rb: #3A1518; --sim-rl: #7F1D1D; --sim-g: #86EFAC; --sim-gb: #12291F; --sim-gl: #14532D; }
+.sim { display: flex; flex-direction: column; gap: 12px; }
+.sim-mission { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 14px; font-weight: 800; }
+.sim-mission .m { padding: 3px 10px; border-radius: 999px; border: 2px solid var(--line); background: var(--surface); color: var(--muted); transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+.sim-mission .m.done { background: var(--ct); border-color: var(--c); color: var(--cd); }
+.sim-mission .m.done::before { content: "✓ "; }
+.sim-board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.sim-zone { position: relative; background: var(--surface); border: 2px solid var(--line); border-bottom-width: 4px; border-radius: 18px; padding: 10px; min-height: 160px; display: flex; flex-direction: column; gap: 8px; min-width: 0; transition: border-color .3s ease, box-shadow .3s ease; }
+.sim-zone.cloud { background: var(--ct); border-color: var(--cm); }
+.sim-zone.flash { border-color: var(--c); box-shadow: 0 0 0 4px var(--ct); }
+.sim-zone > b { font: 900 14px/1.2 var(--font-display); }
+.sim-zone:not(:last-child)::after { content: "→"; position: absolute; right: -20px; top: 50%; transform: translateY(-50%); font-weight: 900; font-size: 18px; color: var(--c); }
+.sim-drop { display: flex; flex-direction: column; gap: 6px; flex: 1; }
+@media (max-width: 760px) { .sim-board { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; } .sim-zone::after { display: none; } .sim-zone { min-height: 120px; } }
+.chip-f { font: 600 12px/1.35 var(--font-mono); padding: 4px 8px; border-radius: 8px; border: 2px solid; overflow-wrap: anywhere; position: relative; z-index: 2; }
+.chip-f.red { color: var(--sim-r); background: var(--sim-rb); border-color: var(--sim-rl); }
+.chip-f.green { color: var(--sim-g); background: var(--sim-gb); border-color: var(--sim-gl); }
+.commit-c { display: flex; flex-direction: column; gap: 1px; padding: 6px 8px; border-radius: 10px; background: var(--bg); border: 2px dashed var(--cm); font-size: 12px; font-weight: 700; position: relative; z-index: 2; }
+.commit-c code { font-size: 11px; align-self: flex-start; }
+.commit-c small { color: var(--muted); font-weight: 600; }
+.commit-c.pushed, .sim-zone.cloud .commit-c { border-style: solid; border-color: var(--c); }
+.commit-c.pushed::after { content: "✓ en GitHub"; font-size: 11px; color: var(--cd); font-weight: 800; }
+.sim-zone.cloud .commit-c::after { content: none; }
+.sim-cmds { display: flex; flex-wrap: wrap; gap: 8px; }
+.sim-cmds button { font: 800 13px var(--font-body); cursor: pointer; color: var(--ink); background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 7px 12px; box-shadow: 0 3px 0 var(--line); transition: transform .1s ease, box-shadow .1s ease, border-color .15s ease; }
+.sim-cmds button code { background: none; padding: 0; color: inherit; font-size: 13px; }
+.sim-cmds button:hover { transform: translateY(2px); box-shadow: 0 1px 0 var(--line); }
+.sim-cmds button:active { transform: translateY(3px); box-shadow: none; }
+.sim-cmds button.next { border-color: var(--c); box-shadow: 0 3px 0 var(--c); animation: nudge 1.3s ease-in-out infinite; }
+.sim-cmds button.next:hover { animation: none; }
+@keyframes nudge { 0%, 100% { transform: none; } 50% { transform: translateY(-3px); } }
+.sim-cmds .sim-reset { margin-left: auto; color: var(--muted); }
+.sim-cmds .gh-btn { background: #1F883D; color: #fff; border-color: #1F883D; box-shadow: 0 3px 0 #116329; }
+.sim-cmds .gh-btn:hover { box-shadow: 0 1px 0 #116329; }
+.sim-cmds .gh-btn.next { border-color: #116329; box-shadow: 0 3px 0 #116329; }
+.sim-term { background: var(--code-bg); color: var(--code-fg); font: 500 13px/1.6 var(--font-mono); border-radius: 16px; padding: 12px 14px; height: 160px; overflow-y: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+.sim-term .t-cmd { color: #fff; font-weight: 700; margin-top: 6px; }
+.sim-term .t-cmd:first-child { margin-top: 0; }
+.sim-term .t-cmd::before { content: "$ "; color: #7EE0B5; }
+.sim-term .r { color: #FCA5A5; }
+.sim-term .g { color: #86EFAC; }
+.sim-term .h { color: #FFD166; font: 700 13px/1.5 var(--font-body); }
+.sim-graph { background: var(--surface); border: 2px solid var(--line); border-bottom-width: 4px; border-radius: 18px; padding: 6px; overflow-x: auto; }
+.sim-svg { display: block; height: auto; max-width: none; margin: 0 auto; --bc: var(--p3); --bcd: var(--p3d); }
+.sim-svg .g-mainline { stroke: var(--muted); stroke-width: 4; stroke-linecap: round; opacity: .55; }
+.sim-svg .g-bpath { fill: none; stroke: var(--bc); stroke-width: 4; stroke-linecap: round; }
+.sim-svg .g-bstub { fill: none; stroke: var(--bc); stroke-width: 3; stroke-dasharray: 4 5; }
+.sim-svg .g-bstub.draw { stroke-dasharray: none; }
+.sim-svg .n-main { fill: var(--muted); stroke: var(--surface); stroke-width: 3; }
+.sim-svg .n-merge { fill: #1F883D; }
+.sim-svg .n-b { fill: var(--bc); stroke: var(--surface); stroke-width: 3; }
+.sim-svg .n-b.local { fill: var(--surface); stroke: var(--bc); stroke-dasharray: 3 3; }
+.sim-svg .t-lbl { font: 800 13px var(--font-mono); fill: var(--muted); }
+.sim-svg .t-b { fill: var(--bcd); }
+.sim-svg .t-here { font: 800 13px var(--font-body); fill: var(--ink); }
+.sim-svg .t-warn { font: 800 12px var(--font-body); fill: #D97706; }
+.sim-svg .t-gh { font: 800 12px var(--font-body); fill: #1F883D; }
+.sim-svg .pop { animation: popn .5s cubic-bezier(.3,1.6,.5,1) both; transform-box: fill-box; transform-origin: center; }
+.sim-svg .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: drawp .6s ease forwards; }
+@keyframes popn { from { transform: scale(0); } }
+@keyframes drawp { to { stroke-dashoffset: 0; } }
+.sim-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--muted); margin: -4px 0 0; }
+.sim-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sim-legend .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.sim-legend .dot.full { background: var(--p3); }
+.sim-legend .dot.hollow { border: 2px dashed var(--p3); }
+@media (prefers-reduced-motion: reduce) { .sim-svg .pop, .sim-cmds button.next { animation: none; } .sim-svg .draw { animation: none; stroke-dashoffset: 0; } }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -2898,6 +2969,7 @@ createMutation.mutate(values, {
   </div>
   <nav class="guide-jump" aria-label="En esta guía">
     <a class="guide-link" href="#g-git-lugares">Los 4 lugares</a>
+    <a class="guide-link" href="#g-git-prueba">🎮 Pruébalo</a>
     <a class="guide-link" href="#g-git-mirar">Comandos para mirar</a>
     <a class="guide-link" href="#g-git-dia">Tu día, en orden</a>
     <a class="guide-link" href="#g-git-pc">¿Otro computador?</a>
@@ -2931,6 +3003,29 @@ createMutation.mutate(values, {
   </ul>
 </section>
 
+<section class="slide" data-phase="g-git" id="g-git-prueba" data-day="Guía Git · Pruébalo" data-title="Pruébalo: a dónde van tus cambios">
+  <p class="eyebrow">🎮 Pruébalo</p>
+  <h2>Ejecuta y mira a dónde van tus cambios</h2>
+  <div class="sim" id="simZones">
+    <div class="sim-mission"><span>Misión:</span><span class="m" data-m="edit">Edita archivos</span><span class="m" data-m="add">git add</span><span class="m" data-m="commit">git commit</span><span class="m" data-m="push">git push</span></div>
+    <div class="sim-board">
+      <div class="sim-zone" data-z="work"><b>📝 Tus archivos</b><div class="sim-drop"></div></div>
+      <div class="sim-zone" data-z="staged"><b>📦 Preparados</b><div class="sim-drop"></div></div>
+      <div class="sim-zone" data-z="local"><b>📸 Tu historial</b><div class="sim-drop"></div></div>
+      <div class="sim-zone cloud" data-z="remote"><b>☁️ GitHub</b><div class="sim-drop"></div></div>
+    </div>
+    <div class="sim-cmds">
+      <button type="button" data-a="edit">✏️ Edita un archivo</button>
+      <button type="button" data-a="status"><code>git status</code></button>
+      <button type="button" data-a="add"><code>git add .</code></button>
+      <button type="button" data-a="commit"><code>git commit -m "…"</code></button>
+      <button type="button" data-a="push"><code>git push</code></button>
+      <button type="button" data-a="reset" class="sim-reset">↺ Reiniciar</button>
+    </div>
+    <div class="sim-term" aria-live="polite"></div>
+  </div>
+</section>
+
 <section class="slide" data-phase="g-git" id="g-git-mirar" data-day="Guía Git · Comandos" data-title="Comandos para mirar">
   <p class="eyebrow">Úsalos sin miedo</p>
   <h2>Comandos para mirar 👀</h2>
@@ -2961,6 +3056,26 @@ createMutation.mutate(values, {
     <li><b>Abre el PR en GitHub</b><span class="cmds"><i class="btn-chip">Compare &amp; pull request</i></span><span>Pides unir tu rama a main. Vercel deja una vista previa para probar.</span></li>
     <li><b>Haz el merge</b><span class="cmds"><i class="btn-chip">Merge pull request</i></span><span>Tu trabajo llega a main y se publica. Mañana, de vuelta al paso 1.</span></li>
   </ol>
+</section>
+
+<section class="slide" data-phase="g-git" id="g-git-ramas" data-day="Guía Git · Pruébalo" data-title="Pruébalo: ramas y PRs">
+  <p class="eyebrow">🎮 Pruébalo</p>
+  <h2>Crea una rama y mira cómo crece</h2>
+  <div class="sim" id="simBranches">
+    <div class="sim-graph"><svg class="sim-svg" role="img" aria-label="Gráfico de ramas de tu repositorio"></svg></div>
+    <p class="sim-legend"><span><i class="dot full"></i>también en GitHub</span><span><i class="dot hollow"></i>solo en tu computador</span></p>
+    <div class="sim-cmds">
+      <button type="button" data-a="main"><code>git checkout main</code></button>
+      <button type="button" data-a="pull"><code>git pull</code></button>
+      <button type="button" data-a="newb"><code>git checkout -b <span class="sim-bname">feat/clients</span></code></button>
+      <button type="button" data-a="commit"><code>git commit -m "…"</code></button>
+      <button type="button" data-a="push"><code>git push</code></button>
+      <button type="button" data-a="merge" class="gh-btn">Merge pull request</button>
+      <button type="button" data-a="branch"><code>git branch</code></button>
+      <button type="button" data-a="reset" class="sim-reset">↺ Reiniciar</button>
+    </div>
+    <div class="sim-term" aria-live="polite"></div>
+  </div>
 </section>
 
 <section class="slide" data-phase="g-git" id="g-git-pc" data-day="Guía Git · Otro computador" data-title="¿Cambiaste de computador?">
@@ -3498,7 +3613,7 @@ createMutation.mutate(values, {
   // Swipe on phones (ignores scrollable code and tables)
   var touchX = null, touchY = null;
   deck.addEventListener('touchstart', function (e) {
-    if (e.target.closest('pre, .table-wrap')) { touchX = null; return; }
+    if (e.target.closest('pre, .table-wrap, .sim')) { touchX = null; return; }
     touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
   }, { passive: true });
   deck.addEventListener('touchend', function (e) {
@@ -3694,6 +3809,301 @@ createMutation.mutate(values, {
     input.addEventListener('input', apply);
     apply();
   });
+})();
+</script>
+<script>
+(function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function hash() { return Math.random().toString(16).slice(2, 9); }
+  function mkTerm(box) {
+    return {
+      out: function (cmd, lines) {
+        if (cmd) { var c = document.createElement('div'); c.className = 't-cmd'; c.textContent = cmd; box.appendChild(c); }
+        (lines || []).forEach(function (l) {
+          var d = document.createElement('div');
+          d.className = l[0]; d.textContent = l[1];
+          box.appendChild(d);
+        });
+        while (box.children.length > 60) box.removeChild(box.firstChild);
+        box.scrollTop = box.scrollHeight;
+      },
+      clear: function () { box.innerHTML = ''; }
+    };
+  }
+  function fly(node, parent, from) {
+    var a = (from || node).getBoundingClientRect();
+    parent.appendChild(node);
+    if (reduce || !a.width) return;
+    var b = node.getBoundingClientRect();
+    node.animate([{ transform: 'translate(' + (a.left - b.left) + 'px,' + (a.top - b.top) + 'px) scale(1.05)' }, { transform: 'none' }],
+      { duration: 650, easing: 'cubic-bezier(.2,.8,.2,1)' });
+  }
+  function flash(zone) {
+    zone.classList.add('flash');
+    setTimeout(function () { zone.classList.remove('flash'); }, 700);
+  }
+
+  // ---------- 1. Los 4 lugares ----------
+  (function () {
+    var root = document.getElementById('simZones');
+    if (!root) return;
+    var Z = {};
+    root.querySelectorAll('.sim-zone').forEach(function (z) { Z[z.dataset.z] = z; });
+    function drop(z) { return Z[z].querySelector('.sim-drop'); }
+    var term = mkTerm(root.querySelector('.sim-term'));
+    var FILES = ['treatment.ts', 'treatment-card.tsx', 'treatments-page.tsx', 'use-treatments.ts'];
+    var MSGS = ['feat(treatments): add treatment card', 'feat(treatments): add filters', 'fix(treatments): price format', 'style(treatments): spacing'];
+    var BR = 'feat/treatments';
+    var st;
+    function reset() {
+      st = { work: [], staged: [], commits: [], n: 0, done: {} };
+      ['work', 'staged', 'local', 'remote'].forEach(function (z) { drop(z).innerHTML = ''; });
+      term.clear();
+      term.out(null, [['h', '💬 Toca los botones. El que se mueve es el siguiente paso sugerido.']]);
+      sync();
+    }
+    function chip(name, cls) { var c = document.createElement('div'); c.className = 'chip-f ' + cls; c.textContent = name; return c; }
+    function unpushed() { return st.commits.filter(function (c) { return !c.pushed; }); }
+    function sync() {
+      root.querySelectorAll('.sim-mission .m').forEach(function (m) { m.classList.toggle('done', !!st.done[m.dataset.m]); });
+      var next = st.work.length ? 'add' : st.staged.length ? 'commit' : unpushed().length ? 'push' : 'edit';
+      root.querySelectorAll('.sim-cmds button').forEach(function (b) { b.classList.toggle('next', b.dataset.a === next); });
+    }
+    var A = {
+      edit: function () {
+        var used = st.work.concat(st.staged).map(function (f) { return f.name; });
+        var name = FILES.filter(function (f) { return used.indexOf(f) < 0; })[0];
+        if (!name) { term.out(null, [['h', '💬 Ya editaste todos. Prueba git add .']]); return; }
+        var f = { name: name, el: chip(name, 'red') };
+        st.work.push(f);
+        drop('work').appendChild(f.el);
+        if (!reduce) f.el.animate([{ opacity: 0, transform: 'scale(.6)' }, { opacity: 1, transform: 'none' }], { duration: 350, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+        flash(Z.work);
+        st.done.edit = true;
+        term.out(null, [['h', '💬 Guardaste ' + name + ' en VS Code. El cambio está solo en tus archivos (rojo).']]);
+      },
+      status: function () {
+        var l = [['o', 'On branch ' + BR]];
+        var u = unpushed().length;
+        if (u) l.push(['o', "Your branch is ahead of 'origin/" + BR + "' by " + u + ' commit' + (u > 1 ? 's' : '') + '.']);
+        if (st.staged.length) { l.push(['o', 'Changes to be committed:']); st.staged.forEach(function (f) { l.push(['g', '        modified:   ' + f.name]); }); }
+        if (st.work.length) { l.push(['o', 'Changes not staged for commit:']); st.work.forEach(function (f) { l.push(['r', '        modified:   ' + f.name]); }); }
+        if (!st.staged.length && !st.work.length) l.push(['o', 'nothing to commit, working tree clean']);
+        l.push(['h', '💬 Rojo: solo en tus archivos · Verde: preparado para el commit.']);
+        term.out('git status', l);
+      },
+      add: function () {
+        if (!st.work.length) { term.out('git add .', [['h', '💬 No pasó nada: no había cambios nuevos.']]); return; }
+        st.work.forEach(function (f) { f.el.classList.remove('red'); f.el.classList.add('green'); fly(f.el, drop('staged')); st.staged.push(f); });
+        st.work = [];
+        flash(Z.staged);
+        st.done.add = true;
+        term.out('git add .', [['h', '💬 Tus cambios pasaron a Preparados (verde). Si todo sale bien, git add no muestra nada.']]);
+      },
+      commit: function () {
+        var cmd = 'git commit -m "' + MSGS[st.n % MSGS.length] + '"';
+        if (!st.staged.length) { term.out(cmd, [['o', st.work.length ? 'no changes added to commit (use "git add")' : 'nothing to commit, working tree clean'], ['h', '💬 Primero prepara tus cambios con git add .']]); return; }
+        var c = { id: hash(), msg: MSGS[st.n % MSGS.length], files: st.staged.length, pushed: false };
+        st.n++;
+        var card = document.createElement('div');
+        card.className = 'commit-c';
+        card.innerHTML = '<code></code><span></span><small></small>';
+        card.querySelector('code').textContent = '📸 ' + c.id;
+        card.querySelector('span').textContent = c.msg;
+        card.querySelector('small').textContent = c.files + (c.files > 1 ? ' archivos' : ' archivo');
+        c.el = card;
+        var chips = st.staged; st.staged = [];
+        chips.forEach(function (f) { fly(f.el, drop('local')); });
+        setTimeout(function () {
+          chips.forEach(function (f) { f.el.remove(); });
+          drop('local').appendChild(card);
+          if (!reduce) card.animate([{ opacity: 0, transform: 'scale(.7)' }, { opacity: 1, transform: 'none' }], { duration: 400, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+        }, reduce ? 0 : 600);
+        st.commits.push(c);
+        flash(Z.local);
+        st.done.commit = true;
+        term.out(cmd, [['o', '[' + BR + ' ' + c.id + '] ' + c.msg], ['o', ' ' + c.files + ' file' + (c.files > 1 ? 's' : '') + ' changed'], ['h', '💬 Guardaste una foto… pero solo en este computador. GitHub todavía no la ve.']]);
+      },
+      push: function () {
+        var u = unpushed();
+        if (!u.length) { term.out('git push', [['o', 'Everything up-to-date'], ['h', '💬 No había commits nuevos para subir.']]); return; }
+        u.forEach(function (c) {
+          var copy = c.el.cloneNode(true);
+          fly(copy, drop('remote'), c.el);
+          c.pushed = true;
+          c.el.classList.add('pushed');
+        });
+        flash(Z.remote);
+        st.done.push = true;
+        term.out('git push', [['o', 'To github.com/tu-usuario/lumi-beauty-center.git'], ['g', '   ' + u[0].id + '..' + u[u.length - 1].id + '  ' + BR + ' -> ' + BR], ['h', '🎉 ¡Listo! Ahora GitHub (y Vercel) tienen tus commits. Ya puedes abrir el PR.']]);
+      },
+      reset: reset
+    };
+    root.querySelector('.sim-cmds').addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (!b || !A[b.dataset.a]) return;
+      A[b.dataset.a]();
+      sync();
+    });
+    reset();
+  })();
+
+  // ---------- 2. Ramas y PRs ----------
+  (function () {
+    var root = document.getElementById('simBranches');
+    if (!root) return;
+    var svg = root.querySelector('.sim-svg');
+    var term = mkTerm(root.querySelector('.sim-term'));
+    var NAMES = ['feat/clients', 'feat/appointments', 'feat/dashboard'];
+    var X0 = 60, DX = 64, YM = 140, YB = 74;
+    function x(c) { return X0 + c * DX; }
+    var st;
+    function reset() {
+      st = { col: 1, main: [{ col: 0 }, { col: 1 }], branches: [], head: 'main', local: 1, nameIdx: 0, fresh: null, prs: 0 };
+      term.clear();
+      term.out(null, [['h', '💬 Sigue el botón que se mueve: rama → commits → push → merge → main → pull.']]);
+      render();
+    }
+    function tip() { return st.main[st.main.length - 1].col; }
+    function behind() { return st.local < tip(); }
+    function open() { var b = st.branches[st.branches.length - 1]; return b && !b.merged ? b : null; }
+    function cur() { return st.head === 'main' ? null : st.branches.filter(function (b) { return b.name === st.head; })[0]; }
+    function unpushed(b) { return b ? b.commits.filter(function (c) { return !c.pushed; }) : []; }
+    function suggest() {
+      var b = open(), c = cur();
+      if (c && !c.merged && !c.commits.length) return 'commit';
+      if (c && unpushed(c).length) return 'push';
+      if (c && !c.merged && c.commits.length < 2) return 'commit';
+      if (b) return st.head === b.name ? 'merge' : 'merge';
+      if (st.head !== 'main') return 'main';
+      if (behind()) return 'pull';
+      return st.nameIdx < NAMES.length ? 'newb' : 'reset';
+    }
+    function el(name, attrs, cls, text) {
+      var a = '<' + name + (cls ? ' class="' + cls + '"' : '');
+      for (var k in attrs) a += ' ' + k + '="' + attrs[k] + '"';
+      return a + (text != null ? '>' + text + '</' + name + '>' : '/>');
+    }
+    function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+    function render() {
+      var ob = open();
+      var maxCol = st.col + (ob && !ob.commits.length ? 1 : 0);
+      var W = Math.max(640, x(maxCol) + 130), H = 204;
+      var p = [];
+      p.push(el('line', { x1: x(0), y1: YM, x2: x(tip()), y2: YM }, 'g-mainline'));
+      st.branches.forEach(function (b) {
+        var fx = x(b.from);
+        if (!b.commits.length) {
+          p.push(el('path', { d: 'M' + fx + ' ' + YM + ' C' + (fx + 24) + ' ' + YM + ' ' + (fx + 24) + ' ' + YB + ' ' + (fx + 50) + ' ' + YB, pathLength: 1 }, 'g-bstub' + (st.fresh === 'new-' + b.name ? ' draw' : '')));
+          p.push(el('text', { x: fx + 58, y: YB + 5 }, 't-lbl t-b', esc(b.name)));
+          return;
+        }
+        var c0 = x(b.commits[0].col), cl = x(b.commits[b.commits.length - 1].col);
+        p.push(el('path', { d: 'M' + fx + ' ' + YM + ' C' + (fx + 34) + ' ' + YM + ' ' + (c0 - 34) + ' ' + YB + ' ' + c0 + ' ' + YB + (cl > c0 ? ' L' + cl + ' ' + YB : ''), pathLength: 1 }, 'g-bpath' + (st.fresh === 'fork-' + b.name ? ' draw' : '')));
+        if (b.merged) {
+          var mx = x(b.merged);
+          p.push(el('path', { d: 'M' + cl + ' ' + YB + ' C' + (cl + 34) + ' ' + YB + ' ' + (mx - 34) + ' ' + YM + ' ' + mx + ' ' + YM, pathLength: 1 }, 'g-bpath' + (st.fresh === 'merge-' + b.name ? ' draw' : '')));
+        }
+        p.push(el('text', { x: c0 - 12, y: YB - 20 }, 't-lbl t-b', esc(b.name)));
+        b.commits.forEach(function (c) {
+          p.push(el('circle', { cx: x(c.col), cy: YB, r: 10 }, 'n-b' + (c.pushed ? '' : ' local') + (st.fresh === c.id || st.fresh === 'fork-' + b.name && c === b.commits[0] ? ' pop' : '')));
+        });
+      });
+      st.main.forEach(function (c) {
+        var isNew = st.fresh === 'merge-' + (c.from || '') || st.fresh === 'm' + c.col;
+        p.push(el('circle', { cx: x(c.col), cy: YM, r: c.merge ? 12 : 10 }, 'n-main' + (c.merge ? ' n-merge' : '') + (isNew ? ' pop' : '')));
+      });
+      p.push(el('text', { x: 8, y: YM + 5 }, 't-lbl', 'main'));
+      var c = cur();
+      if (c) {
+        var hx = c.commits.length ? x(c.commits[c.commits.length - 1].col) : x(c.from) + 50;
+        p.push(el('text', { x: hx, y: YB - 46, 'text-anchor': 'middle' }, 't-here', '📍 estás aquí'));
+      }
+      if (behind()) {
+        p.push(el('text', { x: x(tip()), y: YM + 52, 'text-anchor': 'middle' }, 't-gh', '☁️ main en GitHub'));
+        p.push(el('text', { x: x(st.local), y: YM + 34, 'text-anchor': 'middle' }, 't-warn', (st.head === 'main' ? '📍 ' : '') + 'tu main (atrasado)'));
+      } else if (st.head === 'main') {
+        p.push(el('text', { x: x(st.local), y: YM + 34, 'text-anchor': 'middle' }, 't-here', '📍 estás aquí'));
+      }
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      svg.style.width = Math.round(W * 1.35) + 'px';
+      svg.innerHTML = p.join('');
+      var g = svg.parentNode; g.scrollLeft = g.scrollWidth;
+      st.fresh = null;
+      var next = suggest();
+      root.querySelectorAll('.sim-cmds button').forEach(function (bt) { bt.classList.toggle('next', bt.dataset.a === next); });
+      root.querySelector('.sim-bname').textContent = NAMES[Math.min(st.nameIdx, NAMES.length - 1)];
+    }
+    var A = {
+      main: function () {
+        if (st.head === 'main') { term.out('git checkout main', [['o', "Already on 'main'"]]); return; }
+        st.head = 'main';
+        var l = [['o', "Switched to branch 'main'"]];
+        if (behind()) l.push(['o', "Your branch is behind 'origin/main' by 1 commit."], ['h', '💬 Tu main no tiene el merge que hiciste en GitHub. Haz git pull.']);
+        term.out('git checkout main', l);
+      },
+      pull: function () {
+        if (st.head !== 'main') { term.out('git pull', [['o', 'Already up to date.'], ['h', '💬 El pull del día se hace en main: primero git checkout main.']]); return; }
+        if (!behind()) { term.out('git pull', [['o', 'Already up to date.']]); return; }
+        st.local = tip(); st.fresh = 'm' + st.local;
+        term.out('git pull', [['o', 'Updating ' + hash() + '..' + hash()], ['g', 'Fast-forward'], ['h', '🎉 Tu main ya tiene el merge. ¡Ciclo completo! Así es cada día de trabajo.']]);
+      },
+      newb: function () {
+        var name = NAMES[st.nameIdx], cmd = 'git checkout -b ' + (name || 'feat/…');
+        if (!name) { term.out(cmd, [['h', '💬 Ya practicaste 3 ramas. Toca ↺ Reiniciar para empezar de nuevo.']]); return; }
+        if (open()) { term.out(cmd, [['h', '💬 Ya tienes una rama abierta (' + open().name + '). Termina su PR antes de empezar otra.']]); return; }
+        if (st.head !== 'main') { term.out(cmd, [['h', '💬 Las ramas nuevas nacen desde main: primero git checkout main.']]); return; }
+        if (behind()) { term.out(cmd, [['h', '⚠️ Tu main está atrasado. Primero git pull, así tu rama nace con lo último.']]); return; }
+        st.branches.push({ name: name, from: st.local, commits: [], merged: 0 });
+        st.nameIdx++; st.head = name; st.fresh = 'new-' + name;
+        term.out(cmd, [['o', "Switched to a new branch '" + name + "'"], ['h', '💬 Nueva rama, nacida desde main. Aquí trabajas sin tocar main.']]);
+      },
+      commit: function () {
+        var b = cur();
+        if (!b) { term.out('git commit -m "…"', [['h', '💬 En Lumi no hacemos commits directo en main. Crea una rama con git checkout -b 😉']]); return; }
+        if (b.merged) { term.out('git commit -m "…"', [['h', '💬 Esta rama ya tuvo merge. Vuelve a main y crea una rama nueva.']]); return; }
+        var c = { id: hash(), col: ++st.col, pushed: false };
+        var first = !b.commits.length;
+        b.commits.push(c);
+        st.fresh = first ? 'fork-' + b.name : c.id;
+        var msg = b.name.replace('feat/', 'feat(') + '): step ' + b.commits.length;
+        term.out('git commit -m "' + msg + '"', [['o', '[' + b.name + ' ' + c.id + '] ' + msg], ['h', '💬 Commit guardado en tu computador (círculo punteado). GitHub aún no lo ve.']]);
+      },
+      push: function () {
+        var b = cur(), u = unpushed(b);
+        if (!u.length) { term.out('git push', [['o', 'Everything up-to-date']]); return; }
+        var firstPush = b.commits.length === u.length;
+        u.forEach(function (c) { c.pushed = true; });
+        st.fresh = u[u.length - 1].id;
+        var l = [['o', 'To github.com/tu-usuario/lumi-beauty-center.git']];
+        l.push(firstPush ? ['g', ' * [new branch]      ' + b.name + ' -> ' + b.name] : ['g', '   ' + u[0].id + '..' + u[u.length - 1].id + '  ' + b.name + ' -> ' + b.name]);
+        l.push(['h', '💬 Ahora tus commits también están en GitHub (círculos rellenos). Ya puedes abrir el PR.']);
+        term.out('git push' + (firstPush ? ' -u origin ' + b.name : ''), l);
+      },
+      merge: function () {
+        var b = open();
+        if (!b) { term.out(null, [['h', '💬 No hay ningún PR abierto. Crea una rama, haz commits y push.']]); return; }
+        if (!b.commits.length) { term.out(null, [['h', '💬 Tu rama todavía no tiene commits.']]); return; }
+        if (unpushed(b).length) { term.out(null, [['h', '💬 GitHub solo ve lo que subiste: haz git push primero.']]); return; }
+        b.merged = ++st.col; st.prs++;
+        st.main.push({ col: b.merged, merge: true, from: b.name });
+        st.fresh = 'merge-' + b.name;
+        term.out(null, [['g', '🟢 (en GitHub) Merged pull request #' + st.prs + ' from ' + b.name], ['h', '💬 Tu trabajo ya está en main de GitHub y Vercel lo publica. Pero tu main local todavía no lo sabe…']]);
+      },
+      branch: function () {
+        var names = ['main'].concat(st.branches.map(function (b) { return b.name; }));
+        term.out('git branch', names.map(function (n) { return n === st.head ? ['g', '* ' + n] : ['o', '  ' + n]; }).concat([['h', '💬 El * marca la rama en la que estás.']]));
+      },
+      reset: reset
+    };
+    root.querySelector('.sim-cmds').addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (!b || !A[b.dataset.a]) return;
+      A[b.dataset.a]();
+      if (b.dataset.a !== 'reset') render();
+    });
+    reset();
+  })();
 })();
 </script>
 </body>
