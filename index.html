@@ -1351,6 +1351,12 @@ body[data-phase^="g-"], .tg { --c: var(--pg); --cd: var(--pgd); --ct: var(--pgt)
 .code .git-name, .code .git-email { color: #FFD166; }
 .code .git-name.filled, .code .git-email.filled { color: #7EE0B5; }
 
+/* stack cards (links) */
+a.stack-card { text-decoration: none; color: inherit; font-weight: inherit; transition: transform .1s ease, border-color .15s ease; }
+a.stack-card:hover { transform: translateY(-2px); border-color: var(--cm); }
+a.stack-card .ext-desc code { font-size: 11px; }
+.stack-go { flex: none; margin-left: auto; font-weight: 900; color: var(--cd); }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1742,6 +1748,28 @@ pnpm dev</code></pre></div></div>
   </ul>
   <ul class="checklist">
     <li><label><input type="checkbox" id="f1-c-p2"><span>Paso 2 listo: mi copia está en GitHub y en Vercel, y le pasé los dos links a Jorge</span></label></li>
+  </ul>
+</section>
+
+<section class="slide" data-phase="1" id="f1-stack" data-day="Fase 1 · Paso 2" data-title="Lo que acabas de clonar">
+  <p class="eyebrow">Paso 2 · tu plantilla</p>
+  <h2>¿Qué acabas de clonar? 📦</h2>
+  <p>Una app de React ya configurada con el mismo stack del equipo. Toca cada tarjeta para ver su documentación:</p>
+  <div class="ext-grid stagger">
+    <a class="ext-card stack-card" href="https://react.dev/learn" target="_blank" rel="noopener"><span class="ext-emoji">⚛️</span><span class="ext-text"><b>React 19</b><span class="ext-desc">Construyes la interfaz con componentes.</span></span><span class="stack-go" aria-hidden="true">↗</span></a>
+    <a class="ext-card stack-card" href="https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html" target="_blank" rel="noopener"><span class="ext-emoji">🔷</span><span class="ext-text"><b>TypeScript</b><span class="ext-desc">JavaScript con tipos: te avisa errores antes de ejecutar.</span></span><span class="stack-go" aria-hidden="true">↗</span></a>
+    <a class="ext-card stack-card" href="https://vite.dev/guide/" target="_blank" rel="noopener"><span class="ext-emoji">⚡</span><span class="ext-text"><b>Vite</b><span class="ext-desc">Arranca y empaqueta la app (<code>pnpm dev</code>, <code>pnpm build</code>).</span></span><span class="stack-go" aria-hidden="true">↗</span></a>
+    <a class="ext-card stack-card" href="https://tailwindcss.com/docs" target="_blank" rel="noopener"><span class="ext-emoji">🎨</span><span class="ext-text"><b>Tailwind CSS 4</b><span class="ext-desc">Estilos con clases, directo en el JSX.</span></span><span class="stack-go" aria-hidden="true">↗</span></a>
+    <a class="ext-card stack-card" href="https://ui.shadcn.com/docs" target="_blank" rel="noopener"><span class="ext-emoji">🧩</span><span class="ext-text"><b>shadcn/ui</b><span class="ext-desc">Componentes listos (Button, Card, Tabs) que viven en tu código.</span></span><span class="stack-go" aria-hidden="true">↗</span></a>
+    <a class="ext-card stack-card" href="https://base-ui.com/react/overview/quick-start" target="_blank" rel="noopener"><span class="ext-emoji">🧱</span><span class="ext-text"><b>Base UI</b><span class="ext-desc">La base accesible sobre la que funcionan esos componentes.</span></span><span class="stack-go" aria-hidden="true">↗</span></a>
+    <a class="ext-card stack-card" href="https://lucide.dev/icons/" target="_blank" rel="noopener"><span class="ext-emoji">✨</span><span class="ext-text"><b>Lucide</b><span class="ext-desc">Los íconos de la app.</span></span><span class="stack-go" aria-hidden="true">↗</span></a>
+    <a class="ext-card stack-card" href="https://prettier.io/docs/" target="_blank" rel="noopener"><span class="ext-emoji">🧹</span><span class="ext-text"><b>ESLint + Prettier</b><span class="ext-desc">Revisan y ordenan tu código (<code>pnpm lint</code>, <code>pnpm format</code>).</span></span><span class="stack-go" aria-hidden="true">↗</span></a>
+  </div>
+  <ul class="tldr">
+    <li><span><code>src/components/ui/</code>: los componentes de shadcn. ¿Necesitas otro? <code>pnpm dlx shadcn@latest add dialog</code></span></li>
+    <li><span><code>src/features/_template/</code>: un ejemplo completo para copiar. <code>treatments</code>, <code>clients</code> y <code>appointments</code> están vacías, esperándote.</span></li>
+    <li><span><code>src/app/</code>: la app y el tema claro/oscuro. Empieza leyendo el <code>README.md</code>.</span></li>
+    <li><span>En las próximas fases sumamos React Router, TanStack Query, react-hook-form, zod y date-fns.</span></li>
   </ul>
 </section>
 
