@@ -1440,6 +1440,7 @@ a.stack-card .ext-desc code { font-size: 11px; }
 .flow-mini li.hl .tool-cmd code { font-size: 12px; }
 .flow-mini .gh-pill { color: #fff; background: #1F883D; border-radius: 8px; padding: 2px 8px; font-size: 12px; font-weight: 800; }
 .flow-mini .gh-pill.del { color: #CF222E; background: var(--surface); border: 2px solid #CF222E55; }
+.flow-mini .loop { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px; border: 2px dashed var(--cm); border-radius: 10px; padding: 2px 8px; color: var(--ink); }
 .branch-tip small { color: var(--muted); font-size: 13px; font-weight: 600; }
 
 body { margin: 0; }
@@ -1598,38 +1599,38 @@ img { max-width: 100%; }
   </div>
 </section>
 
-<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Una rama y un PR por día">
+<section class="slide" data-phase="1" data-day="Fase 1 · Inicio" data-title="Una rama y un PR por feature">
   <p class="eyebrow">Tu rutina</p>
-  <h2>Cada día: una rama y un PR</h2>
+  <h2>Una rama y un PR por cada parte de la app</h2>
   <figure class="git-fig">
-    <svg class="git-svg" viewBox="0 0 960 160" role="img" aria-label="La rama main con tres ramas, una por día, que vuelven a main con un pull request">
+    <svg class="git-svg" viewBox="0 0 960 160" role="img" aria-label="La rama main con tres ramas, una por cada parte de la app, que vuelven a main con un pull request">
       <line class="g-main" x1="20" y1="120" x2="940" y2="120"/>
       <text class="g-label" x="24" y="150">main</text>
       <g class="g-branch b1">
         <path d="M60 120 C100 120 100 50 140 50 L240 50 C280 50 280 120 320 120"/>
         <circle cx="160" cy="50" r="7"/><circle cx="200" cy="50" r="7"/>
-        <text class="g-day" x="190" y="22">Día 1</text>
+        <text class="g-day" x="190" y="22">Tratamientos</text>
         <g class="g-pr"><rect x="282" y="68" width="64" height="26" rx="13"/><text x="314" y="82">PR ✓</text></g>
       </g>
       <g class="g-branch b2">
         <path d="M340 120 C380 120 380 50 420 50 L520 50 C560 50 560 120 600 120"/>
         <circle cx="440" cy="50" r="7"/><circle cx="480" cy="50" r="7"/><circle cx="510" cy="50" r="7"/>
-        <text class="g-day" x="470" y="22">Día 2</text>
+        <text class="g-day" x="470" y="22">Clientas</text>
         <g class="g-pr"><rect x="562" y="68" width="64" height="26" rx="13"/><text x="594" y="82">PR ✓</text></g>
       </g>
       <g class="g-branch b3">
         <path d="M620 120 C660 120 660 50 700 50 L800 50 C840 50 840 120 880 120"/>
         <circle cx="730" cy="50" r="7"/>
-        <text class="g-day" x="750" y="22">Día 3</text>
+        <text class="g-day" x="750" y="22">Citas</text>
         <g class="g-pr"><rect x="842" y="68" width="64" height="26" rx="13"/><text x="874" y="82">PR ✓</text></g>
       </g>
       <circle class="g-node" cx="320" cy="120" r="9"/><circle class="g-node" cx="600" cy="120" r="9"/><circle class="g-node" cx="880" cy="120" r="9"/>
     </svg>
   </figure>
   <div class="note-row stagger">
-    <div class="note"><b>Tu avance queda registrado</b><span>Ves todo lo que has logrado, día por día.</span></div>
-    <div class="note"><b>Preview en Vercel</b><span>Cada PR tiene su propio link para probar.</span></div>
-    <div class="note"><b>Tú haces el merge</b><span>Cuando todo funciona, lo unes a <code>main</code>.</span></div>
+    <div class="note"><b>Commit y push cada día</b><span>Al terminar el día subes tu avance a la misma rama: no pierdes nada.</span></div>
+    <div class="note"><b>Preview en Vercel</b><span>Cada push actualiza el link de prueba de tu rama.</span></div>
+    <div class="note"><b>Tú haces el merge</b><span>Cuando la parte está lista y funciona, la unes a <code>main</code>.</span></div>
   </div>
 </section>
 
@@ -1860,21 +1861,22 @@ pnpm dev</code></pre></div></div>
 
 <section class="slide" data-phase="1" data-day="Fase 1 · Paso 2" data-title="Tu rutina de cada día">
   <p class="eyebrow">Desde ahora</p>
-  <h2>Tu rutina de cada día</h2>
+  <h2>Tu rutina: una rama por feature</h2>
   <div class="cols">
-    <div class="code"><div class="code-head"><span>al empezar</span><button class="copy" type="button">Copiar</button></div><pre><code>git checkout main
+    <div class="code"><div class="code-head"><span>al empezar una fase</span><button class="copy" type="button">Copiar</button></div><pre><code>git checkout main
 git pull
-git checkout -b feat/treatments-domain</code></pre></div>
-    <div class="code"><div class="code-head"><span>al terminar</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm format
+git checkout -b feat/treatments-catalog</code></pre></div>
+    <div class="code"><div class="code-head"><span>al terminar cada día</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm format
 pnpm lint
 pnpm build
 git add .
 git commit -m <span class="s">"feat(treatments): add treatment domain"</span>
-git push -u origin feat/treatments-domain</code></pre></div>
+git push -u origin feat/treatments-catalog</code></pre></div>
   </div>
   <ul class="tldr">
-    <li><span>El nombre de la rama cuenta lo que hiciste ese día. Si <code>lint</code> o <code>build</code> muestran errores, corrígelos antes del commit.</span></li>
-    <li><span>En GitHub aparece <b>Compare &amp; pull request</b>. Vercel deja una vista previa en el PR; si al probarla todo funciona, puedes hacer el merge a <code>main</code> tú misma. Después toca <b>Delete branch</b> en el PR: esa rama ya cumplió.</span></li>
+    <li><span>El nombre de la rama cuenta qué parte de la app construyes. Los días siguientes sigues en la misma rama: <code>git status</code> te confirma dónde estás. Después del primer push, basta con <code>git push</code>.</span></li>
+    <li><span>Si <code>lint</code> o <code>build</code> muestran errores, corrígelos antes del commit.</span></li>
+    <li><span>Cuando la fase esté lista, en GitHub abre el PR con <b>Compare &amp; pull request</b>. Vercel deja una vista previa en el PR; si al probarla todo funciona, puedes hacer el merge a <code>main</code> tú misma. Después toca <b>Delete branch</b> en el PR: esa rama ya cumplió.</span></li>
   </ul>
 </section>
 
@@ -1886,8 +1888,8 @@ git push -u origin feat/treatments-domain</code></pre></div>
       <thead><tr><th>Comando</th><th>Qué hace</th><th>Cómo compruebas</th></tr></thead>
       <tbody>
         <tr><td><code>git checkout main</code></td><td>Te pasa a la rama principal</td><td><code>git status</code> → <code>On branch main</code></td></tr>
-        <tr><td><code>git pull</code></td><td>Trae lo nuevo de GitHub, como el merge de ayer</td><td><code>Already up to date</code> o la lista de lo que llegó</td></tr>
-        <tr><td><code>git checkout -b feat/…</code></td><td>Crea la rama del día y te pasa a ella</td><td><code>git status</code> → <code>On branch feat/…</code></td></tr>
+        <tr><td><code>git pull</code></td><td>Trae lo nuevo de GitHub, como tu último merge</td><td><code>Already up to date</code> o la lista de lo que llegó</td></tr>
+        <tr><td><code>git checkout -b feat/…</code></td><td>Crea la rama de la fase y te pasa a ella</td><td><code>git status</code> → <code>On branch feat/…</code></td></tr>
         <tr><td><code>pnpm format</code> · <code>lint</code> · <code>build</code></td><td>Ordena el código, busca errores y revisa que compile</td><td>Terminan sin errores en rojo</td></tr>
         <tr><td><code>git add .</code></td><td>Prepara todos tus cambios para el commit</td><td><code>git status</code> → archivos en verde</td></tr>
         <tr><td><code>git commit -m "…"</code></td><td>Guarda una "foto" de tus cambios, <b>solo en tu computador</b></td><td><code>git log --oneline</code> → tu commit de primero</td></tr>
@@ -2011,7 +2013,7 @@ git push -u origin feat/treatments-domain</code></pre></div>
 <section class="slide" data-phase="1" id="f1-p4" data-day="Fase 1 · Paso 4" data-title="El dominio">
   <p class="eyebrow">Paso 4 · domain</p>
   <h2>Qué es un tratamiento</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatments-domain" title="Copiar comando"><code>git checkout -b feat/treatments-domain</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Una rama para toda esta fase: tratamientos</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatments-catalog" title="Copiar comando"><code>git checkout -b feat/treatments-catalog</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li><span class="loop">🔁 cada día: ✏️ trabajas · <code>git add .</code> · <code>git commit</code> · <code>git push</code></span></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>Toda la fase va en esta rama. Al final de cada día: <code>add</code>, <code>commit</code> y <code>push</code> (no pierdes nada y Vercel actualiza la vista previa). El PR y el merge, cuando la fase esté lista. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <p>Copia los archivos de <code>_template</code> en <code>features/treatments/</code> y cambia <code>Item</code> por <code>Treatment</code>. Empieza por el dominio:</p>
   <div class="cols">
     <div class="code"><div class="code-head"><span>domain/treatment.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> TreatmentCategory =
@@ -2072,7 +2074,6 @@ git push -u origin feat/treatments-domain</code></pre></div>
 <section class="slide" data-phase="1" id="f1-p5" data-day="Fase 1 · Paso 5" data-title="El hook">
   <p class="eyebrow">Paso 5 · ui/hooks</p>
   <h2>Tu primer hook: <code>useTreatments</code></h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatment-card" title="Copiar comando"><code>git checkout -b feat/treatment-card</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="cols">
     <ul class="tldr">
       <li><span>Copia <code>use-items.ts</code> como <code>use-treatments.ts</code> y cambia los nombres.</span></li>
@@ -2128,7 +2129,6 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="1" id="f1-p6" data-day="Fase 1 · Paso 6" data-title="Página y filtros">
   <p class="eyebrow">Paso 6 · ui/pages</p>
   <h2>La página, con filtros por categoría</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatments-page-filters" title="Copiar comando"><code>git checkout -b feat/treatments-page-filters</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="code"><div class="code-head"><span>ui/pages/treatments-page.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { useState } <span class="k">from</span> <span class="s">'react'</span>
 
 <span class="k">import</span> { Button } <span class="k">from</span> <span class="s">'@/components/ui/button'</span>
@@ -2267,14 +2267,14 @@ useEffect(() =&gt; {
       </tbody>
     </table>
   </div>
-  <p class="muted">Recuerda tu rutina: una rama y un PR por cada día que trabajes, y <code>pnpm format</code>, <code>pnpm lint</code> y <code>pnpm build</code> antes de cada commit.</p>
+  <p class="muted">Recuerda tu rutina: una rama y un PR para toda la fase (con commit y push al final de cada día), y <code>pnpm format</code>, <code>pnpm lint</code> y <code>pnpm build</code> antes de cada commit.</p>
 </section>
 
 <!-- PASO 1 -->
 <section class="slide" data-phase="2" id="f2-p1" data-day="Fase 2 · Paso 1" data-title="Las rutas">
   <p class="eyebrow">Paso 1 · React Router</p>
   <h2>Cada pantalla, su propia URL</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/app-routing-layout" title="Copiar comando"><code>git checkout -b feat/app-routing-layout</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Una rama para toda esta fase: navegación y formularios</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatments-crud" title="Copiar comando"><code>git checkout -b feat/treatments-crud</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li><span class="loop">🔁 cada día: ✏️ trabajas · <code>git add .</code> · <code>git commit</code> · <code>git push</code></span></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>Toda la fase va en esta rama. Al final de cada día: <code>add</code>, <code>commit</code> y <code>push</code> (no pierdes nada y Vercel actualiza la vista previa). El PR y el merge, cuando la fase esté lista. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add react-router</code></pre></div>
     <p class="muted">El router decide qué página mostrar según la URL. El layout es el marco que se repite (menú) y <code>&lt;Outlet /&gt;</code> es el hueco donde va cada página.</p>
@@ -2353,7 +2353,6 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="2" id="f2-p2" data-day="Fase 2 · Paso 2" data-title="TanStack Query">
   <p class="eyebrow">Paso 2 · TanStack Query</p>
   <h2>Adiós al <code>useEffect</code> manual</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/tanstack-query" title="Copiar comando"><code>git checkout -b feat/tanstack-query</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <ul class="tldr">
     <li><span>TanStack Query se encarga de pedir los datos, guardar si está cargando o si falló, y guardarlos en caché para no pedirlos dos veces.</span></li>
     <li><span>Tu hook <code>useTreatments</code> pasa de muchas líneas a muy pocas.</span></li>
@@ -2416,7 +2415,6 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="2" id="f2-p3" data-day="Fase 2 · Paso 3" data-title="Página de detalle">
   <p class="eyebrow">Paso 3 · detalle</p>
   <h2>Un tratamiento, su propia página</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatment-detail" title="Copiar comando"><code>git checkout -b feat/treatment-detail</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>application + ui/hooks</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c">// application/get-treatment-by-id.ts</span>
 <span class="k">export function</span> getTreatmentById(repository: TreatmentRepository, id: <span class="k">string</span>) {
@@ -2459,7 +2457,6 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="2" id="f2-p4" data-day="Fase 2 · Paso 4" data-title="Datos que se guardan">
   <p class="eyebrow">Paso 4 · infrastructure</p>
   <h2>Datos que sobreviven a la recarga</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/local-storage-adapter" title="Copiar comando"><code>git checkout -b feat/local-storage-adapter</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <p>Hasta ahora los datos viven en un arreglo y se pierden al recargar. Vamos a crear otro adaptador que los guarde en <code>localStorage</code>, el almacenamiento del navegador.</p>
   <div class="cols">
     <div class="code"><div class="code-head"><span>domain: el contrato crece</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c">// domain/treatment.ts</span>
@@ -2525,7 +2522,6 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="2" id="f2-p5" data-day="Fase 2 · Paso 5" data-title="El formulario">
   <p class="eyebrow">Paso 5 · react-hook-form + zod</p>
   <h2>Un formulario que valida solo</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatment-forms" title="Copiar comando"><code>git checkout -b feat/treatment-forms</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add react-hook-form zod @hookform/resolvers
 npx shadcn@latest add input label textarea</code></pre></div>
   <div class="code"><div class="code-head"><span>ui/components/treatment-form.tsx (la base)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">const</span> treatmentFormSchema = z.object({
@@ -2639,7 +2635,7 @@ npx shadcn@latest add input label textarea</code></pre></div>
 <section class="slide" data-phase="3" data-day="Fase 3 · Paso 1" data-title="Qué es una clienta">
   <p class="eyebrow">Paso 1 · domain</p>
   <h2>Qué es una clienta</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/clients-domain" title="Copiar comando"><code>git checkout -b feat/clients-domain</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Una rama para toda esta fase: clientas</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/clients" title="Copiar comando"><code>git checkout -b feat/clients</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li><span class="loop">🔁 cada día: ✏️ trabajas · <code>git add .</code> · <code>git commit</code> · <code>git push</code></span></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>Toda la fase va en esta rama. Al final de cada día: <code>add</code>, <code>commit</code> y <code>push</code> (no pierdes nada y Vercel actualiza la vista previa). El PR y el merge, cuando la fase esté lista. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>domain/client.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> SkinType = <span class="s">'normal'</span> | <span class="s">'dry'</span> | <span class="s">'oily'</span> | <span class="s">'combination'</span> | <span class="s">'sensitive'</span>
 
@@ -2673,7 +2669,6 @@ npx shadcn@latest add input label textarea</code></pre></div>
 <section class="slide" data-phase="3" data-day="Fase 3 · Paso 2" data-title="Las pantallas">
   <p class="eyebrow">Paso 2 · ui</p>
   <h2>Lo que debe hacer la app</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/clients-pages" title="Copiar comando"><code>git checkout -b feat/clients-pages</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Ruta</th><th>Qué muestra</th></tr></thead>
@@ -2754,7 +2749,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Paso 1" data-title="Qué es una cita">
   <p class="eyebrow">Paso 1 · domain</p>
   <h2>Qué es una cita</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-domain" title="Copiar comando"><code>git checkout -b feat/appointments-domain</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Una rama para toda esta fase: citas</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments" title="Copiar comando"><code>git checkout -b feat/appointments</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li><span class="loop">🔁 cada día: ✏️ trabajas · <code>git add .</code> · <code>git commit</code> · <code>git push</code></span></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>Toda la fase va en esta rama. Al final de cada día: <code>add</code>, <code>commit</code> y <code>push</code> (no pierdes nada y Vercel actualiza la vista previa). El PR y el merge, cuando la fase esté lista. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>domain/appointment.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> AppointmentStatus =
   | <span class="s">'scheduled'</span>
@@ -2784,7 +2779,6 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Paso 2" data-title="Las reglas">
   <p class="eyebrow">Paso 2 · domain/rules</p>
   <h2>Las reglas, como funciones puras</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-rules" title="Copiar comando"><code>git checkout -b feat/appointments-rules</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <p>Una función pura recibe datos y devuelve un resultado, sin React ni repositorios. Por eso es fácil leerla, probarla y confiar en ella.</p>
   <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add date-fns</code></pre></div>
   <div class="code"><div class="code-head"><span>domain/appointment-rules.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { addMinutes, areIntervalsOverlapping } <span class="k">from</span> <span class="s">'date-fns'</span>
@@ -2827,7 +2821,6 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Paso 3" data-title="Usar otros features">
   <p class="eyebrow">Paso 3 · features juntos</p>
   <h2>Las citas necesitan clientas y tratamientos</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-cross-feature" title="Copiar comando"><code>git checkout -b feat/appointments-cross-feature</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>features/treatments/index.ts y clients/index.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c">// treatments/index.ts</span>
 <span class="k">export</span> { useTreatments } <span class="k">from</span> <span class="s">'./ui/hooks/use-treatments'</span>
@@ -2846,7 +2839,6 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Paso 4" data-title="Las pantallas">
   <p class="eyebrow">Paso 4 · ui</p>
   <h2>Lo que debe hacer la agenda</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-pages" title="Copiar comando"><code>git checkout -b feat/appointments-pages</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Ruta</th><th>Qué muestra</th></tr></thead>
@@ -2868,7 +2860,6 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Extra" data-title="Retos extra">
   <p class="eyebrow">Si te quedan ganas</p>
   <h2>Retos extra, con tu experiencia</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-extras" title="Copiar comando"><code>git checkout -b feat/appointments-extras</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <ul class="tldr">
     <li><span><b>Contraindicaciones:</b> agrega a cada tratamiento una lista de alertas incompatibles. Si la clienta tiene alguna, muestra una advertencia antes de agendar.</span></li>
     <li><span><b>Días entre sesiones:</b> un peeling no se repite antes de 15 días. Agrega <code>minDaysBetweenSessions</code> al tratamiento y valídalo.</span></li>
@@ -2910,7 +2901,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="5" data-day="Fase 5 · Paso 1" data-title="Feedback visual">
   <p class="eyebrow">Paso 1 · feedback</p>
   <h2>Que la app responda a cada acción</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/toasts-skeletons" title="Copiar comando"><code>git checkout -b feat/toasts-skeletons</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Una rama para toda esta fase: detalles finales</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/polish-dashboard" title="Copiar comando"><code>git checkout -b feat/polish-dashboard</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li><span class="loop">🔁 cada día: ✏️ trabajas · <code>git add .</code> · <code>git commit</code> · <code>git push</code></span></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>Toda la fase va en esta rama. Al final de cada día: <code>add</code>, <code>commit</code> y <code>push</code> (no pierdes nada y Vercel actualiza la vista previa). El PR y el merge, cuando la fase esté lista. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>npx shadcn@latest add sonner skeleton</code></pre></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>mensajes (toasts)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { toast } <span class="k">from</span> <span class="s">'sonner'</span>
@@ -2934,7 +2925,6 @@ createMutation.mutate(values, {
 <section class="slide" data-phase="5" data-day="Fase 5 · Paso 2" data-title="Pantalla de inicio">
   <p class="eyebrow">Paso 2 · dashboard</p>
   <h2>Una pantalla de inicio útil</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b feat/dashboard" title="Copiar comando"><code>git checkout -b feat/dashboard</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <p>Crea un feature <code>dashboard</code> y llévalo a la ruta <code>/</code> en lugar de la redirección. Que muestre, en tarjetas:</p>
   <div class="table-wrap">
     <table>
@@ -2957,7 +2947,6 @@ createMutation.mutate(values, {
 <section class="slide" data-phase="5" data-day="Fase 5 · Paso 3" data-title="Revisión final">
   <p class="eyebrow">Paso 3 · revisión</p>
   <h2>Mírala como la vería una clienta</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b chore/final-review" title="Copiar comando"><code>git checkout -b chore/final-review</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <ul class="checklist">
     <li><label><input type="checkbox" id="f5-c-f5-1"><span>Se ve bien en el celular y en el computador</span></label></li>
     <li><label><input type="checkbox" id="f5-c-f5-2"><span>Se ve bien en modo claro y en modo oscuro</span></label></li>
@@ -2972,7 +2961,6 @@ createMutation.mutate(values, {
 <section class="slide" data-phase="5" data-day="Fase 5 · Paso 4" data-title="Preséntala">
   <p class="eyebrow">Paso 4 · tu portafolio</p>
   <h2>Preséntala como se merece</h2>
-  <div class="branch-tip"><span class="branch-lbl">🌿 Tu flujo para este paso</span><ol class="flow-mini"><li><code>git checkout main</code></li><li><code>git pull</code></li><li class="hl"><button class="tool-cmd" type="button" data-copy="git checkout -b docs/readme-demo" title="Copiar comando"><code>git checkout -b docs/readme-demo</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button></li><li>✏️ trabajas</li><li><code>git add .</code></li><li><code>git commit -m "…"</code></li><li><code>git push</code></li><li><span class="gh-pill">PR + merge</span></li><li><span class="gh-pill del">Delete branch</span></li></ol><small>La rama sugerida está en el recuadro oscuro: tócalo para copiar el comando. ¿Te toma varios días? Una rama por día. <a href="#g-git-ramas">🎮 Practica el flujo</a></small></div>
   <ul class="tldr">
     <li><span>Actualiza el <code>README.md</code>: qué es Lumi, el link de Vercel, dos o tres capturas y el stack que usaste.</span></li>
     <li><span>Prepara una demo de 10 minutos: un recorrido por la app, una parte del código que te guste y algo que te costó y cómo lo resolviste.</span></li>
@@ -3004,7 +2992,7 @@ createMutation.mutate(values, {
     <a class="guide-link" href="#g-git-lugares">Los 4 lugares</a>
     <a class="guide-link" href="#g-git-prueba">🎮 Pruébalo</a>
     <a class="guide-link" href="#g-git-mirar">Comandos para mirar</a>
-    <a class="guide-link" href="#g-git-dia">Tu día, en orden</a>
+    <a class="guide-link" href="#g-git-dia">Tu flujo, en orden</a>
     <a class="guide-link" href="#g-git-pc">¿Otro computador?</a>
     <a class="guide-link" href="#g-git-errores">Errores comunes</a>
   </nav>
@@ -3078,16 +3066,16 @@ createMutation.mutate(values, {
   </div>
 </section>
 
-<section class="slide" data-phase="g-git" id="g-git-dia" data-day="Guía Git · Comandos" data-title="Tu día, en orden">
+<section class="slide" data-phase="g-git" id="g-git-dia" data-day="Guía Git · Comandos" data-title="Tu flujo, en orden">
   <p class="eyebrow">Ramas y PRs</p>
-  <h2>Tu día, en orden 🗓️</h2>
+  <h2>Tu flujo, en orden 🗓️</h2>
   <ol class="gsteps">
-    <li><b>Empieza con main al día</b><span class="cmds"><code>git checkout main</code><code>git pull</code></span><span>Tu <code>main</code> no sabe del merge de ayer hasta que haces pull.</span></li>
-    <li><b>Crea la rama del día</b><span class="cmds"><code>git checkout -b feat/…</code></span><span>Una copia de main para trabajar sin miedo a dañarla.</span></li>
-    <li><b>Trabaja y guarda</b><span class="cmds"><code>git add .</code><code>git commit -m "…"</code></span><span>Puedes hacer varios commits en el día.</span></li>
+    <li><b>Empieza con main al día</b><span class="cmds"><code>git checkout main</code><code>git pull</code></span><span>Tu <code>main</code> no sabe de tu último merge hasta que haces pull.</span></li>
+    <li><b>Crea la rama del feature</b><span class="cmds"><code>git checkout -b feat/…</code></span><span>Una para toda la parte que vas a construir (ej. <code>feat/clients</code>).</span></li>
+    <li><b>Trabaja y guarda, cada día</b><span class="cmds"><code>git add .</code><code>git commit -m "…"</code></span><span>Al final de cada día, commit y push a la misma rama.</span></li>
     <li><b>Súbela</b><span class="cmds"><code>git push -u origin feat/…</code></span><span>La primera vez con <code>-u</code>; después basta con <code>git push</code>.</span></li>
-    <li><b>Abre el PR en GitHub</b><span class="cmds"><i class="btn-chip">Compare &amp; pull request</i></span><span>Pides unir tu rama a main. Vercel deja una vista previa para probar.</span></li>
-    <li><b>Haz el merge y borra la rama</b><span class="cmds"><i class="btn-chip">Merge pull request</i><i class="btn-chip del">Delete branch</i></span><span>Tu trabajo llega a main y se publica. La rama ya cumplió: bórrala en GitHub para no acumular. Mañana, de vuelta al paso 1.</span></li>
+    <li><b>Feature listo: abre el PR</b><span class="cmds"><i class="btn-chip">Compare &amp; pull request</i></span><span>Pides unir tu rama a main. Vercel deja una vista previa para probar.</span></li>
+    <li><b>Haz el merge y borra la rama</b><span class="cmds"><i class="btn-chip">Merge pull request</i><i class="btn-chip del">Delete branch</i></span><span>Tu trabajo llega a main y se publica. La rama ya cumplió: bórrala en GitHub para no acumular. Para la siguiente parte, de vuelta al paso 1.</span></li>
   </ol>
 </section>
 
@@ -4076,10 +4064,10 @@ createMutation.mutate(values, {
         term.out('git checkout main', l);
       },
       pull: function () {
-        if (st.head !== 'main') { term.out('git pull', [['o', 'Already up to date.'], ['h', '💬 El pull del día se hace en main: primero git checkout main.']]); return; }
+        if (st.head !== 'main') { term.out('git pull', [['o', 'Already up to date.'], ['h', '💬 El pull se hace en main: primero git checkout main.']]); return; }
         if (!behind()) { term.out('git pull', [['o', 'Already up to date.']]); return; }
         st.local = tip(); st.fresh = 'm' + st.local;
-        term.out('git pull', [['o', 'Updating ' + hash() + '..' + hash()], ['g', 'Fast-forward'], ['h', '🎉 Tu main ya tiene el merge. ¡Ciclo completo! Así es cada día de trabajo.']]);
+        term.out('git pull', [['o', 'Updating ' + hash() + '..' + hash()], ['g', 'Fast-forward'], ['h', '🎉 Tu main ya tiene el merge. ¡Ciclo completo! Así es cada feature.']]);
       },
       newb: function () {
         var name = NAMES[st.nameIdx], cmd = 'git checkout -b ' + (name || 'feat/…');
