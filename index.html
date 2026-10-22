@@ -1428,6 +1428,13 @@ a.stack-card .ext-desc code { font-size: 11px; }
 .sim-legend .dot.hollow { border: 2px dashed var(--p3); }
 @media (prefers-reduced-motion: reduce) { .sim-svg .pop, .sim-cmds button.next { animation: none; } .sim-svg .draw { animation: none; stroke-dashoffset: 0; } }
 
+/* rama sugerida por paso */
+.branch-tip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; background: var(--surface); border: 2px dashed var(--cm); border-radius: 16px; padding: 10px 12px; }
+.branch-lbl { font-weight: 900; font-size: 14px; color: var(--cd); }
+.branch-tip .tool-cmd { margin: 0; align-self: center; flex: 0 1 auto; gap: 12px; }
+.branch-tip small { flex-basis: 100%; color: var(--muted); font-size: 13px; font-weight: 600; }
+.branch-tip small code { font-size: 12px; }
+
 body { margin: 0; }
 [hidden] { display: none !important; }
 img { max-width: 100%; }
@@ -1997,6 +2004,7 @@ git push -u origin feat/treatments-domain</code></pre></div>
 <section class="slide" data-phase="1" id="f1-p4" data-day="Fase 1 · Paso 4" data-title="El dominio">
   <p class="eyebrow">Paso 4 · domain</p>
   <h2>Qué es un tratamiento</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatments-domain" title="Copiar comando"><code>git checkout -b feat/treatments-domain</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <p>Copia los archivos de <code>_template</code> en <code>features/treatments/</code> y cambia <code>Item</code> por <code>Treatment</code>. Empieza por el dominio:</p>
   <div class="cols">
     <div class="code"><div class="code-head"><span>domain/treatment.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> TreatmentCategory =
@@ -2057,6 +2065,7 @@ git push -u origin feat/treatments-domain</code></pre></div>
 <section class="slide" data-phase="1" id="f1-p5" data-day="Fase 1 · Paso 5" data-title="El hook">
   <p class="eyebrow">Paso 5 · ui/hooks</p>
   <h2>Tu primer hook: <code>useTreatments</code></h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatment-card" title="Copiar comando"><code>git checkout -b feat/treatment-card</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="cols">
     <ul class="tldr">
       <li><span>Copia <code>use-items.ts</code> como <code>use-treatments.ts</code> y cambia los nombres.</span></li>
@@ -2112,6 +2121,7 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="1" id="f1-p6" data-day="Fase 1 · Paso 6" data-title="Página y filtros">
   <p class="eyebrow">Paso 6 · ui/pages</p>
   <h2>La página, con filtros por categoría</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatments-page-filters" title="Copiar comando"><code>git checkout -b feat/treatments-page-filters</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="code"><div class="code-head"><span>ui/pages/treatments-page.tsx</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { useState } <span class="k">from</span> <span class="s">'react'</span>
 
 <span class="k">import</span> { Button } <span class="k">from</span> <span class="s">'@/components/ui/button'</span>
@@ -2257,6 +2267,7 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="2" id="f2-p1" data-day="Fase 2 · Paso 1" data-title="Las rutas">
   <p class="eyebrow">Paso 1 · React Router</p>
   <h2>Cada pantalla, su propia URL</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/app-routing-layout" title="Copiar comando"><code>git checkout -b feat/app-routing-layout</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add react-router</code></pre></div>
     <p class="muted">El router decide qué página mostrar según la URL. El layout es el marco que se repite (menú) y <code>&lt;Outlet /&gt;</code> es el hueco donde va cada página.</p>
@@ -2335,6 +2346,7 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="2" id="f2-p2" data-day="Fase 2 · Paso 2" data-title="TanStack Query">
   <p class="eyebrow">Paso 2 · TanStack Query</p>
   <h2>Adiós al <code>useEffect</code> manual</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/tanstack-query" title="Copiar comando"><code>git checkout -b feat/tanstack-query</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <ul class="tldr">
     <li><span>TanStack Query se encarga de pedir los datos, guardar si está cargando o si falló, y guardarlos en caché para no pedirlos dos veces.</span></li>
     <li><span>Tu hook <code>useTreatments</code> pasa de muchas líneas a muy pocas.</span></li>
@@ -2397,6 +2409,7 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="2" id="f2-p3" data-day="Fase 2 · Paso 3" data-title="Página de detalle">
   <p class="eyebrow">Paso 3 · detalle</p>
   <h2>Un tratamiento, su propia página</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatment-detail" title="Copiar comando"><code>git checkout -b feat/treatment-detail</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>application + ui/hooks</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c">// application/get-treatment-by-id.ts</span>
 <span class="k">export function</span> getTreatmentById(repository: TreatmentRepository, id: <span class="k">string</span>) {
@@ -2439,6 +2452,7 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="2" id="f2-p4" data-day="Fase 2 · Paso 4" data-title="Datos que se guardan">
   <p class="eyebrow">Paso 4 · infrastructure</p>
   <h2>Datos que sobreviven a la recarga</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/local-storage-adapter" title="Copiar comando"><code>git checkout -b feat/local-storage-adapter</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <p>Hasta ahora los datos viven en un arreglo y se pierden al recargar. Vamos a crear otro adaptador que los guarde en <code>localStorage</code>, el almacenamiento del navegador.</p>
   <div class="cols">
     <div class="code"><div class="code-head"><span>domain: el contrato crece</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c">// domain/treatment.ts</span>
@@ -2504,6 +2518,7 @@ useEffect(() =&gt; {
 <section class="slide" data-phase="2" id="f2-p5" data-day="Fase 2 · Paso 5" data-title="El formulario">
   <p class="eyebrow">Paso 5 · react-hook-form + zod</p>
   <h2>Un formulario que valida solo</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/treatment-forms" title="Copiar comando"><code>git checkout -b feat/treatment-forms</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add react-hook-form zod @hookform/resolvers
 npx shadcn@latest add input label textarea</code></pre></div>
   <div class="code"><div class="code-head"><span>ui/components/treatment-form.tsx (la base)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">const</span> treatmentFormSchema = z.object({
@@ -2617,6 +2632,7 @@ npx shadcn@latest add input label textarea</code></pre></div>
 <section class="slide" data-phase="3" data-day="Fase 3 · Paso 1" data-title="Qué es una clienta">
   <p class="eyebrow">Paso 1 · domain</p>
   <h2>Qué es una clienta</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/clients-domain" title="Copiar comando"><code>git checkout -b feat/clients-domain</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>domain/client.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> SkinType = <span class="s">'normal'</span> | <span class="s">'dry'</span> | <span class="s">'oily'</span> | <span class="s">'combination'</span> | <span class="s">'sensitive'</span>
 
@@ -2650,6 +2666,7 @@ npx shadcn@latest add input label textarea</code></pre></div>
 <section class="slide" data-phase="3" data-day="Fase 3 · Paso 2" data-title="Las pantallas">
   <p class="eyebrow">Paso 2 · ui</p>
   <h2>Lo que debe hacer la app</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/clients-pages" title="Copiar comando"><code>git checkout -b feat/clients-pages</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Ruta</th><th>Qué muestra</th></tr></thead>
@@ -2730,6 +2747,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Paso 1" data-title="Qué es una cita">
   <p class="eyebrow">Paso 1 · domain</p>
   <h2>Qué es una cita</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-domain" title="Copiar comando"><code>git checkout -b feat/appointments-domain</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>domain/appointment.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">export type</span> AppointmentStatus =
   | <span class="s">'scheduled'</span>
@@ -2759,6 +2777,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Paso 2" data-title="Las reglas">
   <p class="eyebrow">Paso 2 · domain/rules</p>
   <h2>Las reglas, como funciones puras</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-rules" title="Copiar comando"><code>git checkout -b feat/appointments-rules</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <p>Una función pura recibe datos y devuelve un resultado, sin React ni repositorios. Por eso es fácil leerla, probarla y confiar en ella.</p>
   <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>pnpm add date-fns</code></pre></div>
   <div class="code"><div class="code-head"><span>domain/appointment-rules.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { addMinutes, areIntervalsOverlapping } <span class="k">from</span> <span class="s">'date-fns'</span>
@@ -2801,6 +2820,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Paso 3" data-title="Usar otros features">
   <p class="eyebrow">Paso 3 · features juntos</p>
   <h2>Las citas necesitan clientas y tratamientos</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-cross-feature" title="Copiar comando"><code>git checkout -b feat/appointments-cross-feature</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>features/treatments/index.ts y clients/index.ts</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="c">// treatments/index.ts</span>
 <span class="k">export</span> { useTreatments } <span class="k">from</span> <span class="s">'./ui/hooks/use-treatments'</span>
@@ -2819,6 +2839,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Paso 4" data-title="Las pantallas">
   <p class="eyebrow">Paso 4 · ui</p>
   <h2>Lo que debe hacer la agenda</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-pages" title="Copiar comando"><code>git checkout -b feat/appointments-pages</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="table-wrap">
     <table>
       <thead><tr><th>Ruta</th><th>Qué muestra</th></tr></thead>
@@ -2840,6 +2861,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="4" data-day="Fase 4 · Extra" data-title="Retos extra">
   <p class="eyebrow">Si te quedan ganas</p>
   <h2>Retos extra, con tu experiencia</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/appointments-extras" title="Copiar comando"><code>git checkout -b feat/appointments-extras</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <ul class="tldr">
     <li><span><b>Contraindicaciones:</b> agrega a cada tratamiento una lista de alertas incompatibles. Si la clienta tiene alguna, muestra una advertencia antes de agendar.</span></li>
     <li><span><b>Días entre sesiones:</b> un peeling no se repite antes de 15 días. Agrega <code>minDaysBetweenSessions</code> al tratamiento y valídalo.</span></li>
@@ -2881,6 +2903,7 @@ alerts: z.array(z.enum([<span class="s">'pregnancy'</span>, <span class="s">'act
 <section class="slide" data-phase="5" data-day="Fase 5 · Paso 1" data-title="Feedback visual">
   <p class="eyebrow">Paso 1 · feedback</p>
   <h2>Que la app responda a cada acción</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/toasts-skeletons" title="Copiar comando"><code>git checkout -b feat/toasts-skeletons</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <div class="code"><div class="code-head"><span>terminal</span><button class="copy" type="button">Copiar</button></div><pre><code>npx shadcn@latest add sonner skeleton</code></pre></div>
   <div class="cols">
     <div class="code"><div class="code-head"><span>mensajes (toasts)</span><button class="copy" type="button">Copiar</button></div><pre><code><span class="k">import</span> { toast } <span class="k">from</span> <span class="s">'sonner'</span>
@@ -2904,6 +2927,7 @@ createMutation.mutate(values, {
 <section class="slide" data-phase="5" data-day="Fase 5 · Paso 2" data-title="Pantalla de inicio">
   <p class="eyebrow">Paso 2 · dashboard</p>
   <h2>Una pantalla de inicio útil</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b feat/dashboard" title="Copiar comando"><code>git checkout -b feat/dashboard</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <p>Crea un feature <code>dashboard</code> y llévalo a la ruta <code>/</code> en lugar de la redirección. Que muestre, en tarjetas:</p>
   <div class="table-wrap">
     <table>
@@ -2926,6 +2950,7 @@ createMutation.mutate(values, {
 <section class="slide" data-phase="5" data-day="Fase 5 · Paso 3" data-title="Revisión final">
   <p class="eyebrow">Paso 3 · revisión</p>
   <h2>Mírala como la vería una clienta</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b chore/final-review" title="Copiar comando"><code>git checkout -b chore/final-review</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <ul class="checklist">
     <li><label><input type="checkbox" id="f5-c-f5-1"><span>Se ve bien en el celular y en el computador</span></label></li>
     <li><label><input type="checkbox" id="f5-c-f5-2"><span>Se ve bien en modo claro y en modo oscuro</span></label></li>
@@ -2940,6 +2965,7 @@ createMutation.mutate(values, {
 <section class="slide" data-phase="5" data-day="Fase 5 · Paso 4" data-title="Preséntala">
   <p class="eyebrow">Paso 4 · tu portafolio</p>
   <h2>Preséntala como se merece</h2>
+  <div class="branch-tip"><span class="branch-lbl">🌿 Rama sugerida</span><button class="tool-cmd" type="button" data-copy="git checkout -b docs/readme-demo" title="Copiar comando"><code>git checkout -b docs/readme-demo</code><span class="tool-cmd-lbl" aria-label="Copiar"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span></button><small>Antes: <code>git checkout main</code> y <code>git pull</code>. ¿Te toma varios días? Una rama por día, con un nombre que cuente lo de ese día.</small></div>
   <ul class="tldr">
     <li><span>Actualiza el <code>README.md</code>: qué es Lumi, el link de Vercel, dos o tres capturas y el stack que usaste.</span></li>
     <li><span>Prepara una demo de 10 minutos: un recorrido por la app, una parte del código que te guste y algo que te costó y cómo lo resolviste.</span></li>
